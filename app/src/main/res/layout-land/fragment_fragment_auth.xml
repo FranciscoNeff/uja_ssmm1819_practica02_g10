@@ -5,7 +5,7 @@
     android:id="@+id/fragment_auth_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nef.corgi.apppowercorpore.Autehtication">
+    tools:context="com.nef.corgi.apppowercorpore.Authetication">
 
     <RelativeLayout
         android:layout_width="match_parent"

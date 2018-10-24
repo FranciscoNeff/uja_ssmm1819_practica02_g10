@@ -23,4 +23,7 @@
     <string name="nav_work_out">Work Out</string>
     <string name="nav_result">Result</string>
     <string name="title_communicate">Comunicate</string>
+    <string name="main_connected">Connected</string>
+    <string name="main_progress">Progress</string>
+    <string name="main_connecting">Connecting</string>
 </resources>

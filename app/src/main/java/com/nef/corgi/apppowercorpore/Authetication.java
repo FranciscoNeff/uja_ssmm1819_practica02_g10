@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
-
-public class Autehtication extends Fragment {
+public class Authetication extends Fragment {
     private userDTO user;
     private OnFragmentInteractionListener mListener;
     // TODO: Rename parameter arguments, choose names that match
@@ -24,13 +22,13 @@ public class Autehtication extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public Autehtication(){}
+    public Authetication(){}
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(userDTO userDTO);
     }
-    public static Autehtication newInstance(String param1, String param2) {
-        Autehtication fragment = new Autehtication();
+    public static Authetication newInstance(String param1, String param2) {
+        Authetication fragment = new Authetication();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

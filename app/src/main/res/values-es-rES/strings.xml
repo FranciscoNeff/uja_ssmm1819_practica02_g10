@@ -3,7 +3,7 @@
     <string name="app_name">Power Corpore</string>
     <string name="fragment_auth_user">Nombre</string>
     <string name="login_hint_user">Introduce tu Nombre</string>
-    <string name="login_pass">"Password "</string>
+    <string name="login_pass">Contraseña</string>
     <string name="login_hint_pass">Introduce la Contraseña</string>
     <string name="login_email">Email</string>
     <string name="login_hint_email">Introduce tu Email</string>
@@ -21,4 +21,7 @@
     <string name="nav_work_out">Rutinas</string>
     <string name="nav_result">Resultado</string>
     <string name="title_communicate">Comunicacion</string>
+    <string name="main_connected">Conectado</string>
+    <string name="main_progress">Progreso</string>
+    <string name="main_connecting">Conectando</string>
 </resources>
