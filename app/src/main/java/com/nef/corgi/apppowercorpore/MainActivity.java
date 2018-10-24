@@ -67,7 +67,7 @@ private userDTO user=null;
         protected void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
 
-            outState.putString("name",user.getDominio());
+            outState.putString("Dominio",user.getDominio());
         }
 
         @Override
