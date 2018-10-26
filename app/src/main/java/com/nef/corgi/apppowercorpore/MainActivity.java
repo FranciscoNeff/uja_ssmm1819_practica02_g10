@@ -34,9 +34,9 @@ private userDTO user=null;
         setContentView(R.layout.activity_main);
         Log.d("INICIO","Bienvenido a PowerCorpore");
         FragmentManager fm = getSupportFragmentManager();
-        Fragment email_user = fm.findFragmentById(R.id.main_container);
+        Fragment hello = fm.findFragmentById(R.id.main_container);
         //Binvenida y muestra el nombre de usuario,en vez del de la app//si se comenta el menu lateral es como se ve mejor
-        if(email_user==null) {
+        if(hello==null) {
             FragmentTransaction ft = fm.beginTransaction();
             Authetication fragment = Authetication.newInstance("", "");
             ft.add(R.id.main_container, fragment, "login");

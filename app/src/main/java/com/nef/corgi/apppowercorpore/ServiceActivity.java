@@ -18,7 +18,11 @@ import android.widget.Toast;
 
 public class ServiceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-public static final String PARAMETER_USER="name";
+public static final String NAME_USER="name";
+    public static final String EMAIL_USER="email";
+    public static final String PASS_USER="pass";//Eesta variable quizas no sea adecuada
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +49,11 @@ public static final String PARAMETER_USER="name";
         navigationView.setNavigationItemSelectedListener(this);
         //Código práctica
         Intent intent = getIntent();
-        String s_user = intent.getStringExtra(PARAMETER_USER);
-        String s_pass = intent.getStringExtra("pass");;
-        String s_email =intent.getStringExtra("email");
+        String s_user = intent.getStringExtra(NAME_USER);
+        String s_pass = intent.getStringExtra(PASS_USER);;
+        String s_email =intent.getStringExtra(EMAIL_USER);
         //Toast.makeText(this, s_user + " " + s_pass + " " + s_email + " " , Toast.LENGTH_LONG).show();//se comenta ya q no es necesario mostrar el password y el mail
-        Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Hola "+NAME_USER , Toast.LENGTH_LONG).show();
     }
     @Override
     public void onBackPressed() {
