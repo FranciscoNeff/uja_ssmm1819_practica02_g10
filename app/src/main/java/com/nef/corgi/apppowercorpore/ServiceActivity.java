@@ -18,9 +18,10 @@ import android.widget.Toast;
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-public static final String NAME_USER="name";
+    //Variables estaticas de control de usuario
+    public static final String NAME_USER="name";
     public static final String EMAIL_USER="email";
-    public static final String PASS_USER="pass";//Eesta variable quizas no sea adecuada
+    public static final String PASS_USER="pass";//Esta variable quizas no sea adecuada
 
 
     @Override
@@ -38,7 +39,7 @@ public static final String NAME_USER="name";
                         .setAction("Action", null).show();//añadir accion(futuro)
             }
         });
-//Menu lateral
+        //Menu lateral
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

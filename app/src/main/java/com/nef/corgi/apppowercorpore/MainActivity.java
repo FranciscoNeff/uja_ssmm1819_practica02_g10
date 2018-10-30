@@ -46,8 +46,10 @@ private userDTO user=null;
 
         if(savedInstanceState!=null){
             String name = savedInstanceState.getString("name");
-            user = new userDTO();
-            user.setUser_name(name);
+            String email = savedInstanceState.getString("email");
+            String pass = savedInstanceState.getString("pass");
+            user = new userDTO(name, email, pass);
+          //revisar lo de user
 
         }
         else {

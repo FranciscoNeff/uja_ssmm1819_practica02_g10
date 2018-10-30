@@ -68,7 +68,7 @@ public class Authetication extends Fragment {
                 intent.putExtra("email",s_email);
                 intent.putExtra("pass",s_pass);
                 startActivity(intent);//con esto lanzamos el menu lateral
-                mListener.onFragmentInteraction(user);
+                mListener.onFragmentInteraction(user);//le pasamos el userario
             }
 
         });
