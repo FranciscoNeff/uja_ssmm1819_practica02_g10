@@ -23,6 +23,7 @@ public class SplashActivity extends Activity {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
+                //meter aqui el verificador de usuario y si no lanzamos al main
             };
         }, DURACION_SPLASH);
     }

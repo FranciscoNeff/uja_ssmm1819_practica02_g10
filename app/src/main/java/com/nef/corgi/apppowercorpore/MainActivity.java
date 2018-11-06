@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 
 //el email sera el identificador unico de nuestra aplicacion(futuro)
@@ -32,7 +33,7 @@ import java.text.DateFormat;
 //E/HAL: load: id=gralloc != hmi->id=gralloc He buscado como eliminar este fallo pero ni he encontrado ese id ni nada(no es un error critico)
 public class MainActivity extends AppCompatActivity implements Authetication.OnFragmentInteractionListener{
 private userDTO user=null;
-
+    SimpleDateFormat FORMATO = new SimpleDateFormat("dd/MM/yyyy");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +179,7 @@ private userDTO user=null;
 public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,iteracion intermedia,devuelvo
 
             private static final String RESOURCE="/ssmm/autentica.php";
+    //private static final  String DOMAIN= "labtelema.ujaen.es";
     private static final  String PARAM_USER= "user";
     private static final String  PARAM_PASS="pass";
     private static final int HTTP_STATUS_CODE =200 ;
@@ -239,16 +241,17 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
                     super.onPostExecute(user);
                     if (user!=null){
                         Toast.makeText(getApplicationContext(),"Correcto",Toast.LENGTH_LONG).show();
-                        SharedPreferences sp = getSharedPreferences(user.getUser_name(),MODE_PRIVATE);
+                        SharedPreferences sp = getSharedPreferences(user.getUser_name(),MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
                         SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("User",user.getUser_name());
+                        editor.putString("user",user.getUser_name());
                         editor.putString("Email",user.getEmail_user());
+                        editor.putString("SID",user.getSid());
+                        editor.putString("EXPIRES",FORMATO.format(user.getExpires()));
 
-                       // editor.putString("Expires",user.getExpires());//FORMAT
-                        SharedPreferences def = getPreferences(MODE_PRIVATE);
+                       /* SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
                         SharedPreferences.Editor edit2 = def.edit();
                         edit2.putString("LAST_USER",user.getUser_name());
-                        editor.commit();
+                        editor.commit();*///
 
                         Intent intent = new Intent(getApplicationContext(),ServiceActivity.class);
                         intent.putExtra(ServiceActivity.NAME_USER,user.getUser_name());
@@ -274,8 +277,9 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
         session = session.substring(session.indexOf("="),session.length());//copia la cadeda desde que encuentre el igual
         expires = expires.substring(expires.indexOf("="),expires.length());
         input.setSid(session);
-        String fecha = DateFormat.getDateInstance().format(expires);//TODO Revisar el date format
-        input.setExpires(fecha);
+        //TODO Revisar el date format
+
+        input.setExpires(FORMATO.format(user.getExpires()));
         return input;
     }
 
