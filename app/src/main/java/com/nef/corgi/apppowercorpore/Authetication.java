@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class Authetication extends Fragment {
@@ -62,6 +63,7 @@ public class Authetication extends Fragment {
 
                 user = new userDTO(s_user, s_pass, s_email);
                 //Toast.makeText(getActivity(),s_user+"Hola",Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(),getString(R.string.fragment_auth_hello)+s_user,Toast.LENGTH_LONG);
                 Intent intent = new Intent(getActivity(),ServiceActivity.class);
                 intent.putExtra(ServiceActivity.NAME_USER,s_user);
                 intent.putExtra("name",s_user);

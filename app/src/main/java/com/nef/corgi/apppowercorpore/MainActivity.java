@@ -1,6 +1,8 @@
 package com.nef.corgi.apppowercorpore;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,8 +18,11 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URL;
+import java.text.DateFormat;
 
 
 //el email sera el identificador unico de nuestra aplicacion(futuro)
@@ -43,6 +48,18 @@ private userDTO user=null;
             ft.commit();
         } else
             Toast.makeText(this,getString(R.string.mainactivity_fragmentepresent), Toast.LENGTH_SHORT).show();
+        SharedPreferences sf = getPreferences(MODE_PRIVATE);
+        //String expires = sf.getString("EXPIRES","")
+        String nombre = sf.getString("USER","");
+            if(nombre!=""){
+                Toast.makeText(this,"Bienvenido"+nombre,Toast.LENGTH_LONG).show();//comprobar el expires para q la sesion sea valida
+                //expires > sesion valida
+                //start activity
+                //expires < sesion no valida
+                //return login
+
+            }
+
 
         if(savedInstanceState!=null){
             String name = savedInstanceState.getString("name");
@@ -155,6 +172,113 @@ private userDTO user=null;
             }
 
             return null;
+
+        }
+
+public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,iteracion intermedia,devuelvo
+
+            private static final String RESOURCE="/ssmm/autentica.php";
+    private static final  String PARAM_USER= "user";
+    private static final String  PARAM_PASS="pass";
+    private static final int HTTP_STATUS_CODE =200 ;
+
+    @Override
+            protected userDTO doInBackground(userDTO... userDTOS) {
+                userDTO data;
+                userDTO result;
+                if (userDTOS!=null) {
+                    data=userDTOS[0];
+                    //TODO hacer la conexion y la autenticacion
+                    //REVISAR ejemplos tema 3
+
+                    String service="http://"+data.getDominio()+data.getPuerto()+RESOURCE+"?"+data.getUser_name()+"&"+data.getPass();
+                    try {
+                        URL urlservice = new URL(service);
+                        HttpURLConnection connection=(HttpURLConnection) urlservice.openConnection();
+
+                        connection.setReadTimeout(10000);//milisegundos
+                        connection.setConnectTimeout(15000 );//milisegundos
+                        connection.setRequestMethod("GET");
+                        connection.setDoInput(true);
+                        connection.connect();
+                        int code = connection.getResponseCode();//recibe el codigo de respuesta de la peticion 1xx 2xx etc
+                        if (code==HTTP_STATUS_CODE){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+                        String line;
+                        while((line=br.readLine())!=null){
+                            if(line.startsWith("SESSION-ID=")){//compara que la cadena empiece de esta manera
+                               String parts[]= line.split("&");//para trocear una cadena se usa split, devuelve un array por cada trozo
+                                if (parts.length==2){
+                                    if(parts[1].startsWith(("EXPIRES"))){
+                                        result = processSesion(data,parts[0],parts[1]);
+
+                                    }
+                                }
+                            }
+                        }
+                        br.close();
+                        }
+                        else{
+                            data=null;
+                        }
+                        connection.disconnect();//cierra la conexion
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                        data=null;
+                    }catch(IOException ioex){
+                        ioex.printStackTrace();
+                    }finally {
+                        return data;
+                    }
+
+
+                }
+               else{
+                return null;}}
+        protected void onPostExecute(userDTO user){
+                    super.onPostExecute(user);
+                    if (user!=null){
+                        Toast.makeText(getApplicationContext(),"Correcto",Toast.LENGTH_LONG).show();
+                        SharedPreferences sp = getSharedPreferences(user.getUser_name(),MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("User",user.getUser_name());
+                        editor.putString("Email",user.getEmail_user());
+
+                       // editor.putString("Expires",user.getExpires());//FORMAT
+                        SharedPreferences def = getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor edit2 = def.edit();
+                        edit2.putString("LAST_USER",user.getUser_name());
+                        editor.commit();
+
+                        Intent intent = new Intent(getApplicationContext(),ServiceActivity.class);
+                        intent.putExtra(ServiceActivity.NAME_USER,user.getUser_name());
+                        intent.putExtra(ServiceActivity.PARAM_SID,user.getSid());
+                        intent.putExtra(ServiceActivity.PARAM_EXPIRED,user.getExpires());
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();//TODO dar mas informacion
+                    }
+                }
+
+    /**
+     *
+     * @param input
+     * @param session
+     * @param expires
+     * @return
+     */
+
+    protected userDTO processSesion (userDTO input,String session,String expires){
+        userDTO ressult = null;
+        session = session.substring(session.indexOf("="),session.length());//copia la cadeda desde que encuentre el igual
+        expires = expires.substring(expires.indexOf("="),expires.length());
+        input.setSid(session);
+        String fecha = DateFormat.getDateInstance().format(expires);//TODO Revisar el date format
+        input.setExpires(fecha);
+        return input;
+    }
+
 
         }
 

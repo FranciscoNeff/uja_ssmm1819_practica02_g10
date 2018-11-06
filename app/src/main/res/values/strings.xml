@@ -26,4 +26,5 @@
     <string name="main_connected">Connected</string>
     <string name="main_progress">Progress</string>
     <string name="main_connecting">Connecting</string>
+    <string name="fragment_auth_hello">Auteticando</string>
 </resources>

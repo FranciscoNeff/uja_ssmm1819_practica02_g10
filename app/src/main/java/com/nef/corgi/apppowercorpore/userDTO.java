@@ -1,9 +1,29 @@
 package com.nef.corgi.apppowercorpore;
 
+import java.util.Date;
+
 public class userDTO {
     private String user_name;
     private String email_user;
     private String pass;
+    private String sid;
+    private Date expires;
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public Date getExpires() {
+        return expires;
+    }
+
+    public void setExpires(Date expires) {
+        this.expires = expires;
+    }
 
     public String getDominio() {
         return dominio;
@@ -61,6 +81,9 @@ public userDTO(String user_name){this.user_name = user_name;}
         // como tanto el dominio como el puerto permanecera invisibles al usuario estos se pasara con un valor predifinido al usuario
         dominio ="dominio";
         puerto=00;
+    }
+
+    public void setExpires(String expires) {
     }
 }
 

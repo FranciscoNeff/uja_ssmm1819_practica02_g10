@@ -22,7 +22,8 @@ public class ServiceActivity extends AppCompatActivity
     public static final String NAME_USER="name";
     public static final String EMAIL_USER="email";
     public static final String PASS_USER="pass";//Esta variable quizas no sea adecuada
-
+    public static final String PARAM_SID="null";
+    public static final String PARAM_EXPIRED="null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
