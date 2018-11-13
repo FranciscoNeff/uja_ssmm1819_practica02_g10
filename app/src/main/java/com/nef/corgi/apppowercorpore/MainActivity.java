@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends AppCompatActivity implements Authetication.OnFragmentInteractionListener{
 private userDTO user=null;
     SimpleDateFormat FORMATO = new SimpleDateFormat("dd/MM/yyyy");
+    private static final String SERVICE_DEFAULT_WEB = "HTTP";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,13 +77,9 @@ private userDTO user=null;
 
         }
 
-       //changetitle(user.getUser_name());//evitamos q coja el nombre name por defecto del ya creado en la clase userDTO
     }
 
-    public void changetitle(String title) {
-        TextView tuser = findViewById(R.id.main_apptitle);
-        tuser.setText(title);
-    }
+
 
         @Override
         protected void onSaveInstanceState(Bundle outState) {
@@ -94,7 +92,7 @@ private userDTO user=null;
         public void onFragmentInteraction(userDTO name) {
 
             this.user.setUser_name(name.getUser_name());
-            changetitle(user.getUser_name());
+
         }
 
     //Practica 2
@@ -248,10 +246,10 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
                         editor.putString("SID",user.getSid());
                         editor.putString("EXPIRES",FORMATO.format(user.getExpires()));
 
-                       /* SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
+                        SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
                         SharedPreferences.Editor edit2 = def.edit();
                         edit2.putString("LAST_USER",user.getUser_name());
-                        editor.commit();*///
+                        editor.commit();//
 
                         Intent intent = new Intent(getApplicationContext(),ServiceActivity.class);
                         intent.putExtra(ServiceActivity.NAME_USER,user.getUser_name());
@@ -266,10 +264,10 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
 
     /**
      *
-     * @param input
-     * @param session
-     * @param expires
-     * @return
+     * @param input userDTO
+     * @param session SESSION ID=XX
+     * @param expires EXPIRES=XX
+     * @return userDTO
      */
 
     protected userDTO processSesion (userDTO input,String session,String expires){
@@ -284,6 +282,64 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
     }
 
 
+        }
+        private String downloadUrl(String domain, String user, String pass) throws IOException {
+            InputStream is = null;
+            String result = "";
+
+            HttpURLConnection conn = null;
+            try {
+                String contentAsString = "";
+                String tempString = "";
+                String url = "http://" + domain + "/ssmm/autentica.php" + "?user=" + user + "&pass=" + pass;
+                URL service_url = new URL(url);
+                System.out.println("Abriendo conexión: " + service_url.getHost()
+                        + " puerto=" + service_url.getPort());
+                conn = (HttpURLConnection) service_url.openConnection();
+                conn.setReadTimeout(10000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                // Starts the query
+                conn.connect();
+                final int response = conn.getResponseCode();
+                final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
+                String mimeType = conn.getHeaderField("Content-Type");
+                String encoding = mimeType.substring(mimeType.indexOf(";"));
+
+                Log.d(SERVICE_DEFAULT_WEB, "The response is: " + response);
+                is = conn.getInputStream();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+                while ((tempString = br.readLine()) != null) {
+                    contentAsString = contentAsString + tempString;
+                    //task.onProgressUpdate(contentAsString.length());
+                }
+
+
+                return contentAsString;
+            } catch (MalformedURLException mex) {
+                result = "URL mal formateada: " + mex.getMessage();
+                System.out.println(result);
+                 /*  mURL.post(new Runnable() {
+                   @Override
+                     public void run() {
+                          mURL.setError(getString(R.string.network_url_error));
+                      }
+                  });*/
+            } catch (IOException e) {
+                result = "Excepción: " + e.getMessage();
+                System.out.println(result);
+
+
+            } finally {
+                if (is != null) {
+                    is.close();
+                    conn.disconnect();
+                }
+            }
+            return result;
         }
 
 
