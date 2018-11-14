@@ -24,7 +24,9 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 //el email sera el identificador unico de nuestra aplicacion(futuro)
@@ -34,7 +36,9 @@ import java.text.SimpleDateFormat;
 //E/HAL: load: id=gralloc != hmi->id=gralloc He buscado como eliminar este fallo pero ni he encontrado ese id ni nada(no es un error critico)
 public class MainActivity extends AppCompatActivity implements Authetication.OnFragmentInteractionListener{
 private userDTO user=null;
-    SimpleDateFormat FORMATO = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
+
+
     private static final String SERVICE_DEFAULT_WEB = "HTTP";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,13 +178,13 @@ private userDTO user=null;
 
         }
 
-public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,iteracion intermedia,devuelvo
+public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //recibo un usario sin sesion ,iteracion intermedia,devuelvo un usuario con SSID y EXPIRES
 
             private static final String RESOURCE="/ssmm/autentica.php";
-    //private static final  String DOMAIN= "labtelema.ujaen.es";
-    private static final  String PARAM_USER= "user";
-    private static final String  PARAM_PASS="pass";
-    private static final int HTTP_STATUS_CODE =200 ;
+            private static final  String DOMAIN= "labtelema.ujaen.es";
+            private static final  String PARAM_USER= "user";
+            private static final String  PARAM_PASS="pass";
+            private static final int HTTP_STATUS_CODE =200 ;
 
     @Override
             protected userDTO doInBackground(userDTO... userDTOS) {
@@ -190,7 +194,8 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
                     data=userDTOS[0];
                     //TODO hacer la conexion y la autenticacion
                     //REVISAR ejemplos tema 3
-
+                    data.setDominio(DOMAIN);
+                    data.setPuerto(80);
                     String service="http://"+data.getDominio()+data.getPuerto()+RESOURCE+"?"+data.getUser_name()+"&"+data.getPass();
                     try {
                         URL urlservice = new URL(service);
@@ -217,6 +222,9 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
                             }
                         }
                         br.close();
+
+
+
                         }
                         else{
                             data=null;
@@ -235,32 +243,34 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //me pasas,itera
                 }
                else{
                 return null;}}
-        protected void onPostExecute(userDTO user){
-                    super.onPostExecute(user);
-                    if (user!=null){
-                        Toast.makeText(getApplicationContext(),"Correcto",Toast.LENGTH_LONG).show();
-                        SharedPreferences sp = getSharedPreferences(user.getUser_name(),MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("user",user.getUser_name());
-                        editor.putString("Email",user.getEmail_user());
-                        editor.putString("SID",user.getSid());
-                        editor.putString("EXPIRES",FORMATO.format(user.getExpires()));
+        protected void onPostExecute(userDTO user) {
+            super.onPostExecute(user);
+            if (user != null) {
+                Toast.makeText(getApplicationContext(), "Correcto", Toast.LENGTH_LONG).show();
+                SharedPreferences sp = getSharedPreferences(user.getUser_name(), MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("user", user.getUser_name());
+                editor.putString("Email", user.getEmail_user());
+                editor.putString("SID", user.getSid());
+                editor.putString("EXPIRES", FORMATO.format(user.getExpires()));
 
-                        SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
-                        SharedPreferences.Editor edit2 = def.edit();
-                        edit2.putString("LAST_USER",user.getUser_name());
-                        editor.commit();//
-
-                        Intent intent = new Intent(getApplicationContext(),ServiceActivity.class);
-                        intent.putExtra(ServiceActivity.NAME_USER,user.getUser_name());
-                        intent.putExtra(ServiceActivity.PARAM_SID,user.getSid());
-                        intent.putExtra(ServiceActivity.PARAM_EXPIRED,user.getExpires());
-                        startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();//TODO dar mas informacion
-                    }
+                SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
+                SharedPreferences.Editor edit2 = def.edit();
+                edit2.putString("LAST_USER", user.getUser_name());
+                editor.commit();//
+                Date expirationDATE = FORMATO.parse(FORMATO.format(user.getExpires()), new ParsePosition(0));
+                Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
+                Date instant = new Date(System.currentTimeMillis());
+                if (((Date) expirationDATE).getTime() > instant.getTime()) {
+                    intent.putExtra(ServiceActivity.NAME_USER, user.getUser_name());
+                    intent.putExtra(ServiceActivity.PARAM_SID, user.getSid());
+                    intent.putExtra(ServiceActivity.PARAM_EXPIRED, user.getExpires());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();//TODO dar mas informacion
                 }
+            }
+        }
 
     /**
      *
