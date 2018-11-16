@@ -22,8 +22,8 @@ public class ServiceActivity extends AppCompatActivity
     public static final String NAME_USER="name";
     public static final String EMAIL_USER="email";
     public static final String PASS_USER="pass";//Esta variable quizas no sea adecuada
-    public static final String PARAM_SID="null";
-    public static final String PARAM_EXPIRED="null";
+    public static final String PARAM_SID="";
+    public static final String PARAM_EXPIRED="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class ServiceActivity extends AppCompatActivity
         String s_pass = intent.getStringExtra(PASS_USER);;
         String s_email =intent.getStringExtra(EMAIL_USER);
         //Toast.makeText(this, s_user + " " + s_pass + " " + s_email + " " , Toast.LENGTH_LONG).show();//se comenta ya q no es necesario mostrar el password y el mail
-        Toast.makeText(this, "Hola "+NAME_USER , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }
     @Override
     public void onBackPressed() {

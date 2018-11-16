@@ -3,7 +3,7 @@
     <string name="app_name">Power Corpore</string>
     <string name="fragment_auth_user">Nombre</string>
     <string name="login_hint_user">Introduce tu Nombre</string>
-    <string name="login_pass">Contraseña</string>
+    <string name="login_pass">Password</string>
     <string name="login_hint_pass">Introduce la Contraseña</string>
     <string name="login_email">Email</string>
     <string name="login_hint_email">Introduce tu Email</string>
