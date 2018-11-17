@@ -5,17 +5,17 @@ import java.sql.Time;
 import java.util.Arrays;
 
 public class rutinaDTO {
-    Date diaRutina;
+    String diaRutina;
     String nombreEjercicio;
     int[] serie;
     String[] repeticiones;
     String tiempo; //cuando se guarde este valor ya estara guardado como la diferencia entre empezar y terminar
 
-    public Date getDiaRutina() {
+    public String getDiaRutina() {
         return diaRutina;
     }
 
-    public void setDiaRutina(Date diaRutina) {
+    public void setDiaRutina(String diaRutina) {
         this.diaRutina = diaRutina;
     }
 
@@ -51,7 +51,7 @@ public class rutinaDTO {
         this.tiempo = tiempo;
     }
 
-    public rutinaDTO(Date diaRutina, String nombreEjercicio, int[] serie, String[] repeticiones, Time tempo) {
+    public rutinaDTO(String diaRutina, String nombreEjercicio, int[] serie, String[] repeticiones, String tempo) {
         this.diaRutina = diaRutina;
         this.nombreEjercicio = nombreEjercicio;
         this.serie = serie;

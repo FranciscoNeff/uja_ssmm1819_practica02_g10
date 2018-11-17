@@ -12,20 +12,35 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         tools:ignore="MissingConstraints">
+        <TableRow
+            android:id="@+id/row_title"
+            android:layout_width="match_parent"
+            android:layout_height="20sp" >
+
+            <TextView
+                android:id="@+id/row_text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
 
         <TableRow
             android:id="@+id/row_header"
             android:layout_width="match_parent"
-            android:layout_height="20sp" />
+            android:layout_height="20sp">
+        <TextView
+            android:id="@+id/row_text_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+        </TableRow>
 
         <TableRow
             android:id="@+id/row_body"
             android:layout_width="match_parent"
             android:layout_height="20sp" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="20sp" />
+
 
         <TableRow
             android:layout_width="match_parent"
