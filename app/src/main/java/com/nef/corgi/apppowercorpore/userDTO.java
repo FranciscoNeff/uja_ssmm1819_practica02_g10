@@ -91,6 +91,11 @@ public class userDTO {
 
     public void setExpires(String expires) {
     }
+
+
+    public String csvtoString() {
+        return  user_name +","+ email_user ;
+    }
 }
 
 
