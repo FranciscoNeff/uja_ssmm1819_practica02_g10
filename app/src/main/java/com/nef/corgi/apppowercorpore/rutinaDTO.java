@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class rutinaDTO {
     String diaRutina;
-    String nombreEjercicio;
+    String[] nombreEjercicio;
     int[] serie;
     String[] repeticiones;
     String tiempo; //cuando se guarde este valor ya estara guardado como la diferencia entre empezar y terminar
@@ -19,11 +19,11 @@ public class rutinaDTO {
         this.diaRutina = diaRutina;
     }
 
-    public String getNombreEjercicio() {
+    public String[] getNombreEjercicio() {
         return nombreEjercicio;
     }
 
-    public void setNombreEjercicio(String nombreEjercicio) {
+    public void setNombreEjercicio(String[] nombreEjercicio) {
         this.nombreEjercicio = nombreEjercicio;
     }
 
@@ -51,7 +51,7 @@ public class rutinaDTO {
         this.tiempo = tiempo;
     }
 
-    public rutinaDTO(String diaRutina, String nombreEjercicio, int[] serie, String[] repeticiones, String tempo) {
+    public rutinaDTO(String diaRutina, String[] nombreEjercicio, int[] serie, String[] repeticiones, String tempo) {
         this.diaRutina = diaRutina;
         this.nombreEjercicio = nombreEjercicio;
         this.serie = serie;

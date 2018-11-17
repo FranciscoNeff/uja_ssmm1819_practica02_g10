@@ -42,13 +42,19 @@ public class Table_workout extends Activity {
         //TODO tabla dinamica de las series
         TextView header= (TextView) findViewById(R.id.row_text_header);
         String head="Ejercicio";
-        for(int i=0;i<rutine.getSerie().length;i++){
-            head=head+"Serie"+i;
-        }
         header.setText(head);
+        for(int i=0;i<rutine.getSerie().length;i++){
+            header.setText(head+"Serie"+i);
+            //header.setGravity(Gravity.CENTER);
+            //header.setBackgroundResource();
+            //header.setLayoutParams(row_header);
+        }
         row_header.addView(header);
         //TODO tabla dinamica filas de ejercicios
+        TextView body=(TextView)findViewById(R.id.row_text_body);
+        for (int i=0;i<rutine.getSerie().length;i++) {
 
+        }
 
 
     }

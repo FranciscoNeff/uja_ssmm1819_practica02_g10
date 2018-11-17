@@ -16,11 +16,13 @@ public class Actualizacion {
         String actualizacion;
         actualizacion=csvuser.getUser_name()+","+csvuser.getEmail_user()+","+FORMATOFECHA.format(c.getTime())+",";//cabecera de usuario
         actualizacion= actualizacion+csvmonitor.getNameM()+","+csvmonitor.getEmailM()+",";//cabecera de monitor
-        actualizacion=actualizacion+csvrutina.getDiaRutina()+","+csvrutina.getNombreEjercicio();//inicio de rutina
-        int[] series = csvrutina.getSerie();
-        for (int i=0; i < (series.length); i++){
-            actualizacion=actualizacion+","+i+","+ csvrutina.getRepeticiones()[i];
-        }//paso intermedio para serie y repeticiones
+        actualizacion=actualizacion+csvrutina.getDiaRutina();//inicio de rutina con el dia
+        for (int i=0;i<csvrutina.getSerie().length;i++) {
+            actualizacion=actualizacion+","+csvrutina.getNombreEjercicio()[i];
+            for (int j = 0; j < (csvrutina.getNombreEjercicio().length); j++) {
+                actualizacion = actualizacion + "," + j + "," + csvrutina.getRepeticiones()[j];
+            }//paso intermedio para serie y repeticiones
+        }//paso intermedio para los ejercicios
         actualizacion=actualizacion+","+csvrutina.getTiempo()+";";//tiempo y final del mensaje
         return actualizacion;
     }
