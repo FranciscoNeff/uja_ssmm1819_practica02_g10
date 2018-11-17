@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,7 +51,7 @@ public class ServiceActivity extends AppCompatActivity
         //Código práctica
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(NAME_USER);
-        String s_pass = intent.getStringExtra(PASS_USER);;
+        String s_pass = intent.getStringExtra(PASS_USER);
         String s_email =intent.getStringExtra(EMAIL_USER);
         //Toast.makeText(this, s_user + " " + s_pass + " " + s_email + " " , Toast.LENGTH_LONG).show();//se comenta ya q no es necesario mostrar el password y el mail
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
@@ -82,7 +81,19 @@ public class ServiceActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //llamada a la actualizacion de datos
+        if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
+            Actualizacion update =  new Actualizacion();
+            userDTO user=null;
+            monitorDTO monitor=null ;
+            rutinaDTO rutina= null;
+            //los dto contendran los valores necesarios estos no estaran a null
+          user.setUser_name(getIntent().getStringExtra(NAME_USER));
+          user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
+          //TODO rellenar el monitor y las rutinas(Preguntar)
+          String datos;
+                datos = update.update(user,monitor,rutina);
+
             return true;
         }
 
@@ -104,7 +115,7 @@ public class ServiceActivity extends AppCompatActivity
 //opcion para compartir los resultados por redes sociales
 
         } else if (id == R.id.nav_send) {
-//opcion para mandar los datos almacenados al server
+//opcion para recibir los datos almacenados al server
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

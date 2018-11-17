@@ -5,14 +5,14 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
 
-public class actualizacion {
+public class Actualizacion {
     SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
     private userDTO csvuser;
     private monitorDTO csvmonitor;
     private rutinaDTO csvrutina;
     Calendar c= new GregorianCalendar();
 
-    public String actualizacion(userDTO csvuser,monitorDTO csvmonitor, rutinaDTO csvrutina){
+    public String update(userDTO csvuser,monitorDTO csvmonitor, rutinaDTO csvrutina){
         String actualizacion;
         actualizacion=csvuser.getUser_name()+","+csvuser.getEmail_user()+","+FORMATOFECHA.format(c.getTime())+",";//cabecera de usuario
         actualizacion= actualizacion+csvmonitor.getNameM()+","+csvmonitor.getEmailM()+",";//cabecera de monitor

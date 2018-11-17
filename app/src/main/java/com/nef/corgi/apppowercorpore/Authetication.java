@@ -66,7 +66,7 @@ public class Authetication extends Fragment {
                 Toast.makeText(getActivity(),getString(R.string.fragment_auth_hello)+s_user,Toast.LENGTH_LONG);
                 Intent intent = new Intent(getActivity(),ServiceActivity.class);
                 intent.putExtra(ServiceActivity.NAME_USER,s_user);
-                intent.putExtra("name",s_user);
+                //intent.putExtra("name",s_user);
                 intent.putExtra("email",s_email);
                 intent.putExtra("pass",s_pass);
                 startActivity(intent);//con esto lanzamos el menu lateral

@@ -10,7 +10,7 @@
     <string name="fragment_button_connect">Iniciar Sesion</string>
     <string name="main_description">Bienvenido</string>
     <string name="mainactivity_fragmentepresent">Fragmento ya activo</string>
-    <string name="action_settings">Configuracion</string>
+    <string name="action_update">Actualizar</string>
     <string name="side_nav_bar">Menu lateral</string>
     <string name="nav_header_desc">Navegacion</string>
     <string name="nav_header_title">Cabecera</string>
