@@ -1,5 +1,6 @@
 package com.nef.corgi.apppowercorpore;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.Toast;
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity
@@ -53,7 +55,7 @@ public class ServiceActivity extends AppCompatActivity
         String s_user = intent.getStringExtra(NAME_USER);
         String s_pass = intent.getStringExtra(PASS_USER);
         String s_email =intent.getStringExtra(EMAIL_USER);
-        //Toast.makeText(this, s_user + " " + s_pass + " " + s_email + " " , Toast.LENGTH_LONG).show();//se comenta ya q no es necesario mostrar el password y el mail
+
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }
     @Override
@@ -109,7 +111,8 @@ public class ServiceActivity extends AppCompatActivity
 //opcion para ver datos del usuario
         } else if (id == R.id.nav_work_out) {
             //TODO llamar a table_workout desde aqui
-
+    Intent workout = new Intent(getApplication(),Table_workout.class);
+    startActivity(workout);
 //opcion para elegir las rutinas
         }else if (id == R.id.nav_result) {
 //opcion para ver los resultado las rutinas

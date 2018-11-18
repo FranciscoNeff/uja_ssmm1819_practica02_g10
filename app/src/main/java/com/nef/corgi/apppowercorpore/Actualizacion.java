@@ -19,7 +19,7 @@ public class Actualizacion {
         actualizacion=actualizacion+csvrutina.getDiaRutina()+00001010;//inicio de rutina con el dia
         for (int i=0;i<csvrutina.getSerie().length;i++) {
             actualizacion=actualizacion+csvrutina.getNombreEjercicio()[i];
-            for (int j = 0; j < (csvrutina.getNombreEjercicio().length); j++) {
+            for (int j = 0; j < (csvrutina.getSerie().length); j++) {
                 actualizacion = actualizacion + ";" + j + ";" + csvrutina.getRepeticiones()[j];
             }//paso intermedio para serie y repeticiones
             actualizacion=actualizacion+00001010;

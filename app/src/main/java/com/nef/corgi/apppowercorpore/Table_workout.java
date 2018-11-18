@@ -2,6 +2,7 @@ package com.nef.corgi.apppowercorpore;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TableLayout;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Table_workout extends Activity {
+public class Table_workout extends AppCompatActivity  {
     private List<rutinaDTO> rutinalistcsv = new ArrayList<>();
     private void readRutincacsv (){
         InputStream rutinacsv = getResources().openRawResource(R.raw.rutina_csv);
@@ -71,7 +73,7 @@ public class Table_workout extends Activity {
     private TableRow row_body=(TableRow)findViewById(R.id.row_body);
     private TextView title = (TextView) findViewById(R.id.row_text_title);
     private TextView header= (TextView) findViewById(R.id.row_text_header);
-    private TextView body=(TextView)findViewById(R.id.row_text_body);
+    private TextView text_body=(TextView)findViewById(R.id.row_text_body);
     //TODO tabla dinamica para los ejercicios
     //TODO tabla dinamica a traves de un XML(Investigar)
     //@Override
@@ -79,7 +81,7 @@ public class Table_workout extends Activity {
         super.onCreate(savedInstanteState);
         tableworkout.setShrinkAllColumns(true);
         tableworkout.setShrinkAllColumns(true);
-        //rutine.setSerie(series);//esto se cambiara por un get pero para el ejemplo sera un set
+
         rutinaDTO rutine = new rutinaDTO();
         String[] ejercicios={};
         String[] repeticiones={};
@@ -116,32 +118,27 @@ public class Table_workout extends Activity {
 
        /* String tabla={};
                 tabla = head+body;*/
-
+        //CSVReader csvreader = new CSVReader(new FileReader(R.raw.rutina_csv)';');//no funciona
+        //Creacion de la tabla
         //Titulo de la columna
-
-
         Date fecha=new Date();
         String s_fecha = FORMATOFECHA.format(fecha);
         rutine.setDiaRutina(s_fecha);
         title.setText(s_fecha);
         row_title.addView(title);
-        //TODO tabla dinamica de las series
-
-
-        //header.setText(head);
+        //TODO tabla dinamica de las series (cabecera)
         for(int i=0;i<rutine.getSerie().length;i++){
-            header.setText(head+"Serie"+i);
-            //header.setGravity(Gravity.CENTER);
-            //header.setBackgroundResource();
-            //header.setLayoutParams(row_header);
+            header.setText(head[i]);
         }
         row_header.addView(header);
         //TODO tabla dinamica filas de ejercicios
-
-        for (int i=0;i<rutine.getSerie().length;i++) {
-
+            String[] filas={};
+        for (int i=0;i<body.length ;i++) {
+            for(int j=0;j<Nseries;j++) {
+                filas[i] =filas[i]+body[j];//lectura de una fila con nombre mas repeticiones
+                text_body.setText(filas[i]);
+                row_body.addView(text_body);
+            }
         }
-
-
     }
 }

@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.nef.corgi.apppowercorpore.Table_workout">
+
 
     <TableLayout
         android:id="@+id/tableworkout"
@@ -46,10 +48,5 @@
                 android:text="TextView" />
         </TableRow>
 
-
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="20sp" />
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
