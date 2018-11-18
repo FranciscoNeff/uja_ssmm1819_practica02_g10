@@ -14,16 +14,17 @@ public class Actualizacion {
 
     public String update(userDTO csvuser,monitorDTO csvmonitor, rutinaDTO csvrutina){
         String actualizacion;
-        actualizacion=csvuser.getUser_name()+","+csvuser.getEmail_user()+","+FORMATOFECHA.format(c.getTime())+",";//cabecera de usuario
-        actualizacion= actualizacion+csvmonitor.getNameM()+","+csvmonitor.getEmailM()+",";//cabecera de monitor
-        actualizacion=actualizacion+csvrutina.getDiaRutina();//inicio de rutina con el dia
+        actualizacion=csvuser.getUser_name()+";"+csvuser.getEmail_user()+";"+FORMATOFECHA.format(c.getTime())+00001010;//cabecera de usuario//salto de linea utf-8
+        actualizacion= actualizacion+csvmonitor.getNameM()+";"+csvmonitor.getEmailM()+00001010;//cabecera de monitor
+        actualizacion=actualizacion+csvrutina.getDiaRutina()+00001010;//inicio de rutina con el dia
         for (int i=0;i<csvrutina.getSerie().length;i++) {
-            actualizacion=actualizacion+","+csvrutina.getNombreEjercicio()[i];
+            actualizacion=actualizacion+csvrutina.getNombreEjercicio()[i];
             for (int j = 0; j < (csvrutina.getNombreEjercicio().length); j++) {
-                actualizacion = actualizacion + "," + j + "," + csvrutina.getRepeticiones()[j];
+                actualizacion = actualizacion + ";" + j + ";" + csvrutina.getRepeticiones()[j];
             }//paso intermedio para serie y repeticiones
+            actualizacion=actualizacion+00001010;
         }//paso intermedio para los ejercicios
-        actualizacion=actualizacion+","+csvrutina.getTiempo()+";";//tiempo y final del mensaje
+        actualizacion=actualizacion+";"+csvrutina.getTiempo()+00001010;//tiempo y final del mensaje
         return actualizacion;
     }
 

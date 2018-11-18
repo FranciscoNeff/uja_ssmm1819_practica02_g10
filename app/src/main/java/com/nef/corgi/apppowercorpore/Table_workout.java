@@ -30,32 +30,29 @@ public class Table_workout extends Activity {
             String[] ejercicios={};
             int i=0;
             rutinaDTO rutina = new rutinaDTO();
-            String[] items={};
+            String[] items=line.split(";");//La cadena se trocea con ;
+            int[] series={};
             while ((Integer.parseInt(items[i]))!=00001010){
-
-
-                //La cadena se trocea con ;
-                items = line.split(";");
                 //Lectura
-
-                //rutina.setNombreEjercicio(items[0]);
-                int[] series={};
-                String[] repeticiones={};
-
                 ejercicios[i]=items[i];
-                i++;
-                do {
+                 i++;
+                do{
                     series[i]=(Integer.parseInt(items[i]));//revisar xq esto slo hay q hacerlo la primera linea
                     i++;
+                }while (Integer.parseInt(items[i])!=00001010);//deberia trocear todas las series //header de la tabla
+                String[] repeticiones={};
+
+                do {
                     repeticiones[i]=items[i];
-                i++;
+                    i++;
                 }while (Integer.parseInt(items[i])!=00001010);
-                rutina.setSerie(series);
-                rutina.setRepeticiones(repeticiones);
+                i++;
+                rutina.setNombreEjercicio(ejercicios);//introduce ejercicio
+                rutina.setSerie(series);//introduce series
+                rutina.setRepeticiones(repeticiones);//introduce repeticiones
                 rutinalistcsv.add(rutina);
                 Log.d("Rutina","Tabla" + rutinalistcsv);
             }
-            rutina.setNombreEjercicio(ejercicios);
 
        /* }catch (IOException error){
             Log.wtf("MyActivity", "Error reading line: " +line, error);
@@ -72,31 +69,66 @@ public class Table_workout extends Activity {
     private TableRow row_title=(TableRow)findViewById(R.id.row_title);
     private TableRow row_header=(TableRow)findViewById(R.id.row_header);
     private TableRow row_body=(TableRow)findViewById(R.id.row_body);
-
+    private TextView title = (TextView) findViewById(R.id.row_text_title);
+    private TextView header= (TextView) findViewById(R.id.row_text_header);
+    private TextView body=(TextView)findViewById(R.id.row_text_body);
     //TODO tabla dinamica para los ejercicios
     //TODO tabla dinamica a traves de un XML(Investigar)
     //@Override
-    public void onCreate (Bundle savedInstanteState,rutinaDTO rutine){
-        //rutine.setSerie(series);//esto se cambiara por un get pero para el ejemplo sera un set
-        int Nseries=rutine.getSerie().length;
-
-        //public void addHeader(){//da fallo preguntar
-
+    public void onCreate (Bundle savedInstanteState,List<rutinaDTO> rutinalistCSV){
         super.onCreate(savedInstanteState);
         tableworkout.setShrinkAllColumns(true);
         tableworkout.setShrinkAllColumns(true);
+        //rutine.setSerie(series);//esto se cambiara por un get pero para el ejemplo sera un set
+        rutinaDTO rutine = new rutinaDTO();
+        String[] ejercicios={};
+        String[] repeticiones={};
+        int Nseries=rutine.getSerie().length;
+        String[] head={};
+        for(int i=0; i < (rutinalistCSV.size()) ; i++){
+            rutine=rutinalistCSV.get(i);
+            if (rutine.getNombreEjercicio()[0]=="Ejercicio")
+            { head[0]=rutine.getNombreEjercicio()[0]; }
+        }//primera parte cabecera
+        Nseries=rutine.getSerie().length;
+        for(int i=0;i<Nseries+1;i++){
+        head[i+1]="Serie"+(i+1);
+        }//segunda parte cabecera
+        String[] body={};
+        //Ejercicio y numero de series
+        //Todo introducir el head
+        //Cuerpo de la rutina
+        for(int i=1;i<(rutinalistCSV.size());i++){
+            rutine=rutinalistCSV.get(i);
+            ejercicios[i]= rutine.getNombreEjercicio()[i];
+            for(int j=1; j< Nseries;j++){
+                repeticiones[j]=rutine.getRepeticiones()[j];
+            }
+        }
+        ejercicios[0]=head[0];
+
+        for(int i = 0;i< (ejercicios.length); i++ ){
+            body[i]=ejercicios[i];
+            for(int j=0;j<Nseries;j++){
+                body[i]=body[i]+repeticiones[j];
+            }
+        }
+
+       /* String tabla={};
+                tabla = head+body;*/
+
         //Titulo de la columna
-        row_title.setGravity(Gravity.CENTER);
-        TextView title = (TextView) findViewById(R.id.row_text_title);
+
+
         Date fecha=new Date();
         String s_fecha = FORMATOFECHA.format(fecha);
         rutine.setDiaRutina(s_fecha);
         title.setText(s_fecha);
         row_title.addView(title);
         //TODO tabla dinamica de las series
-        TextView header= (TextView) findViewById(R.id.row_text_header);
-        String head="Ejercicio";
-        header.setText(head);
+
+
+        //header.setText(head);
         for(int i=0;i<rutine.getSerie().length;i++){
             header.setText(head+"Serie"+i);
             //header.setGravity(Gravity.CENTER);
@@ -105,7 +137,7 @@ public class Table_workout extends Activity {
         }
         row_header.addView(header);
         //TODO tabla dinamica filas de ejercicios
-        TextView body=(TextView)findViewById(R.id.row_text_body);
+
         for (int i=0;i<rutine.getSerie().length;i++) {
 
         }
