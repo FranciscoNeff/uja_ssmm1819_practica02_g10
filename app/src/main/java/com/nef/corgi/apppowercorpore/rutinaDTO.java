@@ -5,11 +5,11 @@ import java.sql.Time;
 import java.util.Arrays;
 
 public class rutinaDTO {
-    String diaRutina;
-    String[] nombreEjercicio;
-    int[] serie;
-    String[] repeticiones;
-    String tiempo; //cuando se guarde este valor ya estara guardado como la diferencia entre empezar y terminar
+    private String diaRutina;
+    private  String[] nombreEjercicio;
+    private  int[] serie;
+    private  String[] repeticiones;
+    private  String tiempo; //cuando se guarde este valor ya estara guardado como la diferencia entre empezar y terminar
 
     public String getDiaRutina() {
         return diaRutina;
@@ -58,6 +58,7 @@ public class rutinaDTO {
         this.repeticiones = repeticiones;
         this.tiempo=tiempo;
     }
+    public rutinaDTO(){}
 
 
     public String csvtoString() {

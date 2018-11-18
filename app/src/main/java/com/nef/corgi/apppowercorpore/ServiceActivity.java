@@ -109,6 +109,7 @@ public class ServiceActivity extends AppCompatActivity
 //opcion para ver datos del usuario
         } else if (id == R.id.nav_work_out) {
             //TODO llamar a table_workout desde aqui
+
 //opcion para elegir las rutinas
         }else if (id == R.id.nav_result) {
 //opcion para ver los resultado las rutinas
