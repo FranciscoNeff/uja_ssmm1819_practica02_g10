@@ -111,7 +111,7 @@ public class ServiceActivity extends AppCompatActivity
 //opcion para ver datos del usuario
         } else if (id == R.id.nav_work_out) {
             //TODO llamar a table_workout desde aqui
-    Intent workout = new Intent(getApplication(),Table_workout.class);
+    Intent workout = new Intent(ServiceActivity.this,Table_workout.class);
     startActivity(workout);
 //opcion para elegir las rutinas
         }else if (id == R.id.nav_result) {
