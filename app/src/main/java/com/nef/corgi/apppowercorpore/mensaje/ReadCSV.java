@@ -52,6 +52,7 @@ public class ReadCSV {
             rutina.setSerie(series);//introduce series
             rutina.setRepeticiones(repeticiones);//introduce repeticiones
             rutinalistcsv.add(rutina);
+
         }
 
         /*}catch (IOException error){

@@ -32,7 +32,7 @@ public class Actualizacion {
         csvrutina.setSerie(rutinalistcsv.get(0).getSerie());
         for (int z = 0;z<rutinalistcsv.size();z++) {
             csvrutina=rutinalistcsv.get(z);
-            actualizacion = actualizacion + csvrutina.getNombreEjercicio();
+            actualizacion = actualizacion + csvrutina.getNombreEjercicio()[0];//revisar esto del 0 xq alomejor no es el primero
                 for (int j = 0; j < (csvrutina.getSerie().length); j++) {
                     actualizacion = actualizacion + ";" + j + ";" + csvrutina.getRepeticiones()[j];
                 }//paso intermedio para serie y repeticiones
