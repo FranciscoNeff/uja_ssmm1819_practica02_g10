@@ -93,7 +93,7 @@ public class ServiceActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
-            Actualizacion update =  new Actualizacion();
+            Actualizacion update =  new Actualizacion("user","monitor");
             userDTO user=null;
             monitorDTO monitor=null ;
             List<rutinaDTO> rutinalistcsv= null;

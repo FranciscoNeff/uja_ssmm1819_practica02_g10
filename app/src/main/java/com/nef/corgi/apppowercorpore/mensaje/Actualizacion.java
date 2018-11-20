@@ -15,9 +15,19 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Actualizacion {
+    protected String user=null;
+    protected String monitor=null;
+
+
     SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
 
     Calendar c= new GregorianCalendar();
+
+    public Actualizacion(String user, String monitor){
+        this.user= user;
+        this.monitor=monitor;
+
+    }
 
     public String update(userDTO csvuser, monitorDTO csvmonitor, List<rutinaDTO> rutinalistcsv){
         String actualizacion;
@@ -41,5 +51,6 @@ public class Actualizacion {
         actualizacion=actualizacion+";"+csvrutina.getTiempo()+00001010;//tiempo y final del mensaje
         return actualizacion;
     }
+
 
 }

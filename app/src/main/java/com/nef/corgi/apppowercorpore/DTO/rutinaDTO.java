@@ -51,6 +51,25 @@ public class rutinaDTO {
         this.tiempo = tiempo;
     }
 
+    /**
+     * <datos> = <rutina><PUNTOYCOMA><repeticiones>
+     *
+     *
+     * @param datos
+     */
+    public rutinaDTO(String datos) throws MalformedRutinaException{
+
+        if(datos==null)
+            throw new MalformedRutinaException(1);
+        String parts[] = datos.split(";");
+
+        this.diaRutina = diaRutina;
+        this.nombreEjercicio = nombreEjercicio;
+        this.serie = serie;
+        this.repeticiones = repeticiones;
+        this.tiempo=tiempo;
+    }
+
     public rutinaDTO(String diaRutina, String[] nombreEjercicio, int[] serie, String[] repeticiones, String tempo) {
         this.diaRutina = diaRutina;
         this.nombreEjercicio = nombreEjercicio;
@@ -63,5 +82,16 @@ public class rutinaDTO {
 
     public String csvtoString() {
         return  diaRutina +","+ nombreEjercicio +","+  Arrays.toString(serie) +","+ Arrays.toString(repeticiones);//Preguntar por el array de to string como arreglarlo
+    }
+
+    public class MalformedRutinaException extends Exception {
+
+        private int type = 0;
+        private static final int FALTAN_ELEMENTOS = 1;
+
+        MalformedRutinaException(int type){
+           this.type=type;
+        }
+
     }
 }
