@@ -39,6 +39,7 @@
 
         <TableRow
             android:id="@+id/row_body"
+            android:tag="revisar esto para el editor"
             android:layout_width="match_parent"
             android:layout_height="20sp" >
             <TextView
