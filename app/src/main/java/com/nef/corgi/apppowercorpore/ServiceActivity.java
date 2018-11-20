@@ -93,23 +93,24 @@ public class ServiceActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
-
-
 
             Actualizacion subida =  new Actualizacion();
 
         userDTO user=null;
             monitorDTO monitor=null ;
-            List<rutinaDTO> rutinalistcsv= null;
             //los dto contendran los valores necesarios estos no estaran a null
           user.setUser_name(getIntent().getStringExtra(NAME_USER));
           user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
-          //TODO rellenar el monitor y las rutinas(Preguntar)
-
+          //TODO preguntar como realizarlo con los parametros dentro de actualizacion
 try {
     String datos = subida.update(user, monitor);
+    /*
+    * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
+    * datos = a formato mensaje en csv a mandar
+    * */
 }catch (IOException e){
     e.printStackTrace();
 }

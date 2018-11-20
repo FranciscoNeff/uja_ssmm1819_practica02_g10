@@ -26,7 +26,11 @@ public class ReadCSV {
         context = c;
     }
     public ReadCSV(){}
-
+    /*
+    En este codigo desfragmentamos un formato csv que seria el correspondiente
+    solo al body de las rutinas
+    ejercicios;series;repetciones CRLF
+     */
     public List<rutinaDTO> readRutinacsv () throws IOException {
         List<rutinaDTO> rutinalistcsv = new ArrayList<>();
         InputStream rutinacsv = context.getResources().openRawResource(R.raw.rutina_csv);
@@ -44,25 +48,22 @@ public class ReadCSV {
                 String[] items = line.split(";");//La cadena se trocea con ;
 
                 while ((Integer.parseInt(items[i])) != 00001010) {
+                    rutina=null;
                     //Lectura
                     ejercicios[i] = items[i];
                     i++;
                     do {
-                        series[i] = (Integer.parseInt(items[i]));//revisar xq esto slo hay q hacerlo la primera linea
+                        series[i] = (Integer.parseInt(items[i]));//leo la serie en la que esta, es un numero
+                        i++;
+                        repeticiones[i] = items[i];//esto es un string
                         i++;
                     }
-                    while (Integer.parseInt(items[i]) != 00001010); //deberia trocear todas las series //header de la tabla
-
-
-                    do {
-                        repeticiones[i] = items[i];
-                        i++;
-                    } while (Integer.parseInt(items[i]) != 00001010);
+                    while (Integer.parseInt(items[i]) != 00001010); //deberia trocear hasta terminar toda la serie y repeticiones
                     i++;
                     rutina.setNombreEjercicio(ejercicios);//introduce ejercicio
                     rutina.setSerie(series);//introduce series
                     rutina.setRepeticiones(repeticiones);//introduce repeticiones
-                    rutinalistcsv.add(rutina);
+                    rutinalistcsv.add(rutina);//introduce el objeto rutina a la lista
                 }
             }catch (NullPointerException e){//Tengo que poner el nullPointerException ya que con las demas excepciones da fallo
                // ya que debido al metodo pide devolver un objeto

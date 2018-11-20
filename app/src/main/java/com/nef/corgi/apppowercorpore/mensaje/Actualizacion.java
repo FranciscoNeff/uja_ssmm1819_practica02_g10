@@ -57,8 +57,6 @@ public class Actualizacion {
         {
            e.printStackTrace();
         }
-
         return actualizacion;
     }
-
 }
