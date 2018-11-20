@@ -5,6 +5,7 @@ import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -28,16 +29,19 @@ public class Actualizacion {
         this.monitor=monitor;
 
     }
+    public Actualizacion(){}
 
-    public String update(userDTO csvuser, monitorDTO csvmonitor, List<rutinaDTO> rutinalistcsv){
-        String actualizacion;
+    public String update(userDTO csvuser, monitorDTO csvmonitor )throws IOException {
+        String actualizacion=null;
         rutinaDTO csvrutina= new rutinaDTO();
-
-
+        try {
+            ReadCSV csvreader = new ReadCSV();
+            List<rutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
         actualizacion=csvuser.getUser_name()+";"+csvuser.getEmail_user()+";"+FORMATOFECHA.format(c.getTime())+00001010;//cabecera de usuario//salto de linea utf-8
         actualizacion= actualizacion+csvmonitor.getNameM()+";"+csvmonitor.getEmailM()+00001010;//cabecera de monitor
-        csvrutina.setDiaRutina(rutinalistcsv.get(0).getDiaRutina());
-        actualizacion=actualizacion+csvrutina.getDiaRutina()+00001010;//inicio de rutina con el dia
+        csvrutina.setDiaRutina(rutinalistcsv.get(0).getDiaRutina());//lo q creo q no esta bien es lo de lo "0" para mejorar deberia obtener todas las fechas,
+        // comparar desde la ultima actualizacion y solo recorrer las mayores a esta fecha
+        actualizacion=actualizacion+FORMATOFECHA.format(csvrutina.getDiaRutina())+00001010;//inicio de rutina con el dia
 
         csvrutina.setSerie(rutinalistcsv.get(0).getSerie());
         for (int z = 0;z<rutinalistcsv.size();z++) {
@@ -49,8 +53,12 @@ public class Actualizacion {
                 actualizacion = actualizacion + 00001010;
         }//paso intermedio para los ejercicios
         actualizacion=actualizacion+";"+csvrutina.getTiempo()+00001010;//tiempo y final del mensaje
+        }catch (IOException e)
+        {
+           e.printStackTrace();
+        }
+
         return actualizacion;
     }
-
 
 }

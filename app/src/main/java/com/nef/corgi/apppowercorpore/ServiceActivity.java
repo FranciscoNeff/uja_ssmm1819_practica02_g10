@@ -22,6 +22,8 @@ import com.nef.corgi.apppowercorpore.DTO.userDTO;
 import com.nef.corgi.apppowercorpore.mensaje.Actualizacion;
 import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
@@ -93,20 +95,26 @@ public class ServiceActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
-            Actualizacion update =  new Actualizacion("user","monitor");
-            userDTO user=null;
+
+
+
+            Actualizacion subida =  new Actualizacion();
+
+        userDTO user=null;
             monitorDTO monitor=null ;
             List<rutinaDTO> rutinalistcsv= null;
             //los dto contendran los valores necesarios estos no estaran a null
           user.setUser_name(getIntent().getStringExtra(NAME_USER));
           user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
           //TODO rellenar el monitor y las rutinas(Preguntar)
-            ReadCSV csvreader = new ReadCSV();
-            rutinalistcsv =  csvreader.readRutincacsv();
-          String datos;
-                datos = update.update(user,monitor,rutinalistcsv);
 
-            return true;
+try {
+    String datos = subida.update(user, monitor);
+}catch (IOException e){
+    e.printStackTrace();
+}
+
+
         }
 
         return super.onOptionsItemSelected(item);
