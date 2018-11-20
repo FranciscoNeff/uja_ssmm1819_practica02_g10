@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.nef.corgi.apppowercorpore.DTO.userDTO;
+
 
 public class Authetication extends Fragment {
     private userDTO user;

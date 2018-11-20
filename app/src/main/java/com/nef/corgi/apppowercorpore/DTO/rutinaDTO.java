@@ -1,4 +1,4 @@
-package com.nef.corgi.apppowercorpore;
+package com.nef.corgi.apppowercorpore.DTO;
 
 import java.sql.Date;
 import java.sql.Time;

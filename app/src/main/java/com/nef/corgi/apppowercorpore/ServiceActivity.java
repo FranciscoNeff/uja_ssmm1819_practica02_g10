@@ -1,6 +1,5 @@
 package com.nef.corgi.apppowercorpore;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Toast;
+
+import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
+import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
+import com.nef.corgi.apppowercorpore.DTO.userDTO;
+import com.nef.corgi.apppowercorpore.mensaje.Actualizacion;
+import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
+
+import java.util.List;
+
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -88,13 +96,15 @@ public class ServiceActivity extends AppCompatActivity
             Actualizacion update =  new Actualizacion();
             userDTO user=null;
             monitorDTO monitor=null ;
-            rutinaDTO rutina= null;
+            List<rutinaDTO> rutinalistcsv= null;
             //los dto contendran los valores necesarios estos no estaran a null
           user.setUser_name(getIntent().getStringExtra(NAME_USER));
           user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
           //TODO rellenar el monitor y las rutinas(Preguntar)
+            ReadCSV csvreader = new ReadCSV();
+            rutinalistcsv =  csvreader.readRutincacsv();
           String datos;
-                datos = update.update(user,monitor,rutina);
+                datos = update.update(user,monitor,rutinalistcsv);
 
             return true;
         }

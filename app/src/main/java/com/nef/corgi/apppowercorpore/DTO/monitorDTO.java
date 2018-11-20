@@ -1,4 +1,4 @@
-package com.nef.corgi.apppowercorpore;
+package com.nef.corgi.apppowercorpore.DTO;
 
 public class monitorDTO {
     String nameM;
@@ -24,7 +24,6 @@ public class monitorDTO {
         this.nameM = nameM;
         this.emailM = emailM;
     }
-
 
     public String csvtoString() {
         return  nameM +","+ emailM ;

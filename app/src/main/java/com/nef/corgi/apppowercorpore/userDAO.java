@@ -1,11 +1,10 @@
 package com.nef.corgi.apppowercorpore;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.text.SimpleDateFormat;
+import com.nef.corgi.apppowercorpore.DTO.userDTO;
 
-import static android.content.Context.MODE_PRIVATE;
+import java.text.SimpleDateFormat;
 
 
 public class userDAO {
