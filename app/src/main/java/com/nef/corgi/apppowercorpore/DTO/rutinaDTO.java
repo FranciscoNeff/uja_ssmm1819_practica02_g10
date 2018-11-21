@@ -81,7 +81,12 @@ public class rutinaDTO {
 
 
     public String csvtoString() {
-        return  diaRutina +";"+ nombreEjercicio +";"+  Arrays.toString(serie) +";"+ Arrays.toString(repeticiones)+00001010;//Preguntar por el array de to string como arreglarlo
+        String csv;
+       csv= diaRutina +";"+ nombreEjercicio;
+               for(int i=0;i<Arrays.toString(serie).length();i++){
+            csv=csv+";"+serie[i]+";"+repeticiones[i];
+        }
+        return csv+00001010;
     }
 
     public class MalformedRutinaException extends Exception {
