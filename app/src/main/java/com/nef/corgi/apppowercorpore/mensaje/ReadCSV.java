@@ -68,7 +68,9 @@ public class ReadCSV {
             }catch (NullPointerException e){//Tengo que poner el nullPointerException ya que con las demas excepciones da fallo
                // ya que debido al metodo pide devolver un objeto
                 e.printStackTrace();
+                rutinalistcsv.clear();
             }
+
             /*}catch(FileNotFoundException e){
                     e.getMessage();
 
