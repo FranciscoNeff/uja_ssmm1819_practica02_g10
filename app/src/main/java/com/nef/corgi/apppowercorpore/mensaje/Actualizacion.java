@@ -37,22 +37,29 @@ public class Actualizacion {
         try {
             ReadCSV csvreader = new ReadCSV();
             List<rutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
-        actualizacion=csvuser.getUser_name()+";"+csvuser.getEmail_user()+";"+FORMATOFECHA.format(c.getTime())+00001010;//cabecera de usuario//salto de linea utf-8
-        actualizacion= actualizacion+csvmonitor.getNameM()+";"+csvmonitor.getEmailM()+00001010;//cabecera de monitor
-        csvrutina.setDiaRutina(rutinalistcsv.get(0).getDiaRutina());//lo q creo q no esta bien es lo de lo "0" para mejorar deberia obtener todas las fechas,
-        // comparar desde la ultima actualizacion y solo recorrer las mayores a esta fecha
-        actualizacion=actualizacion+FORMATOFECHA.format(csvrutina.getDiaRutina())+00001010;//inicio de rutina con el dia
+            if(rutinalistcsv.isEmpty()) { actualizacion=null;
+            }else{
+                actualizacion = csvuser.getUser_name() + ";" + csvuser.getEmail_user() + ";" + FORMATOFECHA.format(c.getTime()) + 00001010;//cabecera de usuario//salto de linea utf-8
+                actualizacion = actualizacion + csvmonitor.getNameM() + ";" + csvmonitor.getEmailM() + 00001010;//cabecera de monitor
+                csvrutina.setDiaRutina(rutinalistcsv.get(0).getDiaRutina());//lo q creo q no esta bien es lo de lo "0" para mejorar deberia obtener todas las fechas,
+                // comparar desde la ultima actualizacion y solo recorrer las mayores a esta fecha
+                for(rutinaDTO rutinaeach : rutinalistcsv) {
+                    actualizacion=rutinaeach.csvtoString();
+                }
 
-        csvrutina.setSerie(rutinalistcsv.get(0).getSerie());
-        for (int z = 0;z<rutinalistcsv.size();z++) {
-            csvrutina=rutinalistcsv.get(z);
-            actualizacion = actualizacion + csvrutina.getNombreEjercicio()[0];//revisar esto del 0 xq alomejor no es el primero
-                for (int j = 0; j < (csvrutina.getSerie().length); j++) {
-                    actualizacion = actualizacion + ";" + j + ";" + csvrutina.getRepeticiones()[j];
-                }//paso intermedio para serie y repeticiones
-                actualizacion = actualizacion + 00001010;
-        }//paso intermedio para los ejercicios
-        actualizacion=actualizacion+";"+csvrutina.getTiempo()+00001010;//tiempo y final del mensaje
+                /*actualizacion = actualizacion + FORMATOFECHA.format(csvrutina.getDiaRutina()) + 00001010;//inicio de rutina con el dia
+
+                csvrutina.setSerie(rutinalistcsv.get(0).getSerie());
+                for (int z = 0; z < rutinalistcsv.size(); z++) {
+                    csvrutina = rutinalistcsv.get(z);
+                    actualizacion = actualizacion + csvrutina.getNombreEjercicio()[0];//revisar esto del 0 xq alomejor no es el primero
+                    for (int j = 0; j < (csvrutina.getSerie().length); j++) {
+                        actualizacion = actualizacion + ";" + j + ";" + csvrutina.getRepeticiones()[j];
+                    }//paso intermedio para serie y repeticiones
+                    actualizacion = actualizacion + 00001010;
+                }//paso intermedio para los ejercicios
+                actualizacion = actualizacion + ";" + csvrutina.getTiempo() + 00001010;//tiempo y final del mensaje*/
+            }
         }catch (IOException e)
         {
            e.printStackTrace();

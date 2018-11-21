@@ -106,7 +106,6 @@ public class ServiceActivity extends AppCompatActivity
           user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
           //TODO preguntar como realizarlo con los parametros dentro de actualizacion
 try {
-
     String datos = subida.update(user, monitor);
     if(datos==null){
         System.out.print("Error en la subida");

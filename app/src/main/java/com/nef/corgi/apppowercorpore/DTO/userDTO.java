@@ -94,7 +94,7 @@ public class userDTO {
 
 
     public String csvtoString() {
-        return  user_name +","+ email_user ;
+        return  user_name +";"+ email_user ;
     }
 }
 
