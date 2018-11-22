@@ -2,6 +2,7 @@ package com.nef.corgi.apppowercorpore.DTO;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 public class rutinaDTO {
@@ -81,8 +82,9 @@ public class rutinaDTO {
 
 
     public String csvtoString() {
+        SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
         String csv;
-       csv= diaRutina +";"+ nombreEjercicio;
+       csv= FORMATOFECHA.format(diaRutina) +";"+ nombreEjercicio;
                for(int i=0;i<Arrays.toString(serie).length();i++){
             csv=csv+";"+serie[i]+";"+repeticiones[i];
         }
