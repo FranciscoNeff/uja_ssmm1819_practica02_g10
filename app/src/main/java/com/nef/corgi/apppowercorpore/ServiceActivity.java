@@ -96,28 +96,26 @@ public class ServiceActivity extends AppCompatActivity
 
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
+                Actualizacion subida = new Actualizacion();
+                userDTO user = null;
+                monitorDTO monitor = null;
+                //los dto contendran los valores necesarios estos no estaran a null
+                user.setUser_name(getIntent().getStringExtra(NAME_USER));
+                user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
+                //TODO preguntar como realizarlo con los parametros dentro de actualizacion
+                try {
+                    String datos = subida.update(user, monitor);
+                    if (datos == null) {
+                        System.out.print("Error en la subida");
+                    }
+                    /*
 
-            Actualizacion subida =  new Actualizacion();
-
-        userDTO user=null;
-            monitorDTO monitor=null ;
-            //los dto contendran los valores necesarios estos no estaran a null
-          user.setUser_name(getIntent().getStringExtra(NAME_USER));
-          user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
-          //TODO preguntar como realizarlo con los parametros dentro de actualizacion
-try {
-    String datos = subida.update(user, monitor);
-    if(datos==null){
-        System.out.print("Error en la subida");
-    }
-    /*
-
-    * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
-    * datos = a formato mensaje en csv a mandar
-    * */
-}catch (IOException e){
-    e.printStackTrace();
-}
+                     * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
+                     * datos = a formato mensaje en csv a mandar
+                     * */
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
         }

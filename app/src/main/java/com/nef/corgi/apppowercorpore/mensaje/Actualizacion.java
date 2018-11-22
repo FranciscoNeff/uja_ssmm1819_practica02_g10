@@ -1,21 +1,19 @@
 package com.nef.corgi.apppowercorpore.mensaje;
 
+import android.os.AsyncTask;
+import android.widget.Toast;
+
 import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class Actualizacion {
+public class Actualizacion extends AsyncTask<Void, String, Boolean> {
     protected String user=null;
     protected String monitor=null;
 
@@ -38,12 +36,18 @@ public class Actualizacion {
             ReadCSV csvreader = new ReadCSV();
             List<rutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
             if(rutinalistcsv.isEmpty()) { actualizacion=null;
-            }else{
-                actualizacion=csvuser.csvtoString()+";"+ FORMATOFECHA.format(c.getTime()) + 00001010;//mensaje del usuario
-                actualizacion=actualizacion+csvmonitor.csvtoString();//mensaje del monitor
-                for(rutinaDTO rutinaeach : rutinalistcsv) {
-                    actualizacion=rutinaeach.csvtoString();
+            }
+            else {
+
+
+                actualizacion = csvuser.csvtoString() + ";" + FORMATOFECHA.format(c.getTime()) + 00001010;//mensaje del usuario
+                actualizacion = actualizacion + csvmonitor.csvtoString();//mensaje del monitor
+                for (rutinaDTO rutinaeach : rutinalistcsv) {
+                    actualizacion = rutinaeach.csvtoString();
                 }//mensaje de las rutinas
+            }
+
+
 
                /* actualizacion = csvuser.getUser_name() + ";" + csvuser.getEmail_user() + ";" + FORMATOFECHA.format(c.getTime()) + 00001010;//cabecera de usuario//salto de linea utf-8
                 actualizacion = actualizacion + csvmonitor.getNameM() + ";" + csvmonitor.getEmailM() + 00001010;//cabecera de monitor
@@ -59,9 +63,9 @@ public class Actualizacion {
                     }//paso intermedio para serie y repeticiones
                     actualizacion = actualizacion + 00001010;
                 }//paso intermedio para los ejercicios
-                actualizacion = actualizacion + ";" + csvrutina.getTiempo() + 00001010;//tiempo y final del mensaje*/
+                actualizacion = actualizacion + ";" + csvrutina.getTiempo() + 00001010;}//tiempo y final del mensaje*/
 
-            }
+
         }catch (IOException e)
         {
             actualizacion=null;
@@ -69,4 +73,20 @@ public class Actualizacion {
         }
         return actualizacion;
     }
+    protected Boolean doInBackground(Void... params){
+        Boolean tarea=null;
+        return tarea;
+    }
+    protected String onProgressUpdate(Void... values){
+        String progreso=null;
+        return progreso;
+    //http://www.sgoliver.net/blog/tareas-en-segundo-plano-en-android-i-thread-y-asynctask/
+    }
+    protected void onPostExecute(Boolean result) {
+        if (result) {
+         // Toast.makeText(this, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
+        }
+    }
 }
+
+
