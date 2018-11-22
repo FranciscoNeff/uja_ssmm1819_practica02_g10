@@ -64,6 +64,7 @@ public class Actualizacion {
             }
         }catch (IOException e)
         {
+            actualizacion=null;
            e.printStackTrace();
         }
         return actualizacion;
