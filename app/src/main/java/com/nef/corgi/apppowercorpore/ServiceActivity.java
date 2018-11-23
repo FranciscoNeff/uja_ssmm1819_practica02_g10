@@ -14,20 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
-import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
-import com.nef.corgi.apppowercorpore.mensaje.Actualizacion;
 import com.nef.corgi.apppowercorpore.mensaje.Envio;
-import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity
@@ -135,4 +126,6 @@ envio.execute();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }}
+        }
+
+}
