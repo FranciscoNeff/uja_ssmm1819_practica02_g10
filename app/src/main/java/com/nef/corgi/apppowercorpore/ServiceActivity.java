@@ -37,7 +37,7 @@ public class ServiceActivity extends AppCompatActivity
     public static final String PASS_USER="pass";//Esta variable quizas no sea adecuada
     public static final String PARAM_SID="";
     public static final String PARAM_EXPIRED="";
-
+public static final userDTO USERLOG=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +65,11 @@ public class ServiceActivity extends AppCompatActivity
         //Código práctica
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(NAME_USER);
+        USERLOG.setUser_name(s_user);
         String s_pass = intent.getStringExtra(PASS_USER);
+        USERLOG.setPass(s_pass);
         String s_email =intent.getStringExtra(EMAIL_USER);
+        USERLOG.setEmail_user(s_email);
 
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }
@@ -98,7 +101,13 @@ public class ServiceActivity extends AppCompatActivity
 
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
+           monitorDTO pmon= null;
+           pmon.setNameM("pruebaMonitor");
+           pmon.setEmailM("pruebaMailMonitor");
 
+
+               Envio envio = new Envio(USERLOG,pmon);
+                envio.execute();
 
 
             return true;}
@@ -142,9 +151,9 @@ public class ServiceActivity extends AppCompatActivity
             monitorDTO monitor = null;
             //los dto contendran los valores necesarios estos no estaran a null
             //System.out.print("Error en la subida");
-            public Envio(userDTO u) {
+            public Envio(userDTO u, monitorDTO mon) {
                 user = u;
-
+                monitor = mon;
             }
 
             @Override
@@ -156,7 +165,20 @@ public class ServiceActivity extends AppCompatActivity
                     String datos = subida.Actualizacion(csvuser, csvmonitor);
                     if (datos == null) {
                         estado=false;
-                        }else{estado=true;}
+                        }else{
+                        if(!isCancelled()) {
+                            int[] j = {};
+                            int h=10;
+                            for (int i = 0; i < h; i++) {
+publishProgress((int)(i)/h);
+
+                            }
+//                            este bucle es solo de prueba para mostrar el dialogo de progres
+//                            en el futuro se realizara con un publish de la actualizacion
+//                                    de las lineas de rutina q va leyendo
+                        }else{
+                        estado=true;}
+                    }
                     /*
                      * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
                      * datos = a formato mensaje en csv a mandar
@@ -176,12 +198,14 @@ public class ServiceActivity extends AppCompatActivity
                 //http://www.sgoliver.net/blog/tareas-en-segundo-plano-en-android-i-thread-y-asynctask/
             }
             protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
                 if (result) {
-                    //Toast.makeText(this, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
+                    Toast.makeText(null, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    // Toast.makeText(this, "Actualizacion Fallida", Toast.LENGTH_LONG).show();
+                     Toast.makeText(null, "Actualizacion Fallida", Toast.LENGTH_LONG).show();
                 }
+
             }
         }
     }

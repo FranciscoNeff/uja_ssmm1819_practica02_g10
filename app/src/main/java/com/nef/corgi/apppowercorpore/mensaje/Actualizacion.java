@@ -17,7 +17,6 @@ public class Actualizacion  {
     protected String user=null;
     protected String monitor=null;
 
-
     SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
 
     Calendar c= new GregorianCalendar();
@@ -46,7 +45,7 @@ public class Actualizacion  {
         return actualizacion;
     }
     public Actualizacion(){}
-
+//Metodo de reserva por si en algun futuro se decide cambiar el formato del csv
     public String update(userDTO csvuser, monitorDTO csvmonitor )throws IOException {
         String actualizacion=null;
         rutinaDTO csvrutina= new rutinaDTO();
