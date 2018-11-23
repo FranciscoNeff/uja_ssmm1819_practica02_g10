@@ -1,11 +1,13 @@
 package com.nef.corgi.apppowercorpore.mensaje;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
+import com.nef.corgi.apppowercorpore.ServiceActivity;
 
 import java.io.IOException;
 
@@ -52,21 +54,24 @@ protected Boolean doInBackground(String... strings) {
 
         return estado;
         }
-//realizar un onpreexcute
+
 protected void onProgressUpdate(Integer... values){
         progressBar.setProgress(values[0]);
         progressBar.postInvalidate();
         super.onProgressUpdate(values);
-        //http://www.sgoliver.net/blog/tareas-en-segundo-plano-en-android-i-thread-y-asynctask/
+
         }
 protected void onPostExecute(Boolean result) {
         super.onPostExecute(result);
+
         if (result) {
-        Toast.makeText(null, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
+       // Toast.makeText(ServiceActivity.this, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
         }
         else{
-        Toast.makeText(null, "Actualizacion Fallida", Toast.LENGTH_LONG).show();
+       // Toast.makeText(ServiceActivity.this, "Actualizacion Fallida", Toast.LENGTH_LONG).show();
         }
 
         }
 }
+//Ayuda
+//http://www.sgoliver.net/blog/tareas-en-segundo-plano-en-android-i-thread-y-asynctask/

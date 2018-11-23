@@ -24,7 +24,7 @@ public class monitorDTO {
         this.nameM = nameM;
         this.emailM = emailM;
     }
-
+public monitorDTO(){}
     public String csvtoString() {
         return  nameM +";"+ emailM +00001010 ;
     }
