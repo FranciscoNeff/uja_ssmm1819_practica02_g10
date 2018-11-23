@@ -1,6 +1,7 @@
 package com.nef.corgi.apppowercorpore.mensaje;
 
 import android.os.AsyncTask;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
@@ -13,7 +14,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class Actualizacion  {
+public class Actualizacion {
+
     protected String user=null;
     protected String monitor=null;
 
@@ -69,7 +71,6 @@ public class Actualizacion  {
         }
         return actualizacion;
     }
-
 }
 
 

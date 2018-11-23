@@ -15,18 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
-import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
-import com.nef.corgi.apppowercorpore.DTO.userDTO;
-import com.nef.corgi.apppowercorpore.mensaje.Actualizacion;
-import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
+import com.nef.corgi.apppowercorpore.DTO.userDTO;
+
 
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity
@@ -106,8 +100,8 @@ public static final userDTO USERLOG=null;
            pmon.setEmailM("pruebaMailMonitor");
 
 
-               Envio envio = new Envio(USERLOG,pmon);
-                envio.execute();
+               /* Envio envio = new Envio(USERLOG, pmon);
+                envio.execute();*/
 
 
             return true;}
@@ -140,9 +134,8 @@ public static final userDTO USERLOG=null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-        protected class Envio extends AsyncTask<String, Integer, Boolean> {
+    }
+/*protected class Envio extends AsyncTask<String, Integer, Boolean> {
             private ProgressBar progressBar=null;
             String csvUser;
             String csvMonitor;
@@ -183,7 +176,7 @@ publishProgress((int)(i)/h);
                      * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
                      * datos = a formato mensaje en csv a mandar
                      * */
-                } catch (IOException e) {
+               /* } catch (IOException e) {
                     e.printStackTrace();
                     estado=false;
                 }
@@ -207,6 +200,4 @@ publishProgress((int)(i)/h);
                 }
 
             }
-        }
-    }
-
+        }*/
