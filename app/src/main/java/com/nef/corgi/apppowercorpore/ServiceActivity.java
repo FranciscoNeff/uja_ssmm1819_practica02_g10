@@ -1,6 +1,7 @@
 package com.nef.corgi.apppowercorpore;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
@@ -96,29 +98,10 @@ public class ServiceActivity extends AppCompatActivity
 
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
-                Actualizacion subida = new Actualizacion();
-                userDTO user = null;
-                monitorDTO monitor = null;
-                //los dto contendran los valores necesarios estos no estaran a null
-                user.setUser_name(getIntent().getStringExtra(NAME_USER));
-                user.setEmail_user(getIntent().getStringExtra(EMAIL_USER));
-                //TODO preguntar como realizarlo con los parametros dentro de actualizacion
-                try {
-                    String datos = subida.update(user, monitor);
-                    if (datos == null) {
-                        System.out.print("Error en la subida");
-                    }
-                    /*
-
-                     * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
-                     * datos = a formato mensaje en csv a mandar
-                     * */
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
 
-        }
+
+            return true;}
 
         return super.onOptionsItemSelected(item);
     }
@@ -148,4 +131,58 @@ public class ServiceActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-}
+
+
+        protected class Envio extends AsyncTask<String, Integer, Boolean> {
+            private ProgressBar progressBar=null;
+            String csvUser;
+            String csvMonitor;
+            Actualizacion subida = new Actualizacion();
+            userDTO user = null;//this.user;
+            monitorDTO monitor = null;
+            //los dto contendran los valores necesarios estos no estaran a null
+            //System.out.print("Error en la subida");
+            public Envio(userDTO u) {
+                user = u;
+
+            }
+
+            @Override
+            protected Boolean doInBackground(String... strings) {
+                String csvuser=user.csvtoString();
+                String csvmonitor=monitor.csvtoString();
+                Boolean estado=null;
+                try {
+                    String datos = subida.Actualizacion(csvuser, csvmonitor);
+                    if (datos == null) {
+                        estado=false;
+                        }else{estado=true;}
+                    /*
+                     * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
+                     * datos = a formato mensaje en csv a mandar
+                     * */
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    estado=false;
+                }
+
+                return estado;
+            }
+//realizar un onpreexcute
+            protected void onProgressUpdate(Integer... values){
+                progressBar.setProgress(values[0]);
+                progressBar.postInvalidate();
+                super.onProgressUpdate(values);
+                //http://www.sgoliver.net/blog/tareas-en-segundo-plano-en-android-i-thread-y-asynctask/
+            }
+            protected void onPostExecute(Boolean result) {
+                if (result) {
+                    //Toast.makeText(this, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    // Toast.makeText(this, "Actualizacion Fallida", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
