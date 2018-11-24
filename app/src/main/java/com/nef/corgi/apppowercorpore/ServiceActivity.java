@@ -60,13 +60,12 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(NAME_USER);
         USERLOG.setUser_name(s_user);
-        ChangleHedaerUser(s_user);//modificar por si la sesion no ha expirado
+       //revisar xq no funciona// ChangleHedaerUser(s_user);//modificar por si la sesion no ha expirado
         String s_pass = intent.getStringExtra(PASS_USER);
         USERLOG.setPass(s_pass);
         String s_email =intent.getStringExtra(EMAIL_USER);
         USERLOG.setEmail_user(s_email);
-       // TextView sh_tx_expires= new TextView(this);
-        //sh_tx_expires.setText(s_user);
+
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }
     @Override
