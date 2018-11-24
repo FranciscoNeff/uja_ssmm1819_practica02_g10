@@ -1,7 +1,7 @@
 package com.nef.corgi.apppowercorpore;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
@@ -21,8 +22,8 @@ import com.nef.corgi.apppowercorpore.mensaje.Envio;
 
 
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
-public class ServiceActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class ServiceActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private TextView VIEWNAMEUSER=null;
     //Variables estaticas de control de usuario
     public static final String NAME_USER="name";
     public static final String EMAIL_USER="email";
@@ -59,11 +60,13 @@ public class ServiceActivity extends AppCompatActivity
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(NAME_USER);
         USERLOG.setUser_name(s_user);
+        ChangleHedaerUser(s_user);//modificar por si la sesion no ha expirado
         String s_pass = intent.getStringExtra(PASS_USER);
         USERLOG.setPass(s_pass);
         String s_email =intent.getStringExtra(EMAIL_USER);
         USERLOG.setEmail_user(s_email);
-
+       // TextView sh_tx_expires= new TextView(this);
+        //sh_tx_expires.setText(s_user);
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }
     @Override
@@ -110,7 +113,7 @@ envio.execute();
         if (id ==  R.id.nav_user) {
 //opcion para ver datos del usuario
         } else if (id == R.id.nav_work_out) {
-            //TODO llamar a table_workout desde aqui
+
             Intent workout = new Intent(ServiceActivity.this,Table_workout.class);
             startActivity(workout);
 //opcion para elegir las rutinas
@@ -128,4 +131,15 @@ envio.execute();
         return true;
         }
 
+    public void ChangleHedaerUser(String s_user) {
+      /* @Override
+        protected void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);*/
+            setContentView(R.layout.app_bar_service);
+            VIEWNAMEUSER = (TextView) findViewById(R.id.show_user_name);
+        VIEWNAMEUSER.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        VIEWNAMEUSER.setText(s_user);//modificar para que busque tb si antes hay un login
+        }//}
 }
+
+
