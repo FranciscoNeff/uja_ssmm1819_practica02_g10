@@ -23,7 +23,6 @@ import com.nef.corgi.apppowercorpore.mensaje.Envio;
 
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private TextView VIEWNAMEUSER=null;
     //Variables estaticas de control de usuario
     public static final String NAME_USER="name";
     public static final String EMAIL_USER="email";
@@ -60,7 +59,13 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(NAME_USER);
         USERLOG.setUser_name(s_user);
-       //revisar xq no funciona// ChangleHedaerUser(s_user);//modificar por si la sesion no ha expirado
+        /*
+        setContentView(R.layout.nav_header_service);
+        TextView VIEWNAMEUSER= (TextView) findViewById(R.id.show_user_name);
+        VIEWNAMEUSER.setTextColor(getColor(R.color.colorPrimaryDark));
+        VIEWNAMEUSER.setText(s_user);
+        */
+
         String s_pass = intent.getStringExtra(PASS_USER);
         USERLOG.setPass(s_pass);
         String s_email =intent.getStringExtra(EMAIL_USER);
@@ -112,7 +117,6 @@ envio.execute();
         if (id ==  R.id.nav_user) {
 //opcion para ver datos del usuario
         } else if (id == R.id.nav_work_out) {
-
             Intent workout = new Intent(ServiceActivity.this,Table_workout.class);
             startActivity(workout);
 //opcion para elegir las rutinas
@@ -129,16 +133,6 @@ envio.execute();
         drawer.closeDrawer(GravityCompat.START);
         return true;
         }
-
-    public void ChangleHedaerUser(String s_user) {
-      /* @Override
-        protected void onCreate(Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);*/
-            setContentView(R.layout.app_bar_service);
-            VIEWNAMEUSER = (TextView) findViewById(R.id.show_user_name);
-        VIEWNAMEUSER.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-        VIEWNAMEUSER.setText(s_user);//modificar para que busque tb si antes hay un login
-        }//}
 }
 
 
