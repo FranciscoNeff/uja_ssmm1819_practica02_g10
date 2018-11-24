@@ -59,17 +59,21 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(NAME_USER);
         USERLOG.setUser_name(s_user);
-        /*
-        setContentView(R.layout.nav_header_service);
-        TextView VIEWNAMEUSER= (TextView) findViewById(R.id.show_user_name);
-        VIEWNAMEUSER.setTextColor(getColor(R.color.colorPrimaryDark));
-        VIEWNAMEUSER.setText(s_user);
-        */
-
+// AL menu lateral le pasamos el nombre del user
+        //TODO revisar si hay un login previo
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.show_user_name);
+        navUsername.setTextColor(getColor(R.color.colorPrimaryDark));
+        navUsername.setText(s_user);
         String s_pass = intent.getStringExtra(PASS_USER);
         USERLOG.setPass(s_pass);
         String s_email =intent.getStringExtra(EMAIL_USER);
         USERLOG.setEmail_user(s_email);
+        //Introduce el expires
+        View subheaderView = navigationView.getHeaderView(1);
+        TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
+        navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
+        navsubHeader.setText("Expires");
 
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }

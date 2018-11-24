@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
@@ -72,7 +73,8 @@ public class Authetication extends Fragment {
                 intent.putExtra("email",s_email);
                 intent.putExtra("pass",s_pass);
                 startActivity(intent);//con esto lanzamos el menu lateral
-                mListener.onFragmentInteraction(user);//le pasamos el userario
+                mListener.onFragmentInteraction(user);//le pasamos el usuario
+
             }
 
         });
