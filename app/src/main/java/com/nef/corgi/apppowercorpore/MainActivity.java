@@ -57,49 +57,49 @@ private userDTO user=null;
         } else
             Toast.makeText(this,getString(R.string.mainactivity_fragmentepresent), Toast.LENGTH_SHORT).show();
         SharedPreferences sf = getPreferences(MODE_PRIVATE);
-        //String expires = sf.getString("EXPIRES","")
-        String nombre = sf.getString("USER","");
-            if(nombre!=""){
-                Toast.makeText(this,"Bienvenido"+nombre,Toast.LENGTH_LONG).show();//comprobar el expires para q la sesion sea valida
+        String expires = sf.getString("EXPIRES","");//user y expires
+        String s_user = sf.getString("USER","");
+           /* if(s_user!=""&& expires!=""){
+                Toast.makeText(this,"Bienvenido"+s_user,Toast.LENGTH_LONG).show();//comprobar el expires para q la sesion sea valida
                 //expires > sesion valida
                 //start activity
                 //expires < sesion no valida
                 //return login
-
-            }
-
+Date expire = FORMATO.parse(expires,new ParsePosition(0));
+Date timestamp= new Date(System.currentTimeMillis());
+                if(expire.getTime()>timestamp.getTime()){
+                    Intent intent=new Intent (this,ServiceActivity.class);
+                    intent.putExtra(ServiceActivity.NAME_USER,s_user);
+                    intent.putExtra(ServiceActivity.PARAM_EXPIRED,expires);
+                }
+            }*/
 
         if(savedInstanceState!=null){
             String name = savedInstanceState.getString("name");
             String email = savedInstanceState.getString("email");
             String pass = savedInstanceState.getString("pass");
-          //revisar lo de user
-
         }
         else {
             user = new userDTO();
-
         }
-
     }
 
 
-
+//Revisar por si sobra
         @Override
         protected void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
-
             outState.putString("Dominio",user.getDominio());
         }
-
+//Revisar por si sobra
         @Override
         public void onFragmentInteraction(userDTO name) {
 
             this.user.setUser_name(name.getUser_name());
-
         }
 
     //Practica 2
+    /*
     public String readServer(userDTO user){
         try {
             //URL url = new URL(domain);
@@ -129,9 +129,8 @@ private userDTO user=null;
         }
 
         return null;
-
-    }
-    class ConnectTask extends AsyncTask<userDTO,Integer,String> {
+*/
+    /*class ConnectTask extends AsyncTask<userDTO,Integer,String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -176,26 +175,40 @@ private userDTO user=null;
 
             return null;
 
+        } @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            Toast.makeText(getApplicationContext(),getString(R.string.main_progress)+" "+String.valueOf(values[0]),Toast.LENGTH_LONG).show();
+
         }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+            TextView banner = findViewById(R.id.main_degree);
+            banner.setText(R.string.main_connected);
+        }*/
 
 public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //recibo un usario sin sesion ,iteracion intermedia,devuelvo un usuario con SSID y EXPIRES
 
             private static final String RESOURCE="/ssmm/autentica.php";
             private static final  String DOMAIN= "labtelema.ujaen.es";
-            private static final  String PARAM_USER= "user";
-            private static final String  PARAM_PASS="pass";
+    private static final  String PARAM_USER= "user";
+    private static final String  PARAM_PASS="pass";
             private static final int HTTP_STATUS_CODE =200 ;
+    private static final int PORT =80 ;
 
     @Override
             protected userDTO doInBackground(userDTO... userDTOS) {
                 userDTO data;
-                userDTO result;
+                userDTO result=new userDTO();
                 if (userDTOS!=null) {
                     data=userDTOS[0];
                     //TODO hacer la conexion y la autenticacion
                     //REVISAR ejemplos tema 3
                     data.setDominio(DOMAIN);
-                    data.setPuerto(80);
+                    data.setPuerto(PORT);
                     String service="http://"+data.getDominio()+data.getPuerto()+RESOURCE+"?"+data.getUser_name()+"&"+data.getPass();
                     try {
                         URL urlservice = new URL(service);
@@ -216,15 +229,11 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //recibo un usar
                                 if (parts.length==2){
                                     if(parts[1].startsWith(("EXPIRES"))){
                                         result = processSesion(data,parts[0],parts[1]);
-
                                     }
                                 }
                             }
                         }
                         br.close();
-
-
-
                         }
                         else{
                             data=null;
@@ -236,16 +245,18 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //recibo un usar
                     }catch(IOException ioex){
                         ioex.printStackTrace();
                     }finally {
-                        return data;
+                        result=null;
+                        return result ;
                     }
 
 
                 }
                else{
-                return null;}}
+                return result;}}
         protected void onPostExecute(userDTO user) {
             super.onPostExecute(user);
             if (user != null) {
+                //revisar  xq lo mismo por el preferences sobra
                 Toast.makeText(getApplicationContext(), "Correcto", Toast.LENGTH_LONG).show();
                 SharedPreferences sp = getSharedPreferences(user.getUser_name(), MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
                 SharedPreferences.Editor editor = sp.edit();
@@ -281,7 +292,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //recibo un usar
      */
 
     protected userDTO processSesion (userDTO input,String session,String expires){
-        userDTO ressult = null;
+        userDTO ressult = new userDTO();
         session = session.substring(session.indexOf("="),session.length());//copia la cadeda desde que encuentre el igual
         expires = expires.substring(expires.indexOf("="),expires.length());
         input.setSid(session);
@@ -341,8 +352,6 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //recibo un usar
             } catch (IOException e) {
                 result = "Excepción: " + e.getMessage();
                 System.out.println(result);
-
-
             } finally {
                 if (is != null) {
                     is.close();
@@ -352,20 +361,6 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO>{ //recibo un usar
             return result;
         }
 
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            Toast.makeText(getApplicationContext(),getString(R.string.main_progress)+" "+String.valueOf(values[0]),Toast.LENGTH_LONG).show();
-
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-            TextView banner = findViewById(R.id.main_degree);
-            banner.setText(R.string.main_connected);
-        }
     }
-}
+
+
