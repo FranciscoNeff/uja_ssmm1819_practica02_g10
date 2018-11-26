@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      //  setSupportActionBar(toolbar);
         Log.d("INICIO","Bienvenido a PowerCorpore");
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag_inicio = fm.findFragmentById(R.id.main_container);
@@ -248,20 +250,20 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
                 editor.commit();*///
 
             Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
-            intent.putExtra(ServiceActivity.NAME_USER, user.getUser_name());
-            intent.putExtra(ServiceActivity.PARAM_SID, user.getSid());
-            intent.putExtra(ServiceActivity.PARAM_EXPIRED, user.getExpires());
-            startActivity(intent);
-            //Date expirationDATE = FORMATO.parse(FORMATO.format(user.getExpires()), new ParsePosition(0));
-            //Date instant = new Date(System.currentTimeMillis());
-//                if (((Date) expirationDATE).getTime() > instant.getTime()) {
-//                    intent.putExtra(ServiceActivity.NAME_USER, user.getUser_name());
-//                    intent.putExtra(ServiceActivity.PARAM_SID, user.getSid());
-//                    intent.putExtra(ServiceActivity.PARAM_EXPIRED, user.getExpires());
-//                    startActivity(intent);
+//            intent.putExtra(ServiceActivity.NAME_USER, user.getUser_name());
+//            intent.putExtra(ServiceActivity.PARAM_SID, user.getSid());
+//            intent.putExtra(ServiceActivity.PARAM_EXPIRED, user.getExpires());
+//            startActivity(intent);
+            Date expirationDATE = FORMATO.parse(FORMATO.format(user.getExpires()), new ParsePosition(0));
+            Date instant = new Date(System.currentTimeMillis());
+                if (((Date) expirationDATE).getTime() > instant.getTime()) {
+                    intent.putExtra(ServiceActivity.NAME_USER, user.getUser_name());
+                    intent.putExtra(ServiceActivity.PARAM_SID, user.getSid());
+                    intent.putExtra(ServiceActivity.PARAM_EXPIRED, user.getExpires());
+                    startActivity(intent);
         } else {
-            SharedPreferences sp = getSharedPreferences(user.getUser_name(), MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
-            SharedPreferences.Editor editor = sp.edit();
+//            SharedPreferences sp = getSharedPreferences(user.getUser_name(), MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
+//            SharedPreferences.Editor editor = sp.edit();
             editor.putString("user", user.getUser_name());
             editor.putString("Email", user.getEmail_user());
             editor.putString("SID", user.getSid());
@@ -269,6 +271,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
             //TODO dar mas informacion
         }
+    }
     }
 
 
