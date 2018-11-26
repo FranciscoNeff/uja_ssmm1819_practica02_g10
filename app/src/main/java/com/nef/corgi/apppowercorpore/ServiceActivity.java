@@ -20,6 +20,8 @@ import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
 import com.nef.corgi.apppowercorpore.mensaje.Envio;
 
+import java.text.SimpleDateFormat;
+
 
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +32,7 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
     public static final String PARAM_SID="";
     public static final String PARAM_EXPIRED="";
     public static final userDTO USERLOG = new userDTO();
+    SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,8 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         View subheaderView = navigationView.getHeaderView(1);
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
-        navsubHeader.setText("Expires");
+        String s_expires = FORMATO.format(PARAM_EXPIRED);
+        navsubHeader.setText(s_expires);
 
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }
