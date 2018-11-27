@@ -26,11 +26,10 @@ import java.text.SimpleDateFormat;
 //Preguntar como quitar(en la barra de aplicacion)el ServiceActivity
 public class ServiceActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     //Variables estaticas de control de usuario
-    public static final String NAME_USER="name";
-    public static final String EMAIL_USER="email";
-    public static final String PASS_USER="pass";//Esta variable quizas no sea adecuada
-    public static final String PARAM_SID="";
-    public static final String PARAM_EXPIRED="";
+    public static final String PARAM_USER_NAME="name";
+    public static final String PARAM_USER_EMAIL="email";
+    public static final String PARAM_USER_SID="sid";
+    public static final String PARAM_USER_EXPIRED="expires";
     public static final userDTO USERLOG = new userDTO();
     SimpleDateFormat FORMATO = new SimpleDateFormat("DD/MM/YYYY)");
 
@@ -60,7 +59,16 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         navigationView.setNavigationItemSelectedListener(this);
         //Código práctica
         Intent intent = getIntent();
-        String s_user = intent.getStringExtra(NAME_USER);
+        String s_user = intent.getStringExtra(PARAM_USER_NAME);
+        String s_sid = intent.getStringExtra(PARAM_USER_SID);
+        String s_expires = intent.getStringExtra(PARAM_USER_EXPIRED);
+
+
+
+
+
+
+
         USERLOG.setUser_name(s_user);
 // AL menu lateral le pasamos el nombre del user
         //TODO revisar si hay un login previo
@@ -68,17 +76,15 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         TextView navUsername = (TextView) headerView.findViewById(R.id.show_user_name);
         navUsername.setTextColor(getColor(R.color.colorPrimaryDark));
         navUsername.setText(s_user);
-        String s_pass = intent.getStringExtra(PASS_USER);
-        USERLOG.setPass(s_pass);
-        String s_email =intent.getStringExtra(EMAIL_USER);
-        USERLOG.setEmail_user(s_email);
+
+
         //Introduce el expires
         View subheaderView = navigationView.getHeaderView(1);
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
-        FORMATO = new SimpleDateFormat("DD/MM/YYYY)");
-        String s_expires = FORMATO.format(PARAM_EXPIRED);
-        USERLOG.setExpires(PARAM_EXPIRED);
+//        FORMATO = new SimpleDateFormat("y/M/d)");
+//        String s_expires = FORMATO.format(PARAM_EXPIRED);
+       // USERLOG.setExpires(PARAM_EXPIRED);
         navsubHeader.setText(s_expires);
 
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
