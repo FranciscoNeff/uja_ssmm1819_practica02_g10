@@ -270,8 +270,8 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
 
     protected userDTO processSesion(userDTO input, String session, String expires) {
         FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
-        session = session.substring(session.indexOf("=") + 1, session.length());//copia la cadeda desde que encuentre el igual
-        expires = expires.substring(expires.indexOf("=") + 1, expires.length());//como la copia desde que encuentra el igual le suma uno para coger la cadena
+        session = session.substring(session.indexOf("SESSION-ID=") + 1, session.length());//copia la cadeda desde que encuentre el igual
+        expires = expires.substring(expires.indexOf("EXPIRES=") + 1, expires.length());//como la copia desde que encuentra el igual le suma uno para coger la cadena
         input.setSid(session);
         try {
             input.setExpires(FORMATO.parse(expires));//se le introduce un date
