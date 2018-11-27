@@ -32,7 +32,7 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
     public static final String PARAM_SID="";
     public static final String PARAM_EXPIRED="";
     public static final userDTO USERLOG = new userDTO();
-    SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
+    SimpleDateFormat FORMATO = new SimpleDateFormat("DD/MM/YYYY)");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         View subheaderView = navigationView.getHeaderView(1);
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
+        FORMATO = new SimpleDateFormat("DD/MM/YYYY)");
         String s_expires = FORMATO.format(PARAM_EXPIRED);
         USERLOG.setExpires(PARAM_EXPIRED);
         navsubHeader.setText(s_expires);

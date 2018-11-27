@@ -217,6 +217,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
     @Override
     protected void onPostExecute(userDTO user) {
         super.onPostExecute(user);
+
         if (user != null) {
             Toast.makeText(getApplicationContext(), "Correcto", Toast.LENGTH_LONG).show();
             SharedPreferences sp = getSharedPreferences(user.getUser_name(), MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
@@ -225,7 +226,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
             editor.putString("Email", user.getEmail_user());
             editor.putString("SID", user.getSid());
             FORMATO=new SimpleDateFormat("y-M-d-H-m-s");
-           editor.putString("EXPIRES",FORMATO.format(user.getExpires()));
+            editor.putString("EXPIRES",FORMATO.format(user.getExpires()));
 
                /* SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
                 SharedPreferences.Editor edit2 = def.edit();
@@ -237,7 +238,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
 //            intent.putExtra(ServiceActivity.PARAM_SID, user.getSid());
 //            intent.putExtra(ServiceActivity.PARAM_EXPIRED, user.getExpires());
 //            startActivity(intent);
-            Date expirationDATE = FORMATO.parse(FORMATO.format(user.getExpires()), new ParsePosition(0));
+            Date expirationDATE = user.getExpires();
             Date instant = new Date(System.currentTimeMillis());
                 if (((Date) expirationDATE).getTime() > instant.getTime()) {
                     intent.putExtra(ServiceActivity.NAME_USER, user.getUser_name());
@@ -266,10 +267,16 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
      */
 
     protected userDTO processSesion(userDTO input, String session, String expires) {
+        FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
         session = session.substring(session.indexOf("=") + 1, session.length());//copia la cadeda desde que encuentre el igual
         expires = expires.substring(expires.indexOf("=") + 1, expires.length());//como la copia desde que encuentra el igual le suma uno para coger la cadena
         input.setSid(session);
-        input.setExpires(expires);//tenemos que meter un Date
+        try {
+            input.setExpires(FORMATO.parse(expires));//tenemos que meter un Date
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
         return input;
     }
 }
@@ -299,7 +306,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
                 String mimeType = conn.getHeaderField("Content-Type");
                 String encoding = mimeType.substring(mimeType.indexOf(";"));
 
-               // Log.d(SERVICE_DEFAULT_WEB, "The response is: " + response);
+                Log.d(SERVICE_DEFAULT_WEB, "The response is: " + response);
                 is = conn.getInputStream();
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));

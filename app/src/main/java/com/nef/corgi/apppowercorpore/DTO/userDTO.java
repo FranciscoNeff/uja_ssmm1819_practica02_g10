@@ -72,12 +72,12 @@ public class userDTO {
         this.email_user = "email";
         this.pass = "12345";
         // como tanto el dominio como el puerto permanecera invisibles al usuario estos se pasara con un valor predifinido al usuario
-        dominio ="labtelemaujaen.es";
-        puerto=80;
+        //dominio ="labtelemaujaen.es";
+        //puerto=80;
 
     }
 
-    public userDTO(String user_name, String email_user, String pass,String dominio, int puerto, Date expires,String sid) {
+    public userDTO(String user_name, String email_user, String pass,String dominio, int puerto, String sid,Date expires) {
         this.user_name = user_name;
         this.email_user = email_user;
         this.pass = pass;
