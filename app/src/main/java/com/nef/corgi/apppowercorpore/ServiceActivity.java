@@ -77,6 +77,7 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
         String s_expires = FORMATO.format(PARAM_EXPIRED);
+        USERLOG.setExpires(PARAM_EXPIRED);
         navsubHeader.setText(s_expires);
 
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();

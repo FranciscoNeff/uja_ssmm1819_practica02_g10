@@ -32,7 +32,7 @@
             android:layout_alignTop="@+id/fragment_auth_label_user"
             android:ems="10"
             android:fontFamily="@font/permanent_marker"
-            android:hint="@string/login_hint_user"
+            android:hint="user1"
             android:inputType="text|textPersonName"
             android:textStyle="italic" />
 
@@ -75,7 +75,7 @@
             android:layout_toEndOf="@+id/fragment_auth_label_pass"
             android:ems="10"
             android:fontFamily="@font/permanent_marker"
-            android:hint="@string/login_hint_pass"
+            android:hint="12345"
             android:inputType="text|textPassword"
             android:textStyle="italic" />
 

@@ -18,8 +18,16 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+/***
+ * Formato en el que se guardan las rutinas
+ * Fecha en la que se realiza DD/MM/AAAA
+ * Array de los ejercicios realizados en ese dia
+ * series de los ejercicios
+ * repeticiones de los ejercicios
+ *
+ */
 
-
+//ejemplo de excepciones en java de clase 4
 public class ReadCSV {
     public Context context;//esto sirve para usarlo en varios metodos
     public ReadCSV(Context c){
@@ -40,13 +48,19 @@ public class ReadCSV {
         if(reader!=null) {
             exist = true;
             String line = "";
-            String[] repeticiones = {};
-            int[] series = {};
-            String[] ejercicios = {};
+
+            String[] ejercicios = {};//array con el nombre de los ejercicios
+            int[] series = {};//array de series
+            String[] repeticiones = {};//array de repeticiones
+            //hacer un split por fechas//a la hora de guardar la rutina que se realiza, se guarda la fecha en la que se realiza la rutina
+            /**/
 
             int i = 0;
             while ((line = reader.readLine()) != null) {
+
                 line = reader.readLine();
+                String s_f_rutina=line;
+                //fecha
                 try {
                     rutinaDTO rutina = new rutinaDTO();
                     String[] items = line.split(";");//La cadena se trocea con ;
@@ -65,8 +79,8 @@ public class ReadCSV {
                         while (Integer.parseInt(items[i]) != 00001010); //deberia trocear hasta terminar toda la serie y repeticiones
                         i++;
                         rutina.setNombreEjercicio(ejercicios);//introduce ejercicio
-                        rutina.setSerie(series);//introduce series
-                        rutina.setRepeticiones(repeticiones);//introduce repeticiones
+                        rutina.setSerie(series);//introduce el array de series
+                        rutina.setRepeticiones(repeticiones);//introduce el array de repeticiones
                         rutinalistcsv.add(rutina);//introduce el objeto rutina a la lista
                     }
                 } catch (NullPointerException e) {//Tengo que poner el nullPointerException ya que con las demas excepciones da fallo
@@ -75,17 +89,11 @@ public class ReadCSV {
                     rutinalistcsv.clear();
                 }
 
-            /*}catch(FileNotFoundException e){
-                    e.getMessage();
-
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-                System.out.println("Error: Fallo en la lectura del fichero. ");
-            }*/
             }
         }else
         {rutinalistcsv.clear();
         System.out.print("Archivo no encontrado");}
+        if(exist!=true){rutinalistcsv.clear();}
         reader.close();
         return rutinalistcsv;
     }

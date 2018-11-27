@@ -92,13 +92,12 @@ public class rutinaDTO {
     }
 
     public class MalformedRutinaException extends Exception {
-
         private int type = 0;
+        private static final int RUTINA_CORRECTA = 0;
         private static final int FALTAN_ELEMENTOS = 1;
-
         MalformedRutinaException(int type){
            this.type=type;
         }
-
+        }
     }
-}
+

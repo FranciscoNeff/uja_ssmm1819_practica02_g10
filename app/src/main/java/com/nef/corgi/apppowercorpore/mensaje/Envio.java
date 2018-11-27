@@ -33,22 +33,27 @@ protected Boolean doInBackground(String... strings) {
     String csvmonitor=monitor.csvtoString();
         Boolean estado=null;
 
-    String actualizacion=null;
+    String actualizacion;
     try {
         ReadCSV csvreader = new ReadCSV();
         List<rutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
-        if(rutinalistcsv.isEmpty()) { estado=false;
+        if(rutinalistcsv.isEmpty()) { estado=false;//si la array esta vacia no actualizamos
         }
         else {
+
             progreso=rutinalistcsv.size();
             actualizacion = csvuser+ ";" + FORMATOFECHA.format(c.getTime()) + 00001010+csvmonitor;//Union del mansaje de cabecera de user y monitor
+
             for (rutinaDTO rutinaeach : rutinalistcsv) {
                 if(!isCancelled()) {
                     publishProgress((int)(rutinalistcsv.size()));
                 }
                 progreso++;
+
                 actualizacion = rutinaeach.csvtoString();
             }//mensaje de las rutinas
+            //capturar las excepciones de actulizaciones
+            //excepcion una cabeceras una de usuario una de monitor mas rutinalist.size()
             estado = true;
         }
     }catch (IOException e)

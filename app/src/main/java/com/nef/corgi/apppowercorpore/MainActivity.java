@@ -10,24 +10,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-
-import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
-
 import java.io.BufferedReader;
-
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-
-import java.net.Socket;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -43,12 +34,11 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements Authetication.OnFragmentInteractionListener{
 
     private static final String SERVICE_DEFAULT_WEB = "http://";
-    private static final String DOMAIN = "labtelema.ujaen.es";
+    private static final String DOMAIN = "labtelema.ujaen.es";//el dominio es estatico
     private static final String RESOURCE = "/ssmm/autentica.php";
-
-    private static final String PARAM_USER = "user";
-    private static final String PARAM_PASS = "pass";
-
+    private static final String QUERY_USER = "?user=";
+    private static final String QUERY_PASS = "&pass=";
+    private static final int PORT = 80;
 
     private userDTO user=null;
     SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
@@ -176,8 +166,8 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
             //TODO hacer la conexion y la autenticacion
             //REVISAR ejemplos tema 3
             data.setDominio(DOMAIN);
-            data.setPuerto(80);
-            String service = SERVICE_DEFAULT_WEB + data.getDominio() + ":" + data.getPuerto() + RESOURCE + "?" + PARAM_USER + data.getUser_name() + "&" + PARAM_PASS + data.getPass();
+            data.setPuerto(PORT);
+            String service = SERVICE_DEFAULT_WEB + data.getDominio() + ":" + data.getPuerto() + RESOURCE + QUERY_USER + data.getUser_name() + QUERY_PASS + data.getPass();
             try {
                 URL urlservice = new URL(service);
                 HttpURLConnection connection = (HttpURLConnection) urlservice.openConnection();
@@ -201,14 +191,13 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
                             }
                         }
                     }
-
                     br.close();
                 } else if (code.startsWith(HTTP_STATUS_ERRORLOCALCODE)) {//errores 4XX
                     Toast.makeText(getApplicationContext(), "Vuelva a intentarlo", Toast.LENGTH_LONG).show();
-                    result = null;
+                    data = null;//cambiar result
                 } else if (code.startsWith(HTTP_STATUS_ERRORSERVERCODE)) {//errores 5XX
                     Toast.makeText(getApplicationContext(), "Problemas con el servidor intentelo mas tarde", Toast.LENGTH_LONG).show();
-                    result = null;
+                    data = null;//cambiar result
                 }
                 connection.disconnect();//cierra la conexion
             } catch (MalformedURLException e) {
@@ -221,9 +210,8 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
             }
 
         } else {
-            return null;
+            return result;
         }
-
     }
 
     @Override
@@ -236,7 +224,8 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
             editor.putString("user", user.getUser_name());
             editor.putString("Email", user.getEmail_user());
             editor.putString("SID", user.getSid());
-            editor.putString("EXPIRES", FORMATO.format(user.getExpires()));
+            FORMATO=new SimpleDateFormat("y-M-d-H-m-s");
+           editor.putString("EXPIRES",FORMATO.format(user.getExpires()));
 
                /* SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
                 SharedPreferences.Editor edit2 = def.edit();
@@ -286,7 +275,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
 }
 
 
-        private String downloadURL(String domain, String user, String pass) throws IOException {
+        private String downloadURL( String user, String pass) throws IOException {
             InputStream is = null;
             String result = "";
 
@@ -294,7 +283,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
             try {
                 String contentAsString = "";
                 String tempString = "";
-                String url = SERVICE_DEFAULT_WEB + domain + RESOURCE + "?user=" + user + "&pass=" + pass;
+                String url = SERVICE_DEFAULT_WEB + DOMAIN + RESOURCE + QUERY_PASS + user + QUERY_PASS + pass;
                 URL service_url = new URL(url);
                 System.out.println("Abriendo conexión: " + service_url.getHost()
                         + " puerto=" + service_url.getPort());
@@ -310,7 +299,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
                 String mimeType = conn.getHeaderField("Content-Type");
                 String encoding = mimeType.substring(mimeType.indexOf(";"));
 
-                Log.d(SERVICE_DEFAULT_WEB, "The response is: " + response);
+               // Log.d(SERVICE_DEFAULT_WEB, "The response is: " + response);
                 is = conn.getInputStream();
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -395,8 +384,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
         protected String doInBackground(userDTO...userDTOS){
 
             try{
-                String url="http://"+userDTOS[0].getDominio();
-             return  downloadURL(url,userDTOS[0].getUser_name(),userDTOS[0].getPass());
+             return  downloadURL(userDTOS[0].getUser_name(),userDTOS[0].getPass());
             }catch (IOException ioex){
                 ioex.printStackTrace();
                 return null;
