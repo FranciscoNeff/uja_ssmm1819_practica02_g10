@@ -20,12 +20,14 @@ import com.nef.corgi.apppowercorpore.DTO.userDTO;
 
 import java.io.BufferedReader;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
+import java.net.Socket;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -56,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
         Log.d("INICIO","Bienvenido a PowerCorpore");
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag_inicio = fm.findFragmentById(R.id.main_container);
@@ -110,12 +110,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
 
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
 
 /*
         @Override
@@ -357,7 +351,7 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
             TextView banner = findViewById(R.id.main_degree);
             banner.setText(R.string.main_connecting);
         }
-
+//revisar
 //        @Override
 //        protected String doInBackground(userDTO... user) {
 //            try {
