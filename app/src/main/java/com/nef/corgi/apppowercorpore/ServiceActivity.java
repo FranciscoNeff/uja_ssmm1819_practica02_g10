@@ -65,11 +65,6 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
 
 
 
-
-
-
-
-        USERLOG.setUser_name(s_user);
 // AL menu lateral le pasamos el nombre del user
         //TODO revisar si hay un login previo
         View headerView = navigationView.getHeaderView(0);
@@ -82,9 +77,6 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         View subheaderView = navigationView.getHeaderView(1);
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
-//        FORMATO = new SimpleDateFormat("y/M/d)");
-//        String s_expires = FORMATO.format(PARAM_EXPIRED);
-       // USERLOG.setExpires(PARAM_EXPIRED);
         navsubHeader.setText(s_expires);
 
         Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();

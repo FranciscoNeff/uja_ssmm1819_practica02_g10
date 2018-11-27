@@ -1,5 +1,6 @@
 package com.nef.corgi.apppowercorpore.mensaje;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
@@ -17,13 +18,19 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Envio extends AsyncTask<String, Integer, Boolean> {
+    public Context context;
     userDTO user = null;
     monitorDTO monitor = null;
     private ProgressBar progressBar=null;
     SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
     public int progreso=0;
     Calendar c= new GregorianCalendar();
-    public Envio(userDTO u, monitorDTO mon) {
+    public Envio(Context c,userDTO u, monitorDTO mon) {
+        context=c;
+        user = u;
+        monitor = mon;
+    }
+    public Envio(userDTO u, monitorDTO mon){
         user = u;
         monitor = mon;
     }
@@ -84,10 +91,10 @@ protected void onPostExecute(Boolean result) {
         super.onPostExecute(result);
 
         if (result) {//Revisar el toast ya que no los puede lanzar desde aqui
-       // Toast.makeText(ServiceActivity.this, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Actualizacion Correcta", Toast.LENGTH_LONG).show();
         }
         else{
-       // Toast.makeText(ServiceActivity.this, "Actualizacion Fallida", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Actualizacion Fallida", Toast.LENGTH_LONG).show();
         }
 
         }

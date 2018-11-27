@@ -3,11 +3,14 @@ package com.nef.corgi.apppowercorpore.DTO;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class rutinaDTO {
     private String diaRutina;
     private  String[] nombreEjercicio;
+    //TODO hacer esto
+    //ArrayList de ejercicios en ellos meter la serie y las repeticiones en plan lista
     private  int[] serie;
     private  String[] repeticiones;
     private  String tiempo; //cuando se guarde este valor ya estara guardado como la diferencia entre empezar y terminar
