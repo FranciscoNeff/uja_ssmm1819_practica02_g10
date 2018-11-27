@@ -14,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.nef.corgi.apppowercorpore.DTO.userDTO;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -101,14 +103,14 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
 
     }
 
-/*
-        @Override
+      /*  @Override
         protected void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
 
             outState.putString("name",user.getUser_name());
+            outState.putString("pass",user.getUser_name());
             outState.putString("email",user.getEmail_user());
-        }*///p1
+        }*/
 
         @Override
         public void onFragmentInteraction(userDTO user) {
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         }
 
     //Practica 2
-    /*public String readServer(userDTO user){
+    public String readServer(userDTO user){
         try {
             //URL url = new URL(domain);
             //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
 
         return null;
 
-    }*///esto por ahora no
+    }//esto por ahora no
 
 
 public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usario sin sesion ,iteracion intermedia,devuelvo un usuario con SSID y EXPIRES
@@ -177,14 +179,14 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
                 connection.setDoInput(true);
                 connection.connect();
                 String code = String.valueOf(connection.getResponseCode());//recibe el codigo de respuesta de la peticion 1xx 2xx etc
-                if (code == HTTP_STATUS_OKCODE) {
+                if (code == HTTP_STATUS_OKCODE) {//por aqui anda el fallo
                     BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                     String line;
                     while ((line = br.readLine()) != null) {
                         if (line.startsWith("SESSION-ID=")) {//compara que la cadena empiece de esta manera
                             String parts[] = line.split("&");//para trocear una cadena se usa split, devuelve un array por cada trozo
                             if (parts.length == 2) {
-                                if (parts[1].startsWith(("EXPIRES"))) {
+                                if (parts[1].startsWith(("EXPIRES="))) {
                                     result = processSesion(data, parts[0], parts[1]);
 
                                 }
@@ -272,10 +274,11 @@ public class Autentica extends AsyncTask<userDTO,Void,userDTO> { //recibo un usa
         expires = expires.substring(expires.indexOf("=") + 1, expires.length());//como la copia desde que encuentra el igual le suma uno para coger la cadena
         input.setSid(session);
         try {
-            input.setExpires(FORMATO.parse(expires));//tenemos que meter un Date
+            input.setExpires(FORMATO.parse(expires));//se le introduce un date
         }
         catch (ParseException e){
             e.printStackTrace();
+            input.setExpires(expires);//se le introduce un String
         }
         return input;
     }
