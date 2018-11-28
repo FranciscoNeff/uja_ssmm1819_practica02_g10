@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     private static final String QUERY_PASS = "&pass=";
     private static final int PORT = 80;
     SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
+    //Cambios para probar el inicio automatico
+    public static final String PARAM_USER_NAME="name";
+    public static final String PARAM_USER_EMAIL="email";
+    public static final String PARAM_USER_EXPIRED="expires";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
