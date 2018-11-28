@@ -27,7 +27,7 @@ public class UserDAO {
 //        listdb.add(new UserDTO("user1","12345"));
 //        listdb.add(new UserDTO("user2","12345"));
 //        listdb.add(new UserDTO("user3","12345"));
-//    }
+//    }//guardar para hacer un check
 
 
 }

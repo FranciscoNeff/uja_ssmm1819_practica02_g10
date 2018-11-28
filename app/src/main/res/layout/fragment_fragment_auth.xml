@@ -75,7 +75,7 @@
             android:layout_toEndOf="@+id/fragment_auth_label_pass"
             android:ems="10"
             android:fontFamily="@font/permanent_marker"
-            android:hint="12345"
+            android:hint="@string/login_hint_pass"
             android:inputType="text|textPassword"
             android:textStyle="italic" />
 

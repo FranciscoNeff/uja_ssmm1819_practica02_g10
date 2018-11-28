@@ -67,17 +67,14 @@ public class UserDTO {
         this.pass = pass;
     }
     public UserDTO (){}
+
     public UserDTO(String user_name, String email_user, String pass) {
         this.user_name = user_name;
         this.email_user = email_user;
-        this.pass = pass;
+        this.pass = "12345";//revisar lo del pass xq no lo coje
         // como tanto el dominio como el puerto permanecera invisibles al usuario estos se pasara con un valor predifinido al usuario
         //dominio ="labtelemaujaen.es";
         //puerto=80;
-
-    }
-    public UserDTO(String user_name,String pass){
-
     }
 
     public UserDTO(String user_name, String email_user, String pass,String dominio, int puerto, String sid,Date expires) {
@@ -89,7 +86,10 @@ public class UserDTO {
         this.expires=expires;
         this.sid=sid;
     }
-
+//public UserDTO(String user_name,String pass){
+//    this.pass = pass;
+//    this.user_name = user_name;
+//}
 
 
     public void setExpires(String expires) {
