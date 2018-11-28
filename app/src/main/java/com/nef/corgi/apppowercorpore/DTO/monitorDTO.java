@@ -1,6 +1,6 @@
 package com.nef.corgi.apppowercorpore.DTO;
 
-public class monitorDTO {
+public class MonitorDTO {
     String nameM;
     String emailM;
 
@@ -20,11 +20,11 @@ public class monitorDTO {
         this.emailM = emailM;
     }
 
-    public monitorDTO(String nameM, String emailM) {
+    public MonitorDTO(String nameM, String emailM) {
         this.nameM = nameM;
         this.emailM = emailM;
     }
-public monitorDTO(){}
+public MonitorDTO(){}
     public String csvtoString() {
         return  nameM +";"+ emailM +00001010 ;
     }

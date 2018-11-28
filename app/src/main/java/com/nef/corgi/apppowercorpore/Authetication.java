@@ -12,11 +12,11 @@ import android.widget.EditText;
 
 import android.widget.Toast;
 
-import com.nef.corgi.apppowercorpore.DTO.userDTO;
+import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 
 
 public class Authetication extends Fragment {
-    private userDTO user;
+    private UserDTO user;
     private OnFragmentInteractionListener mListener;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +29,7 @@ public class Authetication extends Fragment {
     public Authetication(){}
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(userDTO userDTO);
+        void onFragmentInteraction(UserDTO userDTO);
     }
     public static Authetication newInstance(String param1, String param2) {
         Authetication fragment = new Authetication();
@@ -64,7 +64,7 @@ public class Authetication extends Fragment {
                String s_pass = pass.getEditableText().toString();
                 String s_email = email.getEditableText().toString();
 
-                user = new userDTO(s_user, s_pass, s_email);
+                user = new UserDTO(s_user, s_pass, s_email);
                 //Toast.makeText(getActivity(),s_user+"Hola",Toast.LENGTH_LONG);
                 Toast.makeText(getActivity(),getString(R.string.fragment_auth_hello)+s_user,Toast.LENGTH_LONG);
 //                Intent intent = new Intent(getActivity(),ServiceActivity.class);

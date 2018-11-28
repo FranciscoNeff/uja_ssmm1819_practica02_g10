@@ -8,7 +8,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
-import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
+import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 
 
 import java.text.SimpleDateFormat;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class Table_workout extends AppCompatActivity  {
-    private List<rutinaDTO> rutinalistcsv = new ArrayList<>();
+    private List<RutinaDTO> rutinalistcsv = new ArrayList<>();
 
     //SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA", Locale.getDefault());
     private TableLayout tableworkout =null;

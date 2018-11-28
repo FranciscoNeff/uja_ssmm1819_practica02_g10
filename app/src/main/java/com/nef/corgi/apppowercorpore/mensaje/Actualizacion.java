@@ -4,9 +4,10 @@ import android.os.AsyncTask;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
-import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
-import com.nef.corgi.apppowercorpore.DTO.userDTO;
+import com.nef.corgi.apppowercorpore.DTO.UserDTO;
+import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
+import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
+
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -30,12 +31,12 @@ public class Actualizacion {
 
         try {
             ReadCSV csvreader = new ReadCSV();
-            List<rutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
+            List<RutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
             if(rutinalistcsv.isEmpty()) { actualizacion=null;
             }
             else {
                 actualizacion = user+ ";" + FORMATOFECHA.format(c.getTime()) + 00001010+monitor;
-                for (rutinaDTO rutinaeach : rutinalistcsv) {
+                for (RutinaDTO rutinaeach : rutinalistcsv) {
                     actualizacion = rutinaeach.csvtoString();
                 }//mensaje de las rutinas
             }
@@ -48,19 +49,19 @@ public class Actualizacion {
     }
     public Actualizacion(){}
 //Metodo de reserva por si en algun futuro se decide cambiar el formato del csv
-    public String update(userDTO csvuser, monitorDTO csvmonitor )throws IOException {
+    public String update(UserDTO csvuser, MonitorDTO csvmonitor )throws IOException {
         String actualizacion=null;
-        rutinaDTO csvrutina= new rutinaDTO();
+        RutinaDTO csvrutina= new RutinaDTO();
         try {
             ReadCSV csvreader = new ReadCSV();
-            List<rutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
+            List<RutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
             if(rutinalistcsv.isEmpty()) { actualizacion=null;
             }
             else {
 
                 actualizacion = csvuser.csvtoString() + ";" + FORMATOFECHA.format(c.getTime()) + 00001010;//mensaje del usuario
                 actualizacion = actualizacion + csvmonitor.csvtoString();//mensaje del monitor
-                for (rutinaDTO rutinaeach : rutinalistcsv) {
+                for (RutinaDTO rutinaeach : rutinalistcsv) {
                     actualizacion = rutinaeach.csvtoString();
                 }//mensaje de las rutinas
             }

@@ -6,9 +6,9 @@ import android.os.AsyncTask;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
-import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
-import com.nef.corgi.apppowercorpore.DTO.userDTO;
+import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
+import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
+import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.ServiceActivity;
 
 import java.io.IOException;
@@ -19,18 +19,18 @@ import java.util.List;
 
 public class Envio extends AsyncTask<String, Integer, Boolean> {
     public Context context;
-    userDTO user = null;
-    monitorDTO monitor = null;
+    UserDTO user = null;
+    MonitorDTO monitor = null;
     private ProgressBar progressBar=null;
     SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
     public int progreso=0;
     Calendar c= new GregorianCalendar();
-    public Envio(Context c,userDTO u, monitorDTO mon) {
+    public Envio(Context c,UserDTO u, MonitorDTO mon) {
         context=c;
         user = u;
         monitor = mon;
     }
-    public Envio(userDTO u, monitorDTO mon){
+    public Envio(UserDTO u, MonitorDTO mon){
         user = u;
         monitor = mon;
     }
@@ -43,7 +43,7 @@ protected Boolean doInBackground(String... strings) {
     String actualizacion;
     try {
         ReadCSV csvreader = new ReadCSV();
-        List<rutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
+        List<RutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
         if(rutinalistcsv.isEmpty()) { estado=false;//si la array esta vacia no actualizamos
         }
         else {
@@ -51,7 +51,7 @@ protected Boolean doInBackground(String... strings) {
             progreso=rutinalistcsv.size();
             actualizacion = csvuser+ ";" + FORMATOFECHA.format(c.getTime()) + 00001010+csvmonitor;//Union del mansaje de cabecera de user y monitor
 
-            for (rutinaDTO rutinaeach : rutinalistcsv) {
+            for (RutinaDTO rutinaeach : rutinalistcsv) {
                 if(!isCancelled()) {
                     publishProgress((int)(rutinalistcsv.size()));
                 }

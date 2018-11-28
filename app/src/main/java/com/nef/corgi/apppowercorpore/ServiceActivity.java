@@ -16,10 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nef.corgi.apppowercorpore.DTO.monitorDTO;
-import com.nef.corgi.apppowercorpore.DTO.userDTO;
+import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
+import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.mensaje.Envio;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
@@ -30,8 +32,8 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_SID="sid";
     public static final String PARAM_USER_EXPIRED="expires";
-    public static final userDTO USERLOG = new userDTO();
-    SimpleDateFormat FORMATO = new SimpleDateFormat("DD/MM/YYYY)");
+    public static final UserDTO USERLOG = new UserDTO();
+    SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,8 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(PARAM_USER_NAME);
         String s_sid = intent.getStringExtra(PARAM_USER_SID);
-        String s_expires = intent.getStringExtra(PARAM_USER_EXPIRED);
+        String s_expires= intent.getStringExtra(PARAM_USER_EXPIRED);
+        //System.out.print(s_expires);
 
 
 
@@ -106,7 +109,7 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
 
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
-monitorDTO pmon = new monitorDTO("NameMonitor","MailMonitor");
+MonitorDTO pmon = new MonitorDTO("NameMonitor","MailMonitor");
 Envio envio=new Envio(USERLOG,pmon);
 envio.execute();
             }

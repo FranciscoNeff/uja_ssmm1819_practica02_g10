@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class rutinaDTO {
+public class RutinaDTO {
     private String diaRutina;
     private  String[] nombreEjercicio;
     //TODO hacer esto
@@ -61,7 +61,7 @@ public class rutinaDTO {
      *
      * @param datos
      */
-    public rutinaDTO(String datos) throws MalformedRutinaException{
+    public RutinaDTO(String datos) throws MalformedRutinaException{
 
         if(datos==null)
             throw new MalformedRutinaException(1);
@@ -74,14 +74,14 @@ public class rutinaDTO {
         this.tiempo=tiempo;
     }
 
-    public rutinaDTO(String diaRutina, String[] nombreEjercicio, int[] serie, String[] repeticiones, String tempo) {
+    public RutinaDTO(String diaRutina, String[] nombreEjercicio, int[] serie, String[] repeticiones, String tempo) {
         this.diaRutina = diaRutina;
         this.nombreEjercicio = nombreEjercicio;
         this.serie = serie;
         this.repeticiones = repeticiones;
         this.tiempo=tiempo;
     }
-    public rutinaDTO(){}
+    public RutinaDTO(){}
 
 
     public String csvtoString() {

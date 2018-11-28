@@ -13,7 +13,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nef.corgi.apppowercorpore.DTO.userDTO;
+import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                     //expires>=tactual sesion valida
                     Intent intent = new Intent(this, ServiceActivity.class);
                     intent.putExtra(ServiceActivity.PARAM_USER_NAME, nombre);
-                    intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, expires);
+                    intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, FORMATO.format(expires));
                     startActivity(intent);
                 }
                 else{
@@ -92,22 +92,22 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
 
 
     @Override
-    public void onFragmentInteraction(userDTO user) {
+    public void onFragmentInteraction(UserDTO user) {
         Autentica userLOG = new Autentica();
         userLOG.execute(user);
 
     }
 
 
-    public class Autentica extends AsyncTask<userDTO, Void, userDTO> { //recibo un usario sin sesion ,iteracion intermedia,devuelvo un usuario con SSID y EXPIRES
+    public class Autentica extends AsyncTask<UserDTO, Void, UserDTO> { //recibo un usario sin sesion ,iteracion intermedia,devuelvo un usuario con SSID y EXPIRES
         private static final String HTTP_STATUS_OKCODE = "200";
         private static final String HTTP_STATUS_ERRORLOCALCODE = "4";
         private static final String HTTP_STATUS_ERRORSERVERCODE = "5";
 
         @Override
-        protected userDTO doInBackground(userDTO... userDTOS) {
-            userDTO data;
-            userDTO result = new userDTO();
+        protected UserDTO doInBackground(UserDTO... userDTOS) {
+            UserDTO data;
+            UserDTO result = new UserDTO();
             if (userDTOS != null) {
                 data = userDTOS[0];
                 //TODO hacer la conexion y la autenticacion
@@ -163,11 +163,11 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         }
 
         @Override
-        protected void onPostExecute(userDTO user) {
+        protected void onPostExecute(UserDTO user) {
             super.onPostExecute(user);
 
             if (user != null) {
-                Toast.makeText(getApplicationContext(), R.string.correct_log_process +" "+ user.getUser_name(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.correct_log_process )+ user.getUser_name(), Toast.LENGTH_LONG).show();
                 SharedPreferences sp = getPreferences(MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putString("user", user.getUser_name());
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
                 intent.putExtra(ServiceActivity.PARAM_USER_NAME, user.getUser_name());
                 intent.putExtra(ServiceActivity.PARAM_USER_SID, user.getSid());
-                intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, user.getExpires());
+                intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, FORMATO.format(user.getExpires()));
                 startActivity(intent);
 
             } else {
@@ -198,9 +198,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 //TODO dar mas informacion
             }
-
     }
-
 
     /**
      * @param input   userDTO
@@ -209,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
      * @return userDTO
      */
 
-    protected userDTO processSesion(userDTO input, String session, String expires) {
+    protected UserDTO processSesion(UserDTO input, String session, String expires) {
         FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
         session = session.substring(session.indexOf("=") + 1, session.length());//copia la cadeda desde que encuentre el igual
         expires = expires.substring(expires.indexOf("=") + 1, expires.length());//como la copia desde que encuentra el igual le suma uno para coger la cadena
@@ -218,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             input.setExpires(FORMATO.parse(expires));//se le introduce un date
         } catch (ParseException e) {
             e.printStackTrace();
-            input.setExpires(expires);//se le introduce un String
+            //input.setExpires(expires);//se le introduce un String
         }
         return input;
     }
@@ -283,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         return result;
     }
 
-class ConnectTask extends AsyncTask<userDTO, Integer, String> {
+class ConnectTask extends AsyncTask<UserDTO, Integer, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -291,7 +289,7 @@ class ConnectTask extends AsyncTask<userDTO, Integer, String> {
         banner.setText(R.string.main_connecting);
     }
     @Override
-    protected String doInBackground(userDTO... userDTOS) {
+    protected String doInBackground(UserDTO... userDTOS) {
 
         try {
             return downloadURL(userDTOS[0].getUser_name(), userDTOS[0].getPass());

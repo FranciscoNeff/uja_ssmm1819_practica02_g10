@@ -1,17 +1,13 @@
 package com.nef.corgi.apppowercorpore.mensaje;
 
 import android.content.Context;
-import android.util.Log;
 
 
-import com.nef.corgi.apppowercorpore.DTO.rutinaDTO;
+import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
+
 import com.nef.corgi.apppowercorpore.R;
 
-
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,8 +35,8 @@ public class ReadCSV {
     solo al body de las rutinas
     ejercicios;series;repetciones CRLF
      */
-    public List<rutinaDTO> readRutinacsv () throws IOException {
-        List<rutinaDTO> rutinalistcsv = new ArrayList<>();
+    public List<RutinaDTO> readRutinacsv () throws IOException {
+        List<RutinaDTO> rutinalistcsv = new ArrayList<>();
         boolean exist=false;
         InputStream rutinacsv = context.getResources().openRawResource(R.raw.rutina_csv);
         BufferedReader reader = null;
@@ -62,7 +58,7 @@ public class ReadCSV {
                 String s_f_rutina=line;
                 //fecha
                 try {
-                    rutinaDTO rutina = new rutinaDTO();
+                    RutinaDTO rutina = new RutinaDTO();
                     String[] items = line.split(";");//La cadena se trocea con ;
 
                     while ((Integer.parseInt(items[i])) != 00001010) {

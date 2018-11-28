@@ -2,7 +2,7 @@ package com.nef.corgi.apppowercorpore.DTO;
 
 import java.util.Date;
 
-public class userDTO {
+public class UserDTO {
     private String user_name;
     private String email_user;
     private String pass;
@@ -66,18 +66,21 @@ public class userDTO {
     public void setPass(String pass) {
         this.pass = pass;
     }
-    public userDTO (){}
-    public userDTO(String user_name, String email_user, String pass) {
-        this.user_name = "user1";
-        this.email_user = "email";
-        this.pass = "12345";
+    public UserDTO (){}
+    public UserDTO(String user_name, String email_user, String pass) {
+        this.user_name = user_name;
+        this.email_user = email_user;
+        this.pass = pass;
         // como tanto el dominio como el puerto permanecera invisibles al usuario estos se pasara con un valor predifinido al usuario
         //dominio ="labtelemaujaen.es";
         //puerto=80;
 
     }
+    public UserDTO(String user_name,String pass){
 
-    public userDTO(String user_name, String email_user, String pass,String dominio, int puerto, String sid,Date expires) {
+    }
+
+    public UserDTO(String user_name, String email_user, String pass,String dominio, int puerto, String sid,Date expires) {
         this.user_name = user_name;
         this.email_user = email_user;
         this.pass = pass;

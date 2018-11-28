@@ -24,5 +24,5 @@
     <string name="main_connected">Conectado</string>
     <string name="main_progress">Progreso</string>
     <string name="main_connecting">Conectando</string>
-    <string name="correct_log_process">Bienvenido</string>
+    <string name="correct_log_process">"Bienvenido "</string>
 </resources>
