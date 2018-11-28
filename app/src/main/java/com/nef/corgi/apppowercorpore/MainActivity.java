@@ -43,10 +43,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     private static final String QUERY_USER = "?user=";
     private static final String QUERY_PASS = "&pass=";
     private static final int PORT = 80;
-
-    private userDTO user = null;
     SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
-    ConnectTask mtask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,87 +70,33 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             try {
                 FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
                 if (FORMATO.parse(expires).getTime() > System.currentTimeMillis()) {
-                    //compareTO
-                    //expires>=tactual sesion valida devuelve n>=0
-                    //expires<tactual sesion no valida devuelve n<0
-                    Toast.makeText(this, "Bienvenido" + nombre, Toast.LENGTH_LONG).show();
+                    //expires>=tactual sesion valida
                     Intent intent = new Intent(this, ServiceActivity.class);
                     intent.putExtra(ServiceActivity.PARAM_USER_NAME, nombre);
                     intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, expires);
                     startActivity(intent);
-                    //start activity
+                }
+                else{
+                    //expires<tactual sesion no valida
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Authetication fragment = Authetication.newInstance("", "");
+                    ft.add(R.id.main_container, fragment, "login");
+                    ft.commit();
                 }
             } catch (ParseException e_date) {
                 e_date.printStackTrace();
             }
 
         }
-
-       /* if(savedInstanceState!=null){
-            String name = savedInstanceState.getString("name");
-            String email = savedInstanceState.getString("email");
-            String pass = savedInstanceState.getString("pass");
-          //revisar lo de user
-
-        }
-        else {
-            user = new userDTO();
-
-        }*///p1
-
-
     }
 
-      /*  @Override
-        protected void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-
-            outState.putString("name",user.getUser_name());
-            outState.putString("pass",user.getUser_name());
-            outState.putString("email",user.getEmail_user());
-        }*/
 
     @Override
     public void onFragmentInteraction(userDTO user) {
-        //this.user.setUser_name(user.getUser_name());
-        //this.user.setEmail_user(user.getEmail_user());
         Autentica userLOG = new Autentica();
         userLOG.execute(user);
 
     }
-
-    //Practica 2
-    public String readServer(userDTO user) {
-        try {
-            //URL url = new URL(domain);
-            //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            //DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-            Socket socket = new Socket(user.getDominio(), user.getPuerto());
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeUTF("GET /~jccuevas/ssmm/login.php?user=user1&pass=12341234 HTTP/1.1\r\nhost:www4.ujaen.es\r\n\r\n");
-            dataOutputStream.flush();
-
-            StringBuilder sb = new StringBuilder();
-            BufferedReader bis;
-            bis = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String line = "";
-            while ((line = bis.readLine()) != null) {
-                sb.append(line);
-            }
-            final String datos = sb.toString();
-
-
-            return datos;
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-
-    }//esto por ahora no
 
 
     public class Autentica extends AsyncTask<userDTO, Void, userDTO> { //recibo un usario sin sesion ,iteracion intermedia,devuelvo un usuario con SSID y EXPIRES
@@ -197,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                         }
                         br.close();
                     } else if (code.startsWith(HTTP_STATUS_ERRORLOCALCODE)) {//errores 4XX
+                        //revisar lo de start
                         Toast.makeText(getApplicationContext(), "Vuelva a intentarlo", Toast.LENGTH_LONG).show();
                         data = null;//cambiar result
                     } else if (code.startsWith(HTTP_STATUS_ERRORSERVERCODE)) {//errores 5XX
@@ -223,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             super.onPostExecute(user);
 
             if (user != null) {
-                Toast.makeText(getApplicationContext(), "Correcto", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.correct_log_process +" "+ user.getUser_name(), Toast.LENGTH_LONG).show();
                 SharedPreferences sp = getPreferences(MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putString("user", user.getUser_name());
@@ -346,46 +290,6 @@ class ConnectTask extends AsyncTask<userDTO, Integer, String> {
         TextView banner = findViewById(R.id.main_degree);
         banner.setText(R.string.main_connecting);
     }
-//revisar
-//        @Override
-//        protected String doInBackground(userDTO... user) {
-//            try {
-//                //URL url = new URL(domain);
-//                //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                //DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-//                Socket socket = new Socket(user[0].getDominio(), user[0].getPuerto());
-//                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-//                dataOutputStream.writeUTF("GET /~jccuevas/ssmm/login.php?user=user1&pass=12341234 HTTP/1.1\r\nhost:www4.ujaen.es\r\n\r\n");
-//                dataOutputStream.flush();
-//
-//                StringBuilder sb = new StringBuilder();
-//                BufferedReader bis;
-//                bis = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//                String line = "";
-//                while ((line = bis.readLine()) != null) {
-//                    sb.append(line);
-//                    publishProgress(line.length());
-//                    try {
-//                        Thread.sleep(2000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                final String datos = sb.toString();
-//
-//
-//                return datos;
-//
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            return null;
-//
-//        }
-
     @Override
     protected String doInBackground(userDTO... userDTOS) {
 

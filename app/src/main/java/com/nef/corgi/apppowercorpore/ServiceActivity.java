@@ -65,21 +65,18 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
 
 
 
-// AL menu lateral le pasamos el nombre del user
+        // AL menu lateral le pasamos el nombre del user
         //TODO revisar si hay un login previo
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.show_user_name);
         navUsername.setTextColor(getColor(R.color.colorPrimaryDark));
         navUsername.setText(s_user);
 
-
         //Introduce el expires
         View subheaderView = navigationView.getHeaderView(1);
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
         navsubHeader.setText(s_expires);
-
-        Toast.makeText(this, "Hola "+s_user , Toast.LENGTH_LONG).show();
     }
     @Override
     public void onBackPressed() {
