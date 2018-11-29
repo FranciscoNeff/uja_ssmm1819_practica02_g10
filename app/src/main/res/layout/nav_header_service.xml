@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sh_user"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:backgroundTint="@color/colorPrimary"
+    android:background="@drawable/gradientxml"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:id="@+id/sh_user"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="118dp"
         android:layout_height="96dp"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="8dp"
         app:srcCompat="@drawable/ic_menu_user" />

@@ -86,7 +86,7 @@ public class Table_workout extends AppCompatActivity  {
             //String s_fecha = FORMATOFECHA.format(fecha);
             TextView datetext = new TextView(this);
             datetext.setText(fecha.toString());
-            datetext.setTextColor(getColor(R.color.colorAccent));
+            datetext.setTextColor(getColor(R.color.colorPrimary));
             row_body.addView(datetext);
             TextView texto = new TextView(this);
             texto.setText("Texto");

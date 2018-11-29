@@ -1,8 +1,11 @@
 package com.nef.corgi.apppowercorpore;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,16 +19,16 @@ import android.widget.Toast;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.Socket;
+
 import java.net.URL;
 import java.text.ParseException;
-import java.text.ParsePosition;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     public static final String PARAM_USER_NAME="name";
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_EXPIRED="expires";
+    public Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,15 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         Log.d("INICIO", "Bienvenido a PowerCorpore");
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag_inicio = fm.findFragmentById(R.id.main_container);
-        //Binvenida y muestra el nombre de usuario,en vez del de la app//si se comenta el menu lateral es como se ve mejor
+        //Binvenida y muestra el nombre de usuario,en vez del de la app//si se comenta el menu lateral es como se ve mejo
+
+//        ConnectivityManager cm = //de android developer
+//                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//
+//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+//        boolean isConnected = activeNetwork != null &&
+//                activeNetwork.isConnectedOrConnecting();
+
         if (frag_inicio == null) {
             FragmentTransaction ft = fm.beginTransaction();
             Authetication fragment = Authetication.newInstance("", "");
@@ -68,8 +81,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         SharedPreferences sf = getPreferences(MODE_PRIVATE);
         String expires = sf.getString("EXPIRES", "");
         String nombre = sf.getString("USER", "");
-        if(nombre !="" && expires !=""){
-       // if (nombre.length() > 0 && expires.length() > 0) {
+        if (nombre.length() > 0 && expires.length() > 0) {
 
             //comprobar el expires para q la sesion sea valida
             try {
@@ -78,19 +90,20 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                     //expires>=tactual sesion valida
                     Intent intent = new Intent(this, ServiceActivity.class);
                     intent.putExtra(ServiceActivity.PARAM_USER_NAME, nombre);
-                    intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, FORMATO.format(expires));
+                    intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, expires);//Maldito format
                     startActivity(intent);
                 }
                 else{
                     //expires<tactual sesion no valida
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Authetication fragment = Authetication.newInstance("", "");
-                    ft.add(R.id.main_container, fragment, "login");
-                    ft.commit();
+//                    FragmentTransaction ft = fm.beginTransaction();
+//                    Authetication fragment = Authetication.newInstance("", "");
+//                    ft.add(R.id.main_container, fragment, "login");
+//                    ft.commit();
+                    Toast.makeText(this,"Sesion caducada",Toast.LENGTH_SHORT).show();
                 }
-            } catch (ParseException e_date) {
+           } catch (ParseException e_date) {
                 e_date.printStackTrace();
-            }
+           }
 
         }
     }
@@ -175,8 +188,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 Toast.makeText(getApplicationContext(), getString(R.string.correct_log_process )+ user.getUser_name(), Toast.LENGTH_LONG).show();
                 SharedPreferences sp = getPreferences(MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString("user", user.getUser_name());
-                editor.putString("Email", user.getEmail_user());
+                editor.putString("USER", user.getUser_name());
+                editor.putString("EMAIL", user.getEmail_user());
                 editor.putString("SID", user.getSid());
                 FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
                 Date temp = (user.getExpires());
@@ -197,8 +210,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             } else {
                 SharedPreferences sp = getPreferences(MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString("user","");
-                editor.putString("Email", "");
+                editor.putString("USER","");
+                editor.putString("EMAIL", "");
                 editor.putString("SID", "");
                 editor.putString("EXPIRES", "");
                 editor.commit();
@@ -289,6 +302,7 @@ class ConnectTask extends AsyncTask<UserDTO, Integer, String> {
     }
     @Override
     protected String doInBackground(UserDTO... userDTOS) {
+        //Hacer un check db
 
         try {
             return downloadURL( userDTOS[0].getUser_name(), userDTOS[0].getPass());

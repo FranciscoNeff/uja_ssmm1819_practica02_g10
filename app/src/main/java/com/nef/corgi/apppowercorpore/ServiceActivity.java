@@ -71,7 +71,6 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
         navUsername.setText(s_user);
 
         //Introduce el expires
-        //View subheaderView = navigationView.getHeaderView(1);
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
         navsubHeader.setText(s_expires);
