@@ -1,8 +1,10 @@
 package com.nef.corgi.apppowercorpore;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_EXPIRED="expires";
     public Context context;
-
+protected StatusNetkwork  networkStateReceiver= new StatusNetkwork();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +64,9 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag_inicio = fm.findFragmentById(R.id.main_container);
         //Binvenida y muestra el nombre de usuario,en vez del de la app//si se comenta el menu lateral es como se ve mejo
-
-//        ConnectivityManager cm = //de android developer
-//                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-//        boolean isConnected = activeNetwork != null &&
-//                activeNetwork.isConnectedOrConnecting();
+            networkStateReceiver.onReceive(getApplicationContext(), getIntent());
+            //TODO forzar desconectado
+//Seria interesante forzarlo a que lo haga una vez siempre y cuando este desconectado
 
         if (frag_inicio == null) {
             FragmentTransaction ft = fm.beginTransaction();
@@ -93,19 +91,24 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                     intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, expires);//Maldito format
                     startActivity(intent);
                 }
-                else{
-                    //expires<tactual sesion no valida
-//                    FragmentTransaction ft = fm.beginTransaction();
-//                    Authetication fragment = Authetication.newInstance("", "");
-//                    ft.add(R.id.main_container, fragment, "login");
-//                    ft.commit();
-                    Toast.makeText(this,"Sesion caducada",Toast.LENGTH_SHORT).show();
-                }
            } catch (ParseException e_date) {
                 e_date.printStackTrace();
            }
 
         }
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+    @Override
+    public void onPause() {
+        unregisterReceiver(networkStateReceiver);
+        super.onPause();
     }
 
 

@@ -26,5 +26,7 @@
     <string name="main_connecting">Conectando</string>
     <string name="correct_log_process">"Bienvenido "</string>
     <string name="http_code_error_4XX">Ha ocurrido un fallo, vuelve a intentarlo</string>
-    <string name="http_code_error_XX">Problemas con el servidor, intentalo mas tarde</string>
+    <string name="Disconnected">Estas desconectado</string>
+    <string name="Connect">Estas conectado</string>
+    <string name="http_code_error_5XX">Problemas con el servidor, intentalo mas tarde</string>
 </resources>
