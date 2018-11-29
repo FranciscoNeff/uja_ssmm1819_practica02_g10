@@ -28,4 +28,6 @@
     <string name="main_connecting">Connecting</string>
     <string name="fragment_auth_hello">Auteticando</string>
     <string name="correct_log_process">"Welcome "</string>
+    <string name="http_code_error_4XX">Sorry, please try again</string>
+    <string name="http_code_error_5XX">Sorry, problem server, try in other moment</string>
 </resources>

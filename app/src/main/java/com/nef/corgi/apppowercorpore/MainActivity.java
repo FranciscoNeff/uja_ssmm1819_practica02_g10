@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         SharedPreferences sf = getPreferences(MODE_PRIVATE);
         String expires = sf.getString("EXPIRES", "");
         String nombre = sf.getString("USER", "");
-        if (nombre.length() > 0 && expires.length() > 0) {
+        if(nombre !="" && expires !=""){
+       // if (nombre.length() > 0 && expires.length() > 0) {
 
             //comprobar el expires para q la sesion sea valida
             try {
@@ -116,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 data = userDTOS[0];
                 //TODO hacer la conexion y la autenticacion
                 //REVISAR ejemplos tema 3
-                data.setDominio(DOMAIN);
-                data.setPuerto(PORT);
+                data.setDominio(DOMAIN);//se dejan activos por si en un futuro estos actuan a traves de un dominio distinto
+                data.setPuerto(PORT);//pero tanto el dominio como el puerto sera fijos
                 String service = SERVICE_DEFAULT_WEB + data.getDominio() + ":" + data.getPuerto() + RESOURCE + QUERY_USER + data.getUser_name() + QUERY_PASS + data.getPass();
                 try {
                     URL urlservice = new URL(service);
@@ -145,10 +146,10 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                         br.close();
                     } else if (code.startsWith(HTTP_STATUS_ERRORLOCALCODE)) {//errores 4XX
                         //revisar lo de start
-                        Toast.makeText(getApplicationContext(), "Vuelva a intentarlo", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getText(R.string.http_code_error_4XX), Toast.LENGTH_LONG).show();
                         data = null;//cambiar result
                     } else if (code.startsWith(HTTP_STATUS_ERRORSERVERCODE)) {//errores 5XX
-                        Toast.makeText(getApplicationContext(), "Problemas con el servidor intentelo mas tarde", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getText(R.string.http_code_error_5XX), Toast.LENGTH_LONG).show();
                         data = null;//cambiar result
                     }
                     connection.disconnect();//cierra la conexion
@@ -178,8 +179,9 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 editor.putString("Email", user.getEmail_user());
                 editor.putString("SID", user.getSid());
                 FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
-                String temp = FORMATO.format(user.getExpires());
-                editor.putString("EXPIRES", temp);
+                Date temp = (user.getExpires());
+                editor.putString("EXPIRES", FORMATO.format(temp));
+                editor.commit();
 
                /* SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
                 SharedPreferences.Editor edit2 = def.edit();
@@ -195,10 +197,11 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             } else {
                 SharedPreferences sp = getPreferences(MODE_PRIVATE);//crea un fichero con el nombre user.getUser_name()
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString("user", "");
+                editor.putString("user","");
                 editor.putString("Email", "");
                 editor.putString("SID", "");
                 editor.putString("EXPIRES", "");
+                editor.commit();
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 //TODO dar mas informacion
             }
@@ -265,17 +268,9 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         } catch (MalformedURLException mex) {
             result = "URL mal formateada: " + mex.getMessage();
             System.out.println(result);
-                 /*  mURL.post(new Runnable() {
-                   @Override
-                     public void run() {
-                          mURL.setError(getString(R.string.network_url_error));
-                      }
-                  });*///preguntar por esto
         } catch (IOException e) {
             result = "Excepción: " + e.getMessage();
             System.out.println(result);
-
-
         } finally {
             if (is != null) {
                 is.close();
@@ -296,7 +291,7 @@ class ConnectTask extends AsyncTask<UserDTO, Integer, String> {
     protected String doInBackground(UserDTO... userDTOS) {
 
         try {
-            return downloadURL(userDTOS[0].getUser_name(), userDTOS[0].getPass());
+            return downloadURL( userDTOS[0].getUser_name(), userDTOS[0].getPass());
         } catch (IOException ioex) {
             ioex.printStackTrace();
             return null;

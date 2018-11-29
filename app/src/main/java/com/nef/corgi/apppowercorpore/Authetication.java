@@ -22,15 +22,12 @@ public class Authetication extends Fragment {
     private OnFragmentInteractionListener mListener;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    public static final String PARAM_USER_NAME="name";
-    public static final String PARAM_USER_EMAIL="email";
-    public static final String PARAM_USER_EXPIRED="expires";
-    SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
     // TODO: Rename and change types of parameters
-    private String s_user;
-    private String s_pass;
-    private String s_email;
-    private String s_expires;
+    private String mParam1;
+    private String mParam2;
     public Authetication(){}
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -39,8 +36,8 @@ public class Authetication extends Fragment {
     public static Authetication newInstance(String param1, String param2) {
         Authetication fragment = new Authetication();
         Bundle args = new Bundle();
-        args.putString(PARAM_USER_NAME, param1);
-        args.putString(PARAM_USER_EMAIL, param2);//revisar formato de fecha
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,9 +46,8 @@ public class Authetication extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            s_user = getArguments().getString(PARAM_USER_NAME);
-            s_email = getArguments().getString(PARAM_USER_EMAIL);
-            s_expires = getArguments().getString(FORMATO.format(PARAM_USER_EXPIRED));
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

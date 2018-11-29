@@ -59,24 +59,19 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //Código práctica
         Intent intent = getIntent();
         String s_user = intent.getStringExtra(PARAM_USER_NAME);
         String s_sid = intent.getStringExtra(PARAM_USER_SID);
         String s_expires= intent.getStringExtra(PARAM_USER_EXPIRED);
-        //System.out.print(s_expires);
-
-
 
         // AL menu lateral le pasamos el nombre del user
-        //TODO revisar si hay un login previo
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.show_user_name);
         navUsername.setTextColor(getColor(R.color.colorPrimaryDark));
         navUsername.setText(s_user);
 
         //Introduce el expires
-        View subheaderView = navigationView.getHeaderView(1);
+        //View subheaderView = navigationView.getHeaderView(1);
         TextView navsubHeader= (TextView) headerView.findViewById(R.id.show_expires);
         navsubHeader.setTextColor(getColor(R.color.colorPrimaryDark));
         navsubHeader.setText(s_expires);
@@ -113,8 +108,7 @@ MonitorDTO pmon = new MonitorDTO("NameMonitor","MailMonitor");
 Envio envio=new Envio(USERLOG,pmon);
 envio.execute();
             }
-
-        return super.onOptionsItemSelected(item);
+            return true;
     }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
