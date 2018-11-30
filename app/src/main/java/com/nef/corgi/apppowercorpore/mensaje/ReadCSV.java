@@ -45,7 +45,7 @@ public class ReadCSV {
             exist = true;
             String line = "";
 
-            String[] ejercicios = {};//array con el nombre de los ejercicios
+            String ejercicios;//array con el nombre de los ejercicios
             int[] series = {};//array de series
             String[] repeticiones = {};//array de repeticiones
             //hacer un split por fechas//a la hora de guardar la rutina que se realiza, se guarda la fecha en la que se realiza la rutina
@@ -64,7 +64,7 @@ public class ReadCSV {
                     while ((Integer.parseInt(items[i])) != 00001010) {
                         rutina = null;
                         //Lectura
-                        ejercicios[i] = items[i];
+                        ejercicios = items[i];
                         i++;
                         do {
                             series[i] = (Integer.parseInt(items[i]));//leo la serie en la que esta, es un numero
