@@ -35,36 +35,33 @@ public class ReadCSV {
     solo al body de las rutinas
     ejercicios;series;repetciones CRLF
      */
-    public List<RutinaDTO> readRutinacsv () throws IOException {
-        List<RutinaDTO> rutinalistcsv = new ArrayList<>();
+    public RutinaDTO readRutinacsv () throws IOException {
+        List<RutinaDTO.Ejercicio> ejerciciolistcsv=new ArrayList<>();
         boolean exist=false;
         InputStream rutinacsv = context.getResources().openRawResource(R.raw.rutina_csv);
         BufferedReader reader = null;
             reader = new BufferedReader(new InputStreamReader(rutinacsv, Charset.forName("UTF-8")));
+        RutinaDTO rutina = new RutinaDTO();
         if(reader!=null) {
             exist = true;
             String line = "";
-
-            String ejercicios;//array con el nombre de los ejercicios
+            String n_ejercicios;//array con el nombre de los ejercicios
             int[] series = {};//array de series
             String[] repeticiones = {};//array de repeticiones
             //hacer un split por fechas//a la hora de guardar la rutina que se realiza, se guarda la fecha en la que se realiza la rutina
             /**/
-
-            int i = 0;
             while ((line = reader.readLine()) != null) {
-
-                line = reader.readLine();
-                String s_f_rutina=line;
-                //fecha
                 try {
-                    RutinaDTO rutina = new RutinaDTO();
-                    String[] items = line.split(";");//La cadena se trocea con ;
 
+                    RutinaDTO.Ejercicio ejercicio = null;
+                    String[] items = line.split(";");//La cadena se trocea con ;
+                    String s_f_rutina=items[0];
+                    String timerutina=items[1];
+                    int i = 2;
                     while ((Integer.parseInt(items[i])) != 00001010) {
                         rutina = null;
                         //Lectura
-                        ejercicios = items[i];
+                        n_ejercicios = items[i];
                         i++;
                         do {
                             series[i] = (Integer.parseInt(items[i]));//leo la serie en la que esta, es un numero
@@ -74,24 +71,27 @@ public class ReadCSV {
                         }
                         while (Integer.parseInt(items[i]) != 00001010); //deberia trocear hasta terminar toda la serie y repeticiones
                         i++;
-                        rutina.setNombreEjercicio(ejercicios);//introduce ejercicio
-                        rutina.setSerie(series);//introduce el array de series
-                        rutina.setRepeticiones(repeticiones);//introduce el array de repeticiones
-                        rutinalistcsv.add(rutina);//introduce el objeto rutina a la lista
+                        ejercicio.setNombreEjercicio(n_ejercicios); ;//introduce ejercicio
+                        ejercicio.setSerie(series);//introduce el array de series
+                        ejercicio.setRepeticiones(repeticiones);//introduce el array de repeticiones
+                        ejerciciolistcsv.add(ejercicio);
+                        rutina.setListaEjercicios(ejerciciolistcsv);//introduce la lista de ejercicios en la rutina
+                        rutina.setDiaRutina(s_f_rutina);//introduce la fecha que el dia realiza la rutina
+                        rutina.setTiempo(timerutina);//introcude el timestamp de la rutina
                     }
                 } catch (NullPointerException e) {//Tengo que poner el nullPointerException ya que con las demas excepciones da fallo
                     // ya que debido al metodo pide devolver un objeto
                     e.printStackTrace();
-                    rutinalistcsv.clear();
+                   rutina=null;
                 }
 
             }
         }else
-        {rutinalistcsv.clear();
+        {rutina=null;
         System.out.print("Archivo no encontrado");}
-        if(exist!=true){rutinalistcsv.clear();}
+        if(exist!=true){rutina=null;}
         reader.close();
-        return rutinalistcsv;
+        return rutina;
     }
 }
 

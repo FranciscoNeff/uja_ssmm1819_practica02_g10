@@ -102,7 +102,9 @@ public class RutinaDTO {
         public void setNombreEjercicio(String nombreEjercicio) {
             this.nombreEjercicio = nombreEjercicio;
         }
+        public Ejercicio(){
 
+        }
         public Ejercicio(String nombreEjercicio, int[] serie, String[] repeticiones) throws MalformedRutinaException {
     super();
             if (serie.length<0 ){// no deja ||serie=null

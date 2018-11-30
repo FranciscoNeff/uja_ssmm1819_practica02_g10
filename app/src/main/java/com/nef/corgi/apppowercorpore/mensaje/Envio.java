@@ -13,6 +13,7 @@ import com.nef.corgi.apppowercorpore.ServiceActivity;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -39,30 +40,34 @@ protected Boolean doInBackground(String... strings) {
     String csvuser=user.csvtoString();
     String csvmonitor=monitor.csvtoString();
         Boolean estado=null;
+    List<RutinaDTO.Ejercicio> ejerciciolistcsv=new ArrayList<>();
 
     String actualizacion;
     try {
         ReadCSV csvreader = new ReadCSV();
-        List<RutinaDTO> rutinalistcsv = csvreader.readRutinacsv();
-        if(rutinalistcsv.isEmpty()) { estado=false;//si la array esta vacia no actualizamos
+        RutinaDTO rutinacsv = csvreader.readRutinacsv();
+        RutinaDTO.Ejercicio ejercicio=null;
+        ejerciciolistcsv=rutinacsv.getListaEjercicios();
+        if(rutinacsv==null) { estado=false;//si la rutina esta vacia no actualizamos
         }
         else {
 
-            progreso=rutinalistcsv.size();
+            progreso=rutinacsv.getListaEjercicios().size();
             actualizacion = csvuser+ ";" + FORMATOFECHA.format(c.getTime()) + 00001010+csvmonitor;//Union del mansaje de cabecera de user y monitor
-
-            for (RutinaDTO rutinaeach : rutinalistcsv) {
-                if(!isCancelled()) {
-                    publishProgress((int)(rutinalistcsv.size()));
+            actualizacion=rutinacsv.csvtoStringRutina();
+           //for (int i=0;i<rutinacsv.getListaEjercicios().size();i++) {//se xq no me deja meter un foreach
+                for (RutinaDTO.Ejercicio ejercicioeach:ejerciciolistcsv) {
+                    if(!isCancelled()) {
+                        publishProgress((int)(ejerciciolistcsv.size()));
+                    }
+                    actualizacion=ejercicioeach.csvtoStringEjercicio();
+                    progreso++;
                 }
-                progreso++;
-
-                actualizacion = rutinaeach.csvtoString();
             }//mensaje de las rutinas
             //capturar las excepciones de actulizaciones
             //excepcion una cabeceras una de usuario una de monitor mas rutinalist.size()
             estado = true;
-        }
+
     }catch (IOException e)
     {
         actualizacion=null;
