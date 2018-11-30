@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_EXPIRED="expires";
     public Context context;
-protected StatusNetkwork  networkStateReceiver= new StatusNetkwork();
-
+public StatusNetkwork networkStateReceiver= new StatusNetkwork();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +123,7 @@ protected StatusNetkwork  networkStateReceiver= new StatusNetkwork();
         private static final String HTTP_STATUS_OKCODE = "200";
         private static final String HTTP_STATUS_ERRORLOCALCODE = "4";
         private static final String HTTP_STATUS_ERRORSERVERCODE = "5";
+        private static final String BAD_LOGGING="ERROR";
 
         @Override
         protected UserDTO doInBackground(UserDTO... userDTOS) {
@@ -148,6 +148,12 @@ protected StatusNetkwork  networkStateReceiver= new StatusNetkwork();
                     if (code.equalsIgnoreCase(HTTP_STATUS_OKCODE)) {//por aqui anda el fallo
                         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                         String line;
+                        line=br.readLine();
+                        if (line.startsWith(BAD_LOGGING)){
+                            Toast.makeText(getApplicationContext(),getString(R.string.Bad_logging),Toast.LENGTH_SHORT).show();
+                            result=null;
+                        }
+                        else{
                         while ((line = br.readLine()) != null) {
                             if (line.startsWith("SESSION-ID=")) {//compara que la cadena empiece de esta manera
                                 String parts[] = line.split("&");//para trocear una cadena se usa split, devuelve un array por cada trozo
@@ -159,14 +165,15 @@ protected StatusNetkwork  networkStateReceiver= new StatusNetkwork();
                                 }
                             }
                         }
+                        }
                         br.close();
                     } else if (code.startsWith(HTTP_STATUS_ERRORLOCALCODE)) {//errores 4XX
                         //revisar lo de start
                         Toast.makeText(getApplicationContext(), getText(R.string.http_code_error_4XX), Toast.LENGTH_LONG).show();
-                        data = null;//cambiar result
+                        result = null;
                     } else if (code.startsWith(HTTP_STATUS_ERRORSERVERCODE)) {//errores 5XX
                         Toast.makeText(getApplicationContext(), getText(R.string.http_code_error_5XX), Toast.LENGTH_LONG).show();
-                        data = null;//cambiar result
+                       result = null;
                     }
                     connection.disconnect();//cierra la conexion
                 } catch (MalformedURLException e) {

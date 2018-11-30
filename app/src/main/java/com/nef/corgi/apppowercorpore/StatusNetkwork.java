@@ -10,11 +10,12 @@ import android.widget.Toast;
 
 public class StatusNetkwork extends BroadcastReceiver {
     public Context c;
-
+public StatusNetkwork(){}
     public void onReceive(Context context, Intent intent) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = manager.getActiveNetworkInfo();
         onNetworkChange(ni);
+        c=context;
     }
     private void onNetworkChange(NetworkInfo networkInfo) {
         if (networkInfo != null) {
