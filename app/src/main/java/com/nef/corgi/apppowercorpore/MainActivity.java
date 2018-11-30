@@ -1,13 +1,9 @@
 package com.nef.corgi.apppowercorpore;
 
-
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.SharedPreferences;;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     private static final String QUERY_PASS = "&pass=";
     private static final int PORT = 80;
     SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
-    //Cambios para probar el inicio automatico
     public static final String PARAM_USER_NAME="name";
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_EXPIRED="expires";
@@ -74,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             Authetication fragment = Authetication.newInstance("", "");
             ft.add(R.id.main_container, fragment, "login");
             ft.commit();
-            //lanzar tarea asincrona
         } else
             Toast.makeText(this, getString(R.string.mainactivity_fragmentepresent), Toast.LENGTH_SHORT).show();
         SharedPreferences sf = getPreferences(MODE_PRIVATE);
@@ -132,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             UserDTO result = new UserDTO();
             if (userDTOS != null) {
                 data = userDTOS[0];
-                //TODO hacer la conexion y la autenticacion
-                //REVISAR ejemplos tema 3
                 data.setDominio(DOMAIN);//se dejan activos por si en un futuro estos actuan a traves de un dominio distinto
                 data.setPuerto(PORT);//pero tanto el dominio como el puerto sera fijos
                 String service = SERVICE_DEFAULT_WEB + data.getDominio() + ":" + data.getPuerto() + RESOURCE + QUERY_USER + data.getUser_name() + QUERY_PASS + data.getPass();
@@ -146,13 +138,11 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                     connection.setDoInput(true);
                     connection.connect();
                     String code = String.valueOf(connection.getResponseCode());//recibe el codigo de respuesta de la peticion 1xx 2xx etc
-                    if (code.equalsIgnoreCase(HTTP_STATUS_OKCODE)) {//por aqui anda el fallo
+                    if (code.equalsIgnoreCase(HTTP_STATUS_OKCODE)) {
                         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                         String line;
-
                         while ((line = br.readLine()) != null) {
                             if (line.startsWith(BAD_LOGGING)){
-
                                 result=null;
                             }
                             else{
@@ -228,7 +218,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 editor.putString("SID", "");
                 editor.putString("EXPIRES", "");
                 editor.commit();
-              //  Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(),R.string.Bad_logging,Toast.LENGTH_SHORT).show();
                 //TODO dar mas informacion
             }
@@ -267,8 +256,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             String tempString = "";
             String url = SERVICE_DEFAULT_WEB + DOMAIN + RESOURCE + QUERY_PASS + user + QUERY_PASS + pass;
             URL service_url = new URL(url);
-            System.out.println("Abriendo conexión: " + service_url.getHost()
-                    + " puerto=" + service_url.getPort());
             conn = (HttpURLConnection) service_url.openConnection();
             conn.setReadTimeout(10000 /* milliseconds */);
             conn.setConnectTimeout(15000 /* milliseconds */);
@@ -280,12 +267,10 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
             String mimeType = conn.getHeaderField("Content-Type");
             String encoding = mimeType.substring(mimeType.indexOf(";"));
-
             Log.d(SERVICE_DEFAULT_WEB, "The response is: " + response);
             is = conn.getInputStream();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
             while ((tempString = br.readLine()) != null) {
                 contentAsString = contentAsString + tempString;
                 //task.onProgressUpdate(contentAsString.length());
