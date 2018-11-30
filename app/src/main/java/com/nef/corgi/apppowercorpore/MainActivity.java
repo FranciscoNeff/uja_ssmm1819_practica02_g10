@@ -54,19 +54,21 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_EXPIRED="expires";
     public Context context;
-public StatusNetkwork networkStateReceiver= new StatusNetkwork();
+    public StatusNetkwork networkStateReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("INICIO", "Bienvenido a PowerCorpore");
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag_inicio = fm.findFragmentById(R.id.main_container);
         //Binvenida y muestra el nombre de usuario,en vez del de la app//si se comenta el menu lateral es como se ve mejo
-            networkStateReceiver.onReceive(getApplicationContext(), getIntent());
+        networkStateReceiver=new StatusNetkwork(getApplicationContext());
+        networkStateReceiver.onReceive(getApplicationContext(), getIntent());
             //TODO forzar desconectado
 //Seria interesante forzarlo a que lo haga una vez siempre y cuando este desconectado
-
+//el primer conectado lo lanza dos veces
         if (frag_inicio == null) {
             FragmentTransaction ft = fm.beginTransaction();
             Authetication fragment = Authetication.newInstance("", "");
@@ -110,7 +112,6 @@ public StatusNetkwork networkStateReceiver= new StatusNetkwork();
         super.onPause();
     }
 
-
     @Override
     public void onFragmentInteraction(UserDTO user) {
         Autentica userLOG = new Autentica();
@@ -148,13 +149,13 @@ public StatusNetkwork networkStateReceiver= new StatusNetkwork();
                     if (code.equalsIgnoreCase(HTTP_STATUS_OKCODE)) {//por aqui anda el fallo
                         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                         String line;
-                        line=br.readLine();
-                        if (line.startsWith(BAD_LOGGING)){
-                            Toast.makeText(getApplicationContext(),getString(R.string.Bad_logging),Toast.LENGTH_SHORT).show();
-                            result=null;
-                        }
-                        else{
+
                         while ((line = br.readLine()) != null) {
+                            if (line.startsWith(BAD_LOGGING)){
+
+                                result=null;
+                            }
+                            else{
                             if (line.startsWith("SESSION-ID=")) {//compara que la cadena empiece de esta manera
                                 String parts[] = line.split("&");//para trocear una cadena se usa split, devuelve un array por cada trozo
                                 if (parts.length == 2) {
@@ -164,6 +165,7 @@ public StatusNetkwork networkStateReceiver= new StatusNetkwork();
                                     }
                                 }
                             }
+
                         }
                         }
                         br.close();
@@ -178,9 +180,10 @@ public StatusNetkwork networkStateReceiver= new StatusNetkwork();
                     connection.disconnect();//cierra la conexion
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                    data = null;//cambiar por result
+                    result = null;//cambiar por result
                 } catch (IOException ioex) {
                     ioex.printStackTrace();
+                    result=null;
                 } finally {
                     return result;
                 }
@@ -225,7 +228,8 @@ public StatusNetkwork networkStateReceiver= new StatusNetkwork();
                 editor.putString("SID", "");
                 editor.putString("EXPIRES", "");
                 editor.commit();
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.Bad_logging,Toast.LENGTH_SHORT).show();
                 //TODO dar mas informacion
             }
     }
