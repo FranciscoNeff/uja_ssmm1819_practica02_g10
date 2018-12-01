@@ -11,7 +11,8 @@ public class RutinaDTO {
     private String diaRutina;
     List<Ejercicio> listaEjercicios =new ArrayList<Ejercicio>();
     private  String tiempo; //cuando se guarde este valor ya estara guardado como la diferencia entre empezar y terminar
-
+    private static final String DL =";";
+    private static final int FIN = 00001010 ;
     public List<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
@@ -46,7 +47,7 @@ public class RutinaDTO {
 
         if(datos==null)
             throw new MalformedRutinaException(1);
-        String parts[] = datos.split(";");
+        String parts[] = datos.split(DL);
 
         this.diaRutina = diaRutina;
         this.listaEjercicios=listaEjercicios;
@@ -58,8 +59,8 @@ public class RutinaDTO {
 
     public String csvtoStringRutina() {
         SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
-        String csv=FORMATOFECHA.format(diaRutina)+";"+tiempo;
-        return csv+00001010;
+        String csv=FORMATOFECHA.format(diaRutina)+DL+tiempo;
+        return csv+FIN;
     }
 
     public class MalformedRutinaException extends Exception {
@@ -127,9 +128,9 @@ public class RutinaDTO {
         public String csvtoStringEjercicio() {
             String csvejercicio= nombreEjercicio;
              for (int i=0;i<serie.length;i++){
-              csvejercicio= ";" +serie[i] +";"+ repeticiones[i];
+              csvejercicio= DL +serie[i] +DL+ repeticiones[i];
              }
-            return csvejercicio+00001010;
+            return csvejercicio+FIN;
         }
     }
 

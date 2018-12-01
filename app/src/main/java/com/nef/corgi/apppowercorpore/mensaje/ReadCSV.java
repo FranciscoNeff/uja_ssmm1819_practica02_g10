@@ -30,6 +30,8 @@ public class ReadCSV {
         context = c;
     }
     public ReadCSV(){}
+    private static final String DL =";";
+    private static final int FIN = 00001010 ;
     /*
     En este codigo desfragmentamos un formato csv que seria el correspondiente
     solo al body de las rutinas
@@ -48,17 +50,16 @@ public class ReadCSV {
             String n_ejercicios;//array con el nombre de los ejercicios
             int[] series = {};//array de series
             String[] repeticiones = {};//array de repeticiones
-            //hacer un split por fechas//a la hora de guardar la rutina que se realiza, se guarda la fecha en la que se realiza la rutina
-            /**/
+            //a la hora de guardar la rutina que se realiza, se guarda la fecha en la que se realiza la rutina
             while ((line = reader.readLine()) != null) {
                 try {
 
                     RutinaDTO.Ejercicio ejercicio = null;
-                    String[] items = line.split(";");//La cadena se trocea con ;
+                    String[] items = line.split(DL);//La cadena se trocea con ;
                     String s_f_rutina=items[0];
                     String timerutina=items[1];
                     int i = 2;
-                    while ((Integer.parseInt(items[i])) != 00001010) {
+                    while ((Integer.parseInt(items[i])) != FIN) {
                         rutina = null;
                         //Lectura
                         n_ejercicios = items[i];
@@ -69,7 +70,7 @@ public class ReadCSV {
                             repeticiones[i] = items[i];//esto es un string
                             i++;
                         }
-                        while (Integer.parseInt(items[i]) != 00001010); //deberia trocear hasta terminar toda la serie y repeticiones
+                        while (Integer.parseInt(items[i]) != FIN); //deberia trocear hasta terminar toda la serie y repeticiones
                         i++;
                         ejercicio.setNombreEjercicio(n_ejercicios); ;//introduce ejercicio
                         ejercicio.setSerie(series);//introduce el array de series

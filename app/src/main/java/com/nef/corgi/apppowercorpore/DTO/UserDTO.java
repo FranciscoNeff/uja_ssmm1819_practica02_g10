@@ -10,7 +10,7 @@ public class UserDTO {
     private Date expires;
     private String dominio;
     private int puerto;
-
+    private static final String DL =";";
     public String getSid() {
         return sid;
     }
@@ -68,10 +68,22 @@ public class UserDTO {
     }
     public UserDTO (){}
 
-    public UserDTO(String user_name, String pass,String email_user ) {
+    public UserDTO(String user_name, String pass,String email_user )
+
+    throws MalformedUserException{
+
         this.user_name = user_name;
+        if (user_name.length()<4){
+            throw new MalformedUserException(2);
+        }
+        this.pass = pass;
+        if (pass.length()<4){
+            throw new MalformedUserException(3);
+        }
         this.email_user = email_user;
-        this.pass = pass;//revisar lo del pass xq no lo coje
+        if (email_user.length()<9){
+            throw new MalformedUserException(4);
+        }
         // como tanto el dominio como el puerto permanecera invisibles al usuario estos se pasara con un valor predifinido al usuario
         //dominio ="labtelemaujaen.es";
         //puerto=80;
@@ -97,7 +109,20 @@ public class UserDTO {
 
 
     public String csvtoString() {
-        return  user_name +";"+ email_user ;
+        return  user_name +DL+ email_user ;
+    }
+
+    private class MalformedUserException extends Exception {
+        private int type = 0;
+        private static final int USER_CORRECTA = 0;
+        private static final int FALTAN_ELEMENTOS = 1;
+        private static final int BAD_NAME = 2;
+        private static final int BAD_PASS = 3;
+        private static final int BAD_EMAIL = 4;
+        private
+        MalformedUserException(int type){
+            this.type=type;
+        }
     }
 }
 

@@ -24,6 +24,8 @@ public class Envio extends AsyncTask<String, Integer, Boolean> {
     MonitorDTO monitor = null;
     private ProgressBar progressBar=null;
     SimpleDateFormat FORMATOFECHA = new SimpleDateFormat("DD/MM/AAAA");
+    private static final String DL =";";
+    private static final int FIN = 00001010 ;
     public int progreso=0;
     Calendar c= new GregorianCalendar();
     public Envio(Context c,UserDTO u, MonitorDTO mon) {
@@ -53,7 +55,7 @@ protected Boolean doInBackground(String... strings) {
         else {
 
             progreso=rutinacsv.getListaEjercicios().size();
-            actualizacion = csvuser+ ";" + FORMATOFECHA.format(c.getTime()) + 00001010+csvmonitor;//Union del mansaje de cabecera de user y monitor
+            actualizacion = csvuser+ DL + FORMATOFECHA.format(c.getTime()) + FIN +csvmonitor;//Union del mansaje de cabecera de user y monitor
             actualizacion=rutinacsv.csvtoStringRutina();
            //for (int i=0;i<rutinacsv.getListaEjercicios().size();i++) {//se xq no me deja meter un foreach
                 for (RutinaDTO.Ejercicio ejercicioeach:ejerciciolistcsv) {

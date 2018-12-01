@@ -3,7 +3,8 @@ package com.nef.corgi.apppowercorpore.DTO;
 public class MonitorDTO {
     String nameM;
     String emailM;
-
+    private static final String DL =";";
+    private static final int FIN = 00001010 ;
     public String getNameM() {
         return nameM;
     }
@@ -26,6 +27,6 @@ public class MonitorDTO {
     }
 public MonitorDTO(){}
     public String csvtoString() {
-        return  nameM +";"+ emailM +00001010 ;
+        return  nameM +DL+ emailM +FIN ;
     }
 }
