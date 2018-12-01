@@ -72,13 +72,19 @@ public class ReadCSV {
                         }
                         while (Integer.parseInt(items[i]) != FIN); //deberia trocear hasta terminar toda la serie y repeticiones
                         i++;
-                        ejercicio.setNombreEjercicio(n_ejercicios); ;//introduce ejercicio
-                        ejercicio.setSerie(series);//introduce el array de series
-                        ejercicio.setRepeticiones(repeticiones);//introduce el array de repeticiones
-                        ejerciciolistcsv.add(ejercicio);
-                        rutina.setListaEjercicios(ejerciciolistcsv);//introduce la lista de ejercicios en la rutina
-                        rutina.setDiaRutina(s_f_rutina);//introduce la fecha que el dia realiza la rutina
-                        rutina.setTiempo(timerutina);//introcude el timestamp de la rutina
+                        try{
+                            ejercicio.setNombreEjercicio(n_ejercicios);//introduce ejercicio
+                            ejercicio.setSerie(series);//introduce el array de series
+                            ejercicio.setRepeticiones(repeticiones);//introduce el array de repeticiones
+                            ejerciciolistcsv.add(ejercicio);
+                            rutina = new RutinaDTO(s_f_rutina,timerutina,ejerciciolistcsv);
+                       //introduce la lista de ejercicios en la rutina
+                        //introduce la fecha que el dia realiza la rutina
+                        //introcude el timestamp de la rutina
+                        }catch (RutinaDTO.MalformedRutinaException e){
+                            e.printStackTrace();
+                            rutina=null;
+                        }
                     }
                 } catch (NullPointerException e) {//Tengo que poner el nullPointerException ya que con las demas excepciones da fallo
                     // ya que debido al metodo pide devolver un objeto

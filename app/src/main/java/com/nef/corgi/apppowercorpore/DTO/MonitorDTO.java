@@ -21,12 +21,28 @@ public class MonitorDTO {
         this.emailM = emailM;
     }
 
-    public MonitorDTO(String nameM, String emailM) {
+    public MonitorDTO(String nameM, String emailM) throws MalformedMonitorException{
+       if(nameM.length()<4){
+           throw new MalformedMonitorException(1);
+       }
+        if(emailM.length()<4){
+            throw new MalformedMonitorException(1);
+        }
         this.nameM = nameM;
         this.emailM = emailM;
     }
 public MonitorDTO(){}
     public String csvtoString() {
         return  nameM +DL+ emailM +FIN ;
+    }
+
+    private class MalformedMonitorException extends Exception {
+        private int type = 0;
+        private static final int MONITOR_CORRECTO = 0;
+        private static final int FALTAN_ELEMENTOS = 1;
+        private
+        MalformedMonitorException (int type){
+            this.type=type;
+        }
     }
 }

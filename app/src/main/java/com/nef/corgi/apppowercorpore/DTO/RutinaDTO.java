@@ -20,7 +20,6 @@ public class RutinaDTO {
     public void setListaEjercicios(List<Ejercicio> listaEjercicios) {
         this.listaEjercicios = listaEjercicios;
     }
-
     public String getDiaRutina() {
         return diaRutina;
     }
@@ -41,16 +40,17 @@ public class RutinaDTO {
      * <datos> = <rutina><PUNTOYCOMA><repeticiones>
      *
      *
-     * @param datos
      */
-    public RutinaDTO(String datos,List<Ejercicio> listaEjercicios) throws MalformedRutinaException{
-
-        if(datos==null)
-            throw new MalformedRutinaException(1);
-        String parts[] = datos.split(DL);
-
+    public RutinaDTO(String diaRutina,String tiempo,List<Ejercicio> listaEjercicios) throws MalformedRutinaException{
+if(diaRutina.length()<0){
+    new MalformedRutinaException(1);
+}
+        if(tiempo.length()<0){
+            new MalformedRutinaException(1);
+        }
         this.diaRutina = diaRutina;
-        this.listaEjercicios=listaEjercicios;
+    this.listaEjercicios = listaEjercicios;
+
         this.tiempo=tiempo;
     }
 
