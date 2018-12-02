@@ -50,7 +50,6 @@ public class ReadCSV {
             String n_ejercicios;//array con el nombre de los ejercicios
             int[] series = {};//array de series
             String[] repeticiones = {};//array de repeticiones
-            //a la hora de guardar la rutina que se realiza, se guarda la fecha en la que se realiza la rutina
             while ((line = reader.readLine()) != null) {
                 try {
 
