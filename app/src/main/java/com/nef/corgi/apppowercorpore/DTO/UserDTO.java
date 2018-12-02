@@ -112,7 +112,7 @@ public class UserDTO {
         return  user_name +DL+ email_user ;
     }
 
-    private class MalformedUserException extends Exception {
+public class MalformedUserException extends Exception {
         private int type = 0;
         private static final int USER_CORRECTA = 0;
         private static final int FALTAN_ELEMENTOS = 1;

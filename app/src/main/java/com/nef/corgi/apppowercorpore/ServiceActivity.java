@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
+import com.nef.corgi.apppowercorpore.DTO.MonitorDTO.MalformedMonitorException;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.mensaje.Envio;
 
@@ -103,7 +104,12 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
 
         //llamada a la actualizacion de datos
         if (id == R.id.action_update) {//codigo para actualizar las rutinas de cliente a server
-MonitorDTO pmon = new MonitorDTO("NameMonitor","MailMonitor");
+            MonitorDTO pmon;
+            try {
+               pmon = new MonitorDTO("NameMonitor", "MailMonitor");
+            }catch (MalformedMonitorException e){
+                pmon=null;
+            }
 Envio envio=new Envio(USERLOG,pmon);
 envio.execute();
             }

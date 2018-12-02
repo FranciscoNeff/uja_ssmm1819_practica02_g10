@@ -36,7 +36,7 @@ public MonitorDTO(){}
         return  nameM +DL+ emailM +FIN ;
     }
 
-    private class MalformedMonitorException extends Exception {
+    public class MalformedMonitorException extends Exception {
         private int type = 0;
         private static final int MONITOR_CORRECTO = 0;
         private static final int FALTAN_ELEMENTOS = 1;

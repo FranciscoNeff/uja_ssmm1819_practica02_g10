@@ -79,6 +79,7 @@ protected Boolean doInBackground(String... strings) {
         /*
          * Habria que añadir un enviar al servidor o bien al mail permitente del monitor
          * actualizacion = a formato mensaje en csv a mandar
+         * se envia si el estado es true, se indica un fallo si estadao es false
          * */
         return estado;
         }

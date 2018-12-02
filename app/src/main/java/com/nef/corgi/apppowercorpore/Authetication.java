@@ -63,7 +63,11 @@ public class Authetication extends Fragment {
                String s_user = name.getEditableText().toString();
                String s_pass = pass.getEditableText().toString();
                 String s_email = email.getEditableText().toString();
-                user = new UserDTO(s_user, s_pass, s_email);
+                try {
+                    user = new UserDTO(s_user, s_pass, s_email);
+                }catch (UserDTO.MalformedUserException e){
+                    user=null;
+                }
                 mListener.onFragmentInteraction(user);//le pasamos el usuario
 
             }
