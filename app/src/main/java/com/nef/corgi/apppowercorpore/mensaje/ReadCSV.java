@@ -8,6 +8,7 @@ import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 import com.nef.corgi.apppowercorpore.R;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,7 +41,7 @@ public class ReadCSV {
     public RutinaDTO readRutinacsv () throws IOException {
         List<RutinaDTO.Ejercicio> ejerciciolistcsv=new ArrayList<>();
         boolean exist=false;
-        InputStream rutinacsv = context.getResources().openRawResource(R.raw.rutina_csv);
+        InputStream rutinacsv = context.getResources().openRawResource(R.raw.rutina_csv);//TODO nunca llega a leer bien el recurso
         BufferedReader reader = null;
             reader = new BufferedReader(new InputStreamReader(rutinacsv, Charset.forName("UTF-8")));
         RutinaDTO rutina = new RutinaDTO();

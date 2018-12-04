@@ -30,4 +30,5 @@
     <string name="Connect">Estas conectado</string>
     <string name="http_code_error_5XX">Problemas con el servidor, intentalo mas tarde</string>
     <string name="Bad_logging">Has introducido mal el usuario o contraseña</string>
+    <string name="Incorrect_Values">Valores de usuario incorrectos, inserte cualquiera</string>
 </resources>

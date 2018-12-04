@@ -24,6 +24,7 @@ public class Authetication extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+   public Context context;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -65,10 +66,13 @@ public class Authetication extends Fragment {
                 String s_email = email.getEditableText().toString();
                 try {
                     user = new UserDTO(s_user, s_pass, s_email);
+                    mListener.onFragmentInteraction(user);//le pasamos el usuario
                 }catch (UserDTO.MalformedUserException e){
+                    //TODO revisar esto xq da fallo por los valores minimos de las excepciones
+                    //Toast.makeText(context.getApplicationContext(),R.string.Incorrect_Values,Toast.LENGTH_SHORT).show();
                     user=null;
                 }
-                mListener.onFragmentInteraction(user);//le pasamos el usuario
+
 
             }
 

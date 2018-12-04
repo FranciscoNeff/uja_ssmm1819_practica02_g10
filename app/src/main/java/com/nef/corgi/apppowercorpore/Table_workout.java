@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 
 import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
+import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
 
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,10 +36,31 @@ public class Table_workout extends AppCompatActivity  {
     @Override
     public void onCreate (Bundle savedInstanteState){
         super.onCreate(savedInstanteState);
+        ReadCSV csv = new ReadCSV();
         setContentView(R.layout.layout_show_workouts);
         tableworkout = findViewById(R.id.tableworkout) ;
         tableworkout.setShrinkAllColumns(true);
         tableworkout.setShrinkAllColumns(true);
+        RutinaDTO rutina = new RutinaDTO();
+        try {
+            rutina = csv.readRutinacsv();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i=1;i<rutina.getListaEjercicios().size();i++){
+            final TableRow row_body = new TableRow(this);
+            Date fecha=new Date();
+            //String s_fecha = FORMATOFECHA.format(fecha);
+            TextView nameexercise = new TextView(this);
+            nameexercise.setText(fecha.toString());
+            nameexercise.setTextColor(getColor(R.color.colorPrimaryDark));
+            row_body.addView(nameexercise);
+            TextView texto = new TextView(this);
+            texto.setText("Texto");
+
+            row_body.addView(texto);
+            tableworkout.addView(row_body);
+        }
 
 //        rutinaDTO rutine = new rutinaDTO();
 //        String[] ejercicios={};
@@ -80,20 +103,7 @@ public class Table_workout extends AppCompatActivity  {
         //Titulo de la columna
 
   //      rutine.setDiaRutina(s_fecha);
-        for(int i=1;i<5;i++){
-            final TableRow row_body = new TableRow(this);
-            Date fecha=new Date();
-            //String s_fecha = FORMATOFECHA.format(fecha);
-            TextView datetext = new TextView(this);
-            datetext.setText(fecha.toString());
-            datetext.setTextColor(getColor(R.color.colorPrimary));
-            row_body.addView(datetext);
-            TextView texto = new TextView(this);
-            texto.setText("Texto");
 
-            row_body.addView(texto);
-            tableworkout.addView(row_body);
-        }
         //TODO tabla dinamica de las series (cabecera)
 //        for(int i=0;i<rutine.getSerie().length;i++){
 //            header.setText(head[i]);

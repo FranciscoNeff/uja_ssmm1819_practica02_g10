@@ -33,4 +33,5 @@
     <string name="Disconnected">You are disconnected</string>
     <string name="Connect">Connect</string>
     <string name="Bad_logging">Bad User name or Password try again</string>
+    <string name="Incorrect_Values">Incorrect user values, insert any</string>
 </resources>
