@@ -15,14 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.MonitorDTO.MalformedMonitorException;
+import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.mensaje.Envio;
+import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
 
 import java.io.IOException;
-import java.text.ParseException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
 

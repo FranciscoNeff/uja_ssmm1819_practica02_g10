@@ -8,7 +8,6 @@ import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 import com.nef.corgi.apppowercorpore.R;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,10 +37,11 @@ public class ReadCSV {
     solo al body de las rutinas
     ejercicios;series;repetciones CRLF
      */
-    public RutinaDTO readRutinacsv () throws IOException {
+    public RutinaDTO readRutinacsv (InputStream inputStream) throws IOException {
         List<RutinaDTO.Ejercicio> ejerciciolistcsv=new ArrayList<>();
         boolean exist=false;
-        InputStream rutinacsv = context.getResources().openRawResource(R.raw.rutina_csv);//TODO nunca llega a leer bien el recurso
+       // InputStream rutinacsv = context.getResources().openRawResource(R.raw.rutina_csv);//TODO nunca llega a leer bien el recurso
+        InputStream rutinacsv=inputStream;
         BufferedReader reader = null;
             reader = new BufferedReader(new InputStreamReader(rutinacsv, Charset.forName("UTF-8")));
         RutinaDTO rutina = new RutinaDTO();
@@ -49,26 +49,31 @@ public class ReadCSV {
             exist = true;
             String line = "";
             String n_ejercicios;//array con el nombre de los ejercicios
-            int[] series = {};//array de series
+            int[] series = new int[3];//array de series
             String[] repeticiones = {};//array de repeticiones
             while ((line = reader.readLine()) != null) {
                 try {
 
-                    RutinaDTO.Ejercicio ejercicio = null;
+                    RutinaDTO.Ejercicio ejercicio = new RutinaDTO.Ejercicio();
                     String[] items = line.split(DL);//La cadena se trocea con ;
-                    String s_f_rutina=items[0];
-                    String timerutina=items[1];
-                    int i = 2;
-                    while ((Integer.parseInt(items[i])) != FIN) {
-                        rutina = null;
+                    String s_f_rutina="DIArutina";
+                   String timerutina="TiempoRUTINA";
+                    //int i = 2;
+                    int i =0;
+int j=0;
                         //Lectura
                         n_ejercicios = items[i];
                         i++;
                         do {
-                            series[i] = (Integer.parseInt(items[i]));//leo la serie en la que esta, es un numero
+                            try{
+                            series[j] = (Integer.parseInt(items[i]));//leo la serie en la que esta, es un numero
+                        }catch (NumberFormatException numberex){
+                            numberex.printStackTrace();
+                    }
                             i++;
-                            repeticiones[i] = items[i];//esto es un string
+                            repeticiones[j] = items[i];//esto es un string
                             i++;
+                            j++;
                         }
                         while (Integer.parseInt(items[i]) != FIN); //deberia trocear hasta terminar toda la serie y repeticiones
                         i++;
@@ -85,7 +90,7 @@ public class ReadCSV {
                             e.printStackTrace();
                             rutina=null;
                         }
-                    }
+
                 } catch (NullPointerException e) {//Tengo que poner el nullPointerException ya que con las demas excepciones da fallo
                     // ya que debido al metodo pide devolver un objeto
                     e.printStackTrace();

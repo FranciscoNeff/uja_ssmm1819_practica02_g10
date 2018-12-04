@@ -75,7 +75,7 @@ if(diaRutina.length()<0){
            this.type=type;
         }
         }
-    public class Ejercicio extends RutinaDTO {
+    public static class Ejercicio extends RutinaDTO {
         private  String nombreEjercicio;
         private  int[] serie;
         private  String[] repeticiones;

@@ -9,9 +9,11 @@ import android.widget.Toast;
 import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
+import com.nef.corgi.apppowercorpore.R;
 import com.nef.corgi.apppowercorpore.ServiceActivity;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,11 +45,11 @@ protected Boolean doInBackground(String... strings) {
     String csvmonitor=monitor.csvtoString();
         Boolean estado=null;
     List<RutinaDTO.Ejercicio> ejerciciolistcsv=new ArrayList<>();
-
+    InputStream inputStream = context.getResources().openRawResource(R.raw.rutina_csv);
     String actualizacion;
     try {
         ReadCSV csvreader = new ReadCSV();
-        RutinaDTO rutinacsv = csvreader.readRutinacsv();
+        RutinaDTO rutinacsv = csvreader.readRutinacsv(inputStream);
         RutinaDTO.Ejercicio ejercicio=null;
         ejerciciolistcsv=rutinacsv.getListaEjercicios();
         if(rutinacsv==null) { estado=false;//si la rutina esta vacia no actualizamos

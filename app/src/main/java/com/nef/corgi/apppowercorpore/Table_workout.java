@@ -1,23 +1,17 @@
 package com.nef.corgi.apppowercorpore;
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-
 import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
-
-
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
 
 public class Table_workout extends AppCompatActivity  {
     private List<RutinaDTO> rutinalistcsv = new ArrayList<>();
@@ -36,17 +30,19 @@ public class Table_workout extends AppCompatActivity  {
     @Override
     public void onCreate (Bundle savedInstanteState){
         super.onCreate(savedInstanteState);
-        ReadCSV csv = new ReadCSV();
         setContentView(R.layout.layout_show_workouts);
         tableworkout = findViewById(R.id.tableworkout) ;
         tableworkout.setShrinkAllColumns(true);
         tableworkout.setShrinkAllColumns(true);
+        InputStream inputStream = getResources().openRawResource(R.raw.rutina_csv);
+        ReadCSV readCSV=new ReadCSV();
         RutinaDTO rutina = new RutinaDTO();
         try {
-            rutina = csv.readRutinacsv();
+            rutina=readCSV.readRutinacsv(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         for(int i=1;i<rutina.getListaEjercicios().size();i++){
             final TableRow row_body = new TableRow(this);
             Date fecha=new Date();
