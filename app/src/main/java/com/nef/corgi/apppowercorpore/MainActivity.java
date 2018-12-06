@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_EXPIRED="expires";
     public Context context;
-    public StatusNetkwork networkStateReceiver;
+    private StatusNetkwork networkStateReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag_inicio = fm.findFragmentById(R.id.main_container);
         //Binvenida y muestra el nombre de usuario,en vez del de la app//si se comenta el menu lateral es como se ve mejo
-        networkStateReceiver=new StatusNetkwork(getApplicationContext());
+        networkStateReceiver= new StatusNetkwork(getApplicationContext());
         networkStateReceiver.onReceive(getApplicationContext(), getIntent());
             //TODO forzar desconectado
 //Seria interesante forzarlo a que lo haga una vez siempre y cuando este desconectado
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                     Intent intent = new Intent(this, ServiceActivity.class);
                     intent.putExtra(ServiceActivity.PARAM_USER_NAME, nombre);
                     intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, expires);//Maldito format
+                    Toast.makeText(this,R.string.UserRegistred,Toast.LENGTH_SHORT).show();//quitar esta linea para la practica 3 no es visualemte atractiva
                     startActivity(intent);
                 }
            } catch (ParseException e_date) {

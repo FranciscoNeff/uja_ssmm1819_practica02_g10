@@ -34,4 +34,5 @@
     <string name="Connect">Connect</string>
     <string name="Bad_logging">Bad User name or Password try again</string>
     <string name="Incorrect_Values">Incorrect user values, insert any</string>
+    <string name="UserRegistred">Previously registered</string>
 </resources>
