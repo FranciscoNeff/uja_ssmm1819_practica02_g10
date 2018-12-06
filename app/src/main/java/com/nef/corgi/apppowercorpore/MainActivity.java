@@ -30,7 +30,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import es.dmoral.toasty.Toasty;
 
+//TOAST DE COLORES Y CON ICONOS//https://www.codingdemos.com/android-toast-message-tutorial/
 //el email sera el identificador unico de nuestra aplicacion(futuro)
 //Aunque este el menu lateral este no se usa aun, solo tiene estilos por si en un futuro se usa
 //en Translations Edit, contraseña esta Untranslate debido a la ñ (si se ve que el uso de la ñ se hace casi obligatorio, se cambiara la fuente)
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     public static final String PARAM_USER_EXPIRED="expires";
     public Context context;
     private StatusNetkwork networkStateReceiver;
+    ConnectTask task = new ConnectTask();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -84,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                     Intent intent = new Intent(this, ServiceActivity.class);
                     intent.putExtra(ServiceActivity.PARAM_USER_NAME, nombre);
                     intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, expires);//Maldito format
-                    Toast.makeText(this,R.string.UserRegistred,Toast.LENGTH_SHORT).show();//quitar esta linea para la practica 3 no es visualemte atractiva
+                    Toasty.success(this,getString(R.string.UserRegistred),Toast.LENGTH_SHORT).show();//quitar esta linea para la practica 3 no es visualemte atractiva
+                    //Ayuda de los toast
                     startActivity(intent);
                 }
            } catch (ParseException e_date) {
@@ -92,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
            }
 
         }
-
 
     }
 
@@ -240,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             input.setExpires(FORMATO.parse(expires));//se le introduce un date
         } catch (ParseException e) {
             e.printStackTrace();
-            //input.setExpires(expires);//se le introduce un String
         }
         return input;
     }
@@ -274,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             while ((tempString = br.readLine()) != null) {
                 contentAsString = contentAsString + tempString;
-                //task.onProgressUpdate(contentAsString.length());
+                task.onProgressUpdate(contentAsString.length());
             }
 
             return contentAsString;

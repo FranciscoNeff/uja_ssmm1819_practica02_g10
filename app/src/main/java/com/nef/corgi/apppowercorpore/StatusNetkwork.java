@@ -8,6 +8,8 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
+
 public class StatusNetkwork extends BroadcastReceiver {
     public Context cont;
 public StatusNetkwork(Context c){
@@ -26,7 +28,7 @@ public StatusNetkwork(Context c){
                 Toast.makeText(cont.getApplicationContext(),R.string.Connect ,Toast.LENGTH_SHORT).show();
             } else {
                 Log.d("MenuActivity", "DISCONNECTED");
-                Toast.makeText(cont.getApplicationContext(), R.string.Disconnected ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(cont.getApplicationContext(), R.string.Disconnected, Toast.LENGTH_SHORT).show();//no reconoce el getString en esta clase
             }
         }
     }

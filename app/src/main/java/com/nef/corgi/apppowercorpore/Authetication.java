@@ -16,6 +16,8 @@ import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 
 import java.text.SimpleDateFormat;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class Authetication extends Fragment {
     private UserDTO user;
@@ -69,7 +71,7 @@ public class Authetication extends Fragment {
                     mListener.onFragmentInteraction(user);//le pasamos el usuario
                 }catch (UserDTO.MalformedUserException e){
                     //TODO revisar esto xq da fallo por los valores minimos de las excepciones
-                    //Toast.makeText(context.getApplicationContext(),R.string.Incorrect_Values,Toast.LENGTH_SHORT).show();
+                   Toasty.error(getActivity(),getString(R.string.Incorrect_Values),Toast.LENGTH_SHORT).show();
                     user=null;
                 }
 
