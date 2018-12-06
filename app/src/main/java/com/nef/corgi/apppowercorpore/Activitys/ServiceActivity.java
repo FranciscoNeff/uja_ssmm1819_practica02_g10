@@ -1,4 +1,4 @@
-package com.nef.corgi.apppowercorpore;
+package com.nef.corgi.apppowercorpore.Activitys;
 
 import android.content.Intent;
 
@@ -18,13 +18,10 @@ import android.widget.TextView;
 
 import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.MonitorDTO.MalformedMonitorException;
-import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
+import com.nef.corgi.apppowercorpore.R;
 import com.nef.corgi.apppowercorpore.mensaje.Envio;
-import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
 

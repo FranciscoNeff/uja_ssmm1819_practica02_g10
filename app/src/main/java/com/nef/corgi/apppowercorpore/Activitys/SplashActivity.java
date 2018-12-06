@@ -1,4 +1,4 @@
-package com.nef.corgi.apppowercorpore;
+package com.nef.corgi.apppowercorpore.Activitys;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+
+import com.nef.corgi.apppowercorpore.R;
 
 public class SplashActivity extends Activity {
     private final int DURACION_SPLASH = 600;

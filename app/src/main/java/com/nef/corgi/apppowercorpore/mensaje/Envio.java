@@ -1,7 +1,6 @@
 package com.nef.corgi.apppowercorpore.mensaje;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -10,7 +9,6 @@ import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.R;
-import com.nef.corgi.apppowercorpore.ServiceActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

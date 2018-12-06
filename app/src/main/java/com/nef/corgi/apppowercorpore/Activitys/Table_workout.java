@@ -1,10 +1,11 @@
-package com.nef.corgi.apppowercorpore;
+package com.nef.corgi.apppowercorpore.Activitys;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import com.nef.corgi.apppowercorpore.DTO.RutinaDTO;
+import com.nef.corgi.apppowercorpore.R;
 import com.nef.corgi.apppowercorpore.mensaje.ReadCSV;
 import java.io.IOException;
 import java.io.InputStream;

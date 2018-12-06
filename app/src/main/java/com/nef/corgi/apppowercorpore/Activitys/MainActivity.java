@@ -1,4 +1,4 @@
-package com.nef.corgi.apppowercorpore;
+package com.nef.corgi.apppowercorpore.Activitys;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nef.corgi.apppowercorpore.Authetication;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
+import com.nef.corgi.apppowercorpore.R;
+import com.nef.corgi.apppowercorpore.StatusNetkwork;
 
 import java.io.BufferedReader;
 
