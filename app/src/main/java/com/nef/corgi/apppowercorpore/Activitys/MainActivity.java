@@ -18,6 +18,7 @@ import com.nef.corgi.apppowercorpore.Authetication;
 import com.nef.corgi.apppowercorpore.DTO.Preferences;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.R;
+import com.nef.corgi.apppowercorpore.Registros;
 import com.nef.corgi.apppowercorpore.StatusNetkwork;
 
 import java.io.BufferedReader;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     public Context context;
     private StatusNetkwork networkStateReceiver;
     ConnectTask task = new ConnectTask();
-    Preferences pref = new Preferences();
+    Registros pref = new Registros();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 Date temp = (user.getExpires());
                 editor.putString("EXPIRES", FORMATO.format(temp));
                 editor.commit();
-
+//pref.AddRegistro(user);revisar por aqui el opcional
                 /*
                 SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
                 SharedPreferences.Editor edit2 = def.edit();

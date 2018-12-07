@@ -80,7 +80,7 @@ public class UserDTO {
         if (pass.length()<4){
             throw new MalformedUserException(3);
         }
-        this.email_user = "emailusertest";//cambiar por email_user; //dejamos este para comprobar mas rapido
+        this.email_user = email_user;//cambiar por email_user; //dejamos este para comprobar mas rapido
         if (email_user.length()<9){
             throw new MalformedUserException(4);
         }
