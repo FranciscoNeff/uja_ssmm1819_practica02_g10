@@ -72,15 +72,15 @@ public class UserDTO {
 
     throws MalformedUserException{
 
-        this.user_name = "user1";
+        this.user_name = user_name;
         if (user_name.length()<4){
             throw new MalformedUserException(2);
         }
-        this.pass = "12345";
+        this.pass = pass;
         if (pass.length()<4){
             throw new MalformedUserException(3);
         }
-        this.email_user = "emailuser";
+        this.email_user = "emailusertest";//cambiar por email_user; //dejamos este para comprobar mas rapido
         if (email_user.length()<9){
             throw new MalformedUserException(4);
         }

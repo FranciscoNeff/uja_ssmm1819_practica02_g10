@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nef.corgi.apppowercorpore.Authetication;
+import com.nef.corgi.apppowercorpore.DTO.Preferences;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.R;
 import com.nef.corgi.apppowercorpore.StatusNetkwork;
@@ -35,12 +36,10 @@ import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
 
+
 //TOAST DE COLORES Y CON ICONOS//https://www.codingdemos.com/android-toast-message-tutorial/
 //el email sera el identificador unico de nuestra aplicacion(futuro)
-//Aunque este el menu lateral este no se usa aun, solo tiene estilos por si en un futuro se usa
 //en Translations Edit, contraseña esta Untranslate debido a la ñ (si se ve que el uso de la ñ se hace casi obligatorio, se cambiara la fuente)
-//en nav tanto el header como el subtitulo cambiar el valor por el nombre del usuario como header y el mail como subtitule(futuro);estos ademas salen blancos por el tema(cambiarlo)
-//E/HAL: load: id=gralloc != hmi->id=gralloc He buscado como eliminar este fallo pero ni he encontrado ese id ni nada(no es un error critico)
 public class MainActivity extends AppCompatActivity implements Authetication.OnFragmentInteractionListener {
 
     private static final String SERVICE_DEFAULT_WEB = "http://";
@@ -50,12 +49,13 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
     private static final String QUERY_PASS = "&pass=";
     private static final int PORT = 80;
     SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
-    public static final String PARAM_USER_NAME="name";
+    public static final String PARAM_USER_NAME="USER";
     public static final String PARAM_USER_EMAIL="email";
     public static final String PARAM_USER_EXPIRED="expires";
     public Context context;
     private StatusNetkwork networkStateReceiver;
     ConnectTask task = new ConnectTask();
+    Preferences pref = new Preferences();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -90,8 +90,7 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                     Intent intent = new Intent(this, ServiceActivity.class);
                     intent.putExtra(ServiceActivity.PARAM_USER_NAME, nombre);
                     intent.putExtra(ServiceActivity.PARAM_USER_EXPIRED, expires);//Maldito format
-                    Toasty.success(this,getString(R.string.UserRegistred),Toast.LENGTH_SHORT).show();//quitar esta linea para la practica 3 no es visualemte atractiva
-                    //Ayuda de los toast
+                    Toasty.success(this,getString(R.string.UserRegistred),Toast.LENGTH_SHORT).show();//quitar esta linea para la practica 3 no es visualemte atractividad
                     startActivity(intent);
                 }
            } catch (ParseException e_date) {
@@ -206,10 +205,12 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 editor.putString("EXPIRES", FORMATO.format(temp));
                 editor.commit();
 
-               /* SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
+                /*
+                SharedPreferences def = getPreferences(MODE_PRIVATE); //crea un fichero con todos los usuarios
                 SharedPreferences.Editor edit2 = def.edit();
+                pref.saveCredentials(def,user);
                 edit2.putString("LAST_USER", user.getUser_name());
-                editor.commit();*///
+                edit2.commit();*/
 
                 Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
                 intent.putExtra(ServiceActivity.PARAM_USER_NAME, user.getUser_name());
@@ -225,8 +226,8 @@ public class MainActivity extends AppCompatActivity implements Authetication.OnF
                 editor.putString("SID", "");
                 editor.putString("EXPIRES", "");
                 editor.commit();
-                Toast.makeText(getApplicationContext(),R.string.Bad_logging,Toast.LENGTH_SHORT).show();
-                //TODO dar mas informacion
+                Toasty.error(getApplicationContext(),getString(R.string.Bad_logging),Toast.LENGTH_SHORT).show();
+
             }
     }
 
