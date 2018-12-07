@@ -20,6 +20,7 @@ import com.nef.corgi.apppowercorpore.DTO.MonitorDTO;
 import com.nef.corgi.apppowercorpore.DTO.MonitorDTO.MalformedMonitorException;
 import com.nef.corgi.apppowercorpore.DTO.UserDTO;
 import com.nef.corgi.apppowercorpore.R;
+import com.nef.corgi.apppowercorpore.Registros;
 import com.nef.corgi.apppowercorpore.mensaje.Envio;
 
 import java.text.SimpleDateFormat;
@@ -34,19 +35,24 @@ public class ServiceActivity extends AppCompatActivity implements NavigationView
     public static final String PARAM_USER_EXPIRED="expires";
     public static final UserDTO USERLOG = new UserDTO();
     SimpleDateFormat FORMATO = new SimpleDateFormat("y-M-d-H-m-s");
-
+Registros reg = new Registros();
+    //String registros;//linea para el apartado opcional
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // registros = reg.ReadRegistro();
         //botón flotante
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+
+              /*  Snackbar.make(view, registros, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();//añadir accion(futuro)*///linea para el apartado opcional
+               Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();//añadir accion(futuro)
             }
         });
